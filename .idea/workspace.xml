@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfdccd17-bc41-4eb6-9dc8-f1a1b916cdc5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/CleckhuddersfaxSupplies.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/backuplogin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/Eg Code/connect.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/partials/dbConnect.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/addShop.css" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/addShop.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/login.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +42,6 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "govind",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -76,7 +68,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1715868517918</updated>
-      <workItem from="1715868520203" duration="3682000" />
+      <workItem from="1715868520203" duration="4105000" />
     </task>
     <servers />
   </component>
