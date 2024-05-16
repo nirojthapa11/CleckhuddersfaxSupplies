@@ -4,17 +4,19 @@
 	<meta charset="UTF-8">
 	<title>Whishlist</title>
 	<link rel="stylesheet" href="myWishlist.css">
+  <link rel="stylesheet" href="../HeaderPage/head.css">
+  <link rel="stylesheet" href="../FooterPage/footer.css">
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-  <?php include('head.php');?>
+  <div><?php include('../HeaderPage/head.php');?></div>
   <div class="wrapper">
     <div class="sidebar">
         <ul>
-            <li><a href="myprofile.html"><i class="fas fa-user"></i>My Profile</a></li>
+            <li><a href="customerProfile.php"><i class="fas fa-user"></i>My Profile</a></li>
             <li><a href="#"><i class="fas fa-cart-shopping"></i>My Orders</a></li>
-            <li><a href=""><i class="fas fa-heart"></i>My Whislist</a></li>
+            <li><a href="myWishlist.php"><i class="fas fa-heart"></i>My Whislist</a></li>
             <li><a href="#"><i class="fas fa-money-bill"></i></i>Payment</a></li>
             <li><a href="#"><i class="fas fa-home"></i>Back to Home</a></li>
         </ul> 
@@ -37,7 +39,7 @@
         <tbody>
           <tr>
             <td class="img-container">
-              <img src="../Image/apple.jpeg" alt="Product 1">
+              <img src="/Image/apple.jpeg" alt="Product 1">
             </td>
             <td class="td-product-name">Lamb</td>
             <td class="td-price">€77.00</td>
@@ -56,7 +58,7 @@
         <tbody>
           <tr>
             <td class="img-container">
-              <img src="../Image/RainbowTrout.jpeg" alt="Product 1">
+              <img src="/Image/RainbowTrout.jpeg" alt="Product 1">
             </td>
             <td class="td-product-name">Trout</td>
             <td class="td-price">€89.00 </td>
@@ -75,6 +77,9 @@
       </table>
     </div>
   </div>
-  <?php include('footer.php');?>
+
+  <?php include('../FooterPage/footer.php');?>
+
+  <script src="../HeaderPage/head.js"></script>
 </body>
 </html>

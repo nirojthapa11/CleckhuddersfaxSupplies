@@ -21,7 +21,7 @@
                     <a href="#" class="fab fa-twitter"></a>
                     <a href="#" class="fab fa-instagram"></a>
                     <a href="#" class="fab fa-linkedin"></a>
-                    <img src="../Image/Website Logo.png" alt="">
+                    <img src="/Image/WebsiteLogo.png" alt="">
                 </div>
             </div>
 
@@ -35,16 +35,16 @@
 
             <div class="box">
                 <h3>Quick Links</h3>
-                <a href="../PHP/homepage.php" class="links"><i class="fa-solid fa-chevron-right"></i>Home</a>
-                <a href="../PHP/aboutus.php" class="links"><i class="fa-solid fa-chevron-right"></i>About</a>
-                <a href="../PHP/contactus.php" class="links"><i class="fa-solid fa-chevron-right"></i>Contact Us</a>
-                <a href="../PHP/product.php" class="links"><i class="fa-solid fa-chevron-right"></i>Products</a>
-                <a href="../PHP/shop.php" class="links"><i class="fa-solid fa-chevron-right"></i>Shops</a>
+                <a href="../HomePage/homepage.php" class="links"><i class="fa-solid fa-chevron-right"></i>Home</a>
+                <a href="../AboutUsPage/aboutus.php" class="links"><i class="fa-solid fa-chevron-right"></i>About</a>
+                <a href="../ContactUsPage/contactus.php" class="links"><i class="fa-solid fa-chevron-right"></i>Contact Us</a>
+                <a href="../ProductPage/product.php" class="links"><i class="fa-solid fa-chevron-right"></i>Products</a>
+                <a href="../ShopPage/shop.php" class="links"><i class="fa-solid fa-chevron-right"></i>Shops</a>
             </div>
 
             <div class="box">
                 <h3>Payment Patner</h3>
-                <img src="../Image/PayPal.jpeg" class="payment" alt="">
+                <img src="/Image/PayPal.jpeg" class="payment" alt="">
             </div>
         </div>
 

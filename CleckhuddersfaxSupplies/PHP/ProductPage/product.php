@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="product.css">
+    <link rel="stylesheet" href="../HeaderPage/head.css">
+    <link rel="stylesheet" href="../FooterPage/footer.css">
 </head>
 <body class="">
-    <?php include('head.php');?>
+    <div><?php include('../HeaderPage/head.php');?></div>
 
     <div class="container">
         <div class="heads">
@@ -44,8 +46,9 @@
     </div> -->
 
     <br><br><br>
-    <?php include('footer.php');?>
+    <?php include('../FooterPage/footer.php');?>
 
     <script src="product.js"></script>
+    <script src="../HeaderPage/head.js"></script>
 </body>
 </html>

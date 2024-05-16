@@ -7,15 +7,17 @@
     <title>Cleckhuddersfax Supplies</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="greengrocerCategories.css">
+    <link rel="stylesheet" href="fishmongerCategories.css">
+    <link rel="stylesheet" href="../HeaderPage/head.css">
+    <!-- <link rel="stylesheet" href="../FooterPage/footer.css"> -->
 </head>
 <body>
-    <?php include('head.php');?>
+    <div><?php include('../HeaderPage/head.php');?></div>
 
     <section>
         <div class="container">
             <div class="sidebar">
-                <h3>Greengrocer</h3>
+                <h3>Fishmonger</h3>
                 <div class="filter">
                     <div id="btns"></div>
                 </div>
@@ -29,8 +31,10 @@
             </div>
         </div>
     </section>
-    <!-- <?php include('footer.php');?> -->
+    
+    <!-- <?php include('../FooterPage/footer.php');?> -->
 
-    <script src="greengrocerCategories.js"></script>
+    <script src="fishmongerCategories.js"></script>
+    <script src="../HeaderPage/head.js"></script>
 </body>
 </html>

@@ -6,19 +6,21 @@
     <title>About Us</title>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
     <link rel="stylesheet" href="aboutus.css">
+    <link rel="stylesheet" href="../HeaderPage/head.css">
+    <link rel="stylesheet" href="../FooterPage/footer.css">
 
 </head>
 <body>
-    <?php include('head.php');?>
+    <div><?php include('../HeaderPage/head.php');?></div>
 
     <section>
         <div class="about">
             <div class="heading">
                 <h1>ABOUT US</h1>
-                <a href="../PHP/homepage.php">Back to Home</a>
+                <a href="../HomePage/homepage.php">Back to Home</a>
             </div>
                 <div class="abt-banner">
-                    <img src="../Image/AboutImage.jpeg" alt="">
+                    <img src="/Image/AboutImage.jpeg" alt="">
                 </div>
                 <h1 class="quotes">Where shopping meets convenience, and quality meets affordability.</h1>
                 <p class="text">
@@ -33,7 +35,7 @@
                     
                 <div class="heading-2">
                     <h1>OUR VISION</h1>
-                    <img class="img-2" src="../Image/vegitables.jpeg"  alt="">
+                    <img class="img-2" src="/Image/vegitables.jpeg"  alt="">
                 </div>
                 <p class="text-2" > 
                     At Cleckhuddersfax Supplies, we envision a world where shopping is not just a transaction, but an experience—a journey of discovery, connection, and empowerment.
@@ -51,8 +53,9 @@
     </section>
 
     <br><br><br><br>
-    <?php include('footer.php');?>
+    <?php include('../FooterPage/footer.php');?>
 
     <script src="aboutus.js"></script>
+    <script src="../HeaderPage/head.js"></script>
 </body>
 </html>

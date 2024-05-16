@@ -1,15 +1,15 @@
 const btns=[
     {
         id: 1,
-        name: 'Fish'
+        name: 'Cured Meats'
     },
     {
         id: 2,
-        name: 'Seafood'
+        name: 'Cheeses'
     },
     {
         id: 3,
-        name: 'Smoked & Cured Fish'
+        name: 'Sandwiches'
     },
 ]
 
@@ -26,82 +26,82 @@ document.getElementById('btns').innerHTML=filters.map((btn) =>{
 const product = [
     {
         id :1,
-        image : "../Image/Perch.jpeg",
-        title : "Perch",
+        image : "/Image/Bresaola.jpeg",
+        title : "Bresaola",
         price : 3.50,
-        category: "Fish"
+        category: "Cured Meats"
     },
 
     {
         id :1,
-        image : "../Image/RainbowTrout.jpeg",
-        title : "Rainbow Trout",
+        image : "/Image/Coppa.jpeg",
+        title : "Coppa",
         price : 3.50,
-        category: "Fish"
+        category: "Cured Meats"
     },
 
     {
         id :1,
-        image : "../Image/Sardines.jpeg",
-        title : "Sardines",
+        image : "/Image/Genoa.jpeg",
+        title : "Genoa",
         price : 3.50,
-        category: "Fish"
+        category: "Cured Meats"
     },
 
     {
         id :1,
-        image : "../Image/Stripedbass.jpeg",
-        title : "Stripedbass",
+        image : "/Image/Guanciale.jpeg",
+        title : "Guanciale",
         price : 3.50,
-        category: "Fish"
+        category: "Cured Meats"
     },
 
     {
         id :2,
-        image : "../Image/Crab.jpeg",
-        title : "Crab",
+        image : "/Image/GreekFeta.jpeg",
+        title : "Greek Feta",
         price : 3.50,
-        category: "Seafood"
+        category: "Cheeses"
     },
 
     {
         id :2,
-        image : "../Image/Lobster.jpeg",
-        title : "Lobster",
+        image : "/Image/Goudacheese.jpeg",
+        title : "Gouda Cheese",
         price : 3.50,
-        category: "Seafood"
-    },
-
-    {
-        id :2,
-        image : "../Image/Shrimp.jpeg",
-        title : "Shrimp",
-        price : 3.50,
-        category: "Seafood"
-    },
-
-    {
-        id :2,
-        image : "../Image/Mussels.jpeg",
-        title : "Mussels",
-        price : 3.50,
-        category: "Seafood"
+        category: "Cheeses"
     },
 
     {
         id :3,
-        image : "../Image/Smokedsalmon.jpeg",
-        title : "Smoked Salmon",
+        image : "/Image/ChickenSandwich.jpeg",
+        title : "Chicken Sandwich",
         price : 3.50,
-        category: "Smoked & Cured Fish"
+        category: "Sandwiches"
     },
 
     {
         id :3,
-        image : "../Image/lox.jpeg",
-        title : "Lox",
+        image : "/Image/EggSandwich.jpeg",
+        title : "Egg Sandwich",
         price : 3.50,
-        category: "Smoked & Cured Fish"
+        category: "Sandwiches"
+    },
+
+    {
+        id :3,
+        image : "/Image/SeafoodSandwich.jpeg",
+        title : "Seafood Sandwich",
+        price : 3.50,
+        category: "Sandwiches"
+    },
+
+    {
+        id :3,
+        image : "/Image/HamSandwich.jpeg",
+        title : "Ham Sandwich",
+        price : 3.50,
+        category: "Sandwiches"
     },
 ];
 

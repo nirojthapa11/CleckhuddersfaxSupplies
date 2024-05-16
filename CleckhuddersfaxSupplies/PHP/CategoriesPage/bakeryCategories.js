@@ -1,15 +1,15 @@
 const btns=[
     {
         id: 1,
-        name: 'Meat'
+        name: 'Bread'
     },
     {
         id: 2,
-        name: 'Wings & Legs'
+        name: 'Cakes'
     },
     {
         id: 3,
-        name: 'Sausages'
+        name: 'Cookies'
     },
 ]
 
@@ -26,82 +26,82 @@ document.getElementById('btns').innerHTML=filters.map((btn) =>{
 const product = [
     {
         id :1,
-        image : "../Image/Chickenbreasts.jpeg",
-        title : "Chicken",
+        image : "/Image/Sourdoughbread.jpeg",
+        title : "Sourdough Bread",
         price : 3.50,
-        category: "Meat"
+        category: "Bread"
     },
 
     {
         id :1,
-        image : "../Image/meat.jpeg",
-        title : "Goat",
+        image : "/Image/Sandwichbread.jpg",
+        title : "Sandwich Bread",
         price : 3.50,
-        category: "Meat"
-    },
-
-    {
-        id :1,
-        image : "../Image/Pork.jpeg",
-        title : "Pork",
-        price : 3.50,
-        category: "Meat"
-    },
-
-    {
-        id :1,
-        image : "../Image/Kangaroo.jpeg",
-        title : "Kangaroo",
-        price : 3.50,
-        category: "Meat"
+        category: "Bread"
     },
 
     {
         id :2,
-        image : "../Image/chickenlegwings.jpeg",
-        title : "Chicken legs & wings",
+        image : "/Image/VanillaCake.jpeg",
+        title : "Vanilla Cake",
         price : 3.50,
-        category: "Wings & Legs"
+        category: "Cakes"
     },
 
     {
         id :2,
-        image : "../Image/GoatShoulder.jpeg",
-        title : "Goat Shoulder",
+        image : "/Image/StrawberryCake.jpeg",
+        title : "Strawberry Cake",
         price : 3.50,
-        category: "Wings & Legs"
+        category: "Cakes"
     },
 
     {
         id :2,
-        image : "../Image/porkleg.jpg",
-        title : "Pork Leg",
+        image : "/Image/ChocolateCake.jpeg",
+        title : "Chocolate Cake",
         price : 3.50,
-        category: "Wings & Legs"
+        category: "Cakes"
     },
 
     {
         id :2,
-        image : "../Image/Kangaroosolder.jpg",
-        title : "Kangaroo Shoulder",
+        image : "/Image/BirthdayCake.jpeg",
+        title : "Birthday Cake",
         price : 3.50,
-        category: "Wings & Legs"
+        category: "Cakes"
     },
 
     {
         id :3,
-        image : "../Image/Sausages.jpeg",
-        title : "Chicken Sausages",
+        image : "/Image/Chocolatechipcookies.jpeg",
+        title : "Chocolate Chip",
         price : 3.50,
-        category: "Sausages"
+        category: "Cookies"
     },
 
     {
         id :3,
-        image : "../Image/PorkSausage.jpeg",
-        title : "Pork Sausages",
+        image : "/Image/Snickerdoodle.jpeg",
+        title : "Snickerdoodle",
         price : 3.50,
-        category: "Sausages"
+        category: "Cookies"
+    },
+
+    {
+        id :3,
+        image : "/Image/PeanutButter.jpeg",
+        title : "Peanut Butter",
+        price : 3.50,
+        category: "Cookies"
+    },
+
+    {
+        id :3,
+        image : "/Image/Shortbread.jpeg",
+        title : "Shortbread",
+        price : 3.50,
+        category: "Cookies"
     },
 ];
 

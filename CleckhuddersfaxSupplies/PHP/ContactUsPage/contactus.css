@@ -38,7 +38,7 @@ section{
 }
 
 .contact{
-  background: url(../Image/contactus.jpeg) no-repeat right;
+  background: url(/Image/contactus.jpeg) no-repeat right;
   background-size: 60%;
   background-color: #eeeeee;
   overflow: hidden;

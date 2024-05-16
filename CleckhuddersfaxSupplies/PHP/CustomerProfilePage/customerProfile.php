@@ -4,17 +4,19 @@
 	<meta charset="UTF-8">
 	<title>Side Navigation Bar</title>
 	<link rel="stylesheet" href="customerProfile.css">
+    <link rel="stylesheet" href="../HeaderPage/head.css">
+    <link rel="stylesheet" href="../FooterPage/footer.css">
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <?php include('head.php');?>
+    <div><?php include('../HeaderPage/head.php');?></div>
     <div class="wrapper">
         <div class="sidebar">
             <ul>
                 <li><a href="customerProfile.php"><i class="fas fa-user"></i>My Profile</a></li>
                 <li><a href="#"><i class="fas fa-cart-shopping"></i>My Orders</a></li>
-                <li><a href="Wishlist.html"><i class="fas fa-heart"></i>My Whislist</a></li>
+                <li><a href="myWishlist.php"><i class="fas fa-heart"></i>My Whislist</a></li>
                 <li><a href="#"><i class="fas fa-money-bill"></i></i>Payment</a></li>
                 <li><a href="#"><i class="fas fa-cart-shopping"></i>My Cart</a></li>
             </ul> 
@@ -23,7 +25,7 @@
             <div class="he">My Profile</div>  
             <div class="profile-content">
                 <div>
-                <img src="../Eg Code/usericon.png" alt="User Image">
+                <img src="/Image/usericon.png" alt="User Image">
                 <button type="submit" class="but">Upload Picture</button>
                 </div>
                 <div class="profile-container">
@@ -88,6 +90,7 @@
             </div>
         </div>
     </div>
-<?php include('footer.php');?>
+    <?php include('../FooterPage/footer.php');?>
+    <script src="../HeaderPage/head.js"></script>
 </body>
 </html>

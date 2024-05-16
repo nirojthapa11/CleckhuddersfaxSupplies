@@ -11,7 +11,7 @@
 <body>
     <header class="header">
         <div class="header-1">
-            <img src="../Image/Website Logo.png" alt="">
+            <img src="/Image/WebsiteLogo.png" alt="">
             <form action="" class="search-form">
                 <input type="search" name="" placeholder="Search here..." id="search-box">
                 <label for="search-box" class="fas fa-search"></label>
@@ -22,15 +22,15 @@
                 
                 <div id="login-btn" class="fas fa-user">
                     <div class="login-options">
-                        <a href="customerProfile.php"> <i class="fa-regular fa-face-smile"></i> Manage My Account</a>
+                        <a href="../CustomerProfilePage/customerProfile.php"> <i class="fa-regular fa-face-smile"></i> Manage My Account</a>
                         <a href="#"> <i class="fa-sharp fa-solid fa-box-open"></i> My Orders</a>
-                        <a href="myWishlist.php"> <i class="fa-regular fa-heart"></i> My Wishlist</a>
+                        <a href="../CustomerProfilePage/myWishlist.php"> <i class="fa-regular fa-heart"></i> My Wishlist</a>
                         <a href="#"> <i class="fa-regular fa-star"></i> My Reviews</a>
                         <a href="#"> <i class="fa-solid fa-person-walking-arrow-right"></i> Logout</a>
                     </div>
                 </div>
-                <a href="../PHP/Login_Signup/login.php">LogIn</a>
-                <a href="../PHP/Login_Signup/customerSignup.php">SignUp</a>
+                <a href="../Login_Signup/login.php">LogIn</a>
+                <a href="../Login_Signup/customerSignup.php">SignUp</a>
             </div>
         </div>
         <div class="header-2">
@@ -40,53 +40,53 @@
                 <nav class="menu">
                     <ul class="menu-main">
                         <li>
-                            <a href="../PHP/homepage.php">Home</a>
+                            <a href="../HomePage/homepage.php">Home</a>
                         </li>
                        <li>
-                           <a href="../PHP/aboutus.php">About Us</a>
+                           <a href="../AboutUsPage/aboutus.php">About Us</a>
                        </li>
                        <li>
-                           <a href="../PHP/contactus.php">Contact Us</a>
+                           <a href="../ContactUsPage/contactus.php">Contact Us</a>
                        </li>
                        <li>
-                           <a href="../PHP/product.php">Products</a>
+                           <a href="../ProductPage/product.php">Products</a>
                        </li>
                         <li class="menu-item-has-children">
-                            <a href="../PHP/shop.php">Shop <i class="fa fa-angle-down"></i></a>
+                            <a href="../ShopPage/shop.php">Shop <i class="fa fa-angle-down"></i></a>
                             <div class="sub-menu mega-menu mega-menu-column-4">
                               <div class="list-item">
                                     <h4 class="title">Greengrocer</h4>
                                     <ul>
-                                        <li><a href="../PHP/greengrocerCategories.php">Fruits List</a></li>
-                                        <li><a href="../PHP/greengrocerCategories.php">Vegetables List</a></li>
+                                        <li><a href="../CategoriesPage/greengrocerCategories.php">Fruits List</a></li>
+                                        <li><a href="../CategoriesPage/greengrocerCategories.php">Vegetables List</a></li>
                                     </ul>
                                     <h4 class="title">Bakery</h4>
                                     <ul>
-                                        <li><a href="../PHP/bakeryCategories.php">Bread List</a></li>
-                                        <li><a href="../PHP/bakeryCategories.php">Cakes List</a></li>
-                                        <li><a href="../PHP/bakeryCategories.php">Cookies List</a></li>
+                                        <li><a href="../CategoriesPage/bakeryCategories.php">Bread List</a></li>
+                                        <li><a href="../CategoriesPage/bakeryCategories.php">Cakes List</a></li>
+                                        <li><a href="../CategoriesPage/bakeryCategories.php">Cookies List</a></li>
                                     </ul>
                               </div>
                               <div class="list-item">
                                   <h4 class="title">Butcher</h4>
                                   <ul>
-                                        <li><a href="../PHP/butcherCategories.php">Meat List</a></li>
-                                        <li><a href="../PHP/butcherCategories.php">Wings & Legs List</a></li>
-                                        <li><a href="../PHP/butcherCategories.php">Sausages List</a></li>
+                                        <li><a href="../CategoriesPage/butcherCategories.php">Meat List</a></li>
+                                        <li><a href="../CategoriesPage/butcherCategories.php">Wings & Legs List</a></li>
+                                        <li><a href="../CategoriesPage/butcherCategories.php">Sausages List</a></li>
                                     </ul>
                                     <h4 class="title">Fishmonger</h4>
                                   <ul>
-                                        <li><a href="../PHP/fishmongerCategories.php">Fish List</a></li>
-                                        <li><a href="../PHP/fishmongerCategories.php">Seafood List</a></li>
-                                        <li><a href="../PHP/fishmongerCategories.php">Smoked & Cured Fish List</a></li>
+                                        <li><a href="../CategoriesPage/fishmongerCategories.php">Fish List</a></li>
+                                        <li><a href="../CategoriesPage/fishmongerCategories.php">Seafood List</a></li>
+                                        <li><a href="../CategoriesPage/fishmongerCategories.php">Smoked & Cured Fish List</a></li>
                                     </ul>
                               </div>
                               <div class="list-item">
                                   <h4 class="title">Delicatessen</h4>
                                   <ul>
-                                         <li><a href="../PHP/delicatessenCategories.php">Cured Meats List</a></li>
-                                         <li><a href="../PHP/delicatessenCategories.php">Cheeses List</a></li>
-                                         <li><a href="../PHP/delicatessenCategories.php">Sandwiches List</a></li>
+                                         <li><a href="../CategoriesPage/delicatessenCategories.php">Cured Meats List</a></li>
+                                         <li><a href="../CategoriesPage/delicatessenCategories.php">Cheeses List</a></li>
+                                         <li><a href="../CategoriesPage/delicatessenCategories.php">Sandwiches List</a></li>
                                     </ul>
                               </div>
                             </div>
@@ -98,11 +98,11 @@
     </header>
 
     <nav class="bottom-navbar">
-        <a href="../PHP/homepage.php" class="fas fa-home"></a>
-        <a href="../PHP/aboutus.php" class="fa-solid fa-address-card""></a>
-        <a href="../PHP/contactus.php" class="fas fa-comments"></a>
-        <a href="../PHP/product.php" class="fa-solid fa-bowl-food"></a>
-        <a href="../PHP/shop.php" class="fa-solid fa-store"></a>
+        <a href="../HomePage/homepage.php" class="fas fa-home"></a>
+        <a href="../AboutUsPage/aboutus.php" class="fa-solid fa-address-card""></a>
+        <a href="../ContactUsPage/contactus.php" class="fas fa-comments"></a>
+        <a href="../ProductPage/product.php" class="fa-solid fa-bowl-food"></a>
+        <a href="../ShopPage/shop.php" class="fa-solid fa-store"></a>
     </nav>
 
     <script src="head.js"></script>
