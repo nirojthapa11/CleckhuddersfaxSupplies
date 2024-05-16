@@ -1,43 +1,44 @@
-
 <?php
 session_start();
 require_once '../../partials/dbConnect.php';
 
-function sanitizeInput($data) {
+function sanitizeInput($data)
+{
     return htmlspecialchars(trim($data));
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (empty($_POST['userName']) || empty($_POST['password'])) {
+    $showError = "Username or password is missing.";
+} else {
     $username = sanitizeInput($_POST['userName']);
     $password = sanitizeInput($_POST['password']);
     $usertype = $_POST['usertype'];
     $query = '';
+    $showError = false;
 
-    echo $username . $password . $usertype;
 
     if ($usertype == 'customer') {
         $query = "SELECT username, password FROM Customer WHERE username = '$username' AND password = '$password'";
-    }
-    elseif ($usertype == 'trader') {
+    } elseif ($usertype == 'trader') {
         $query = "SELECT username, password FROM Trader WHERE username = '$username' AND password = '$password'";
-    }
-    elseif ($usertype == 'admin') {
+    } elseif ($usertype == 'admin') {
         $query = "SELECT username, password FROM Customer WHERE username = '$username' AND password = '$password'";
     }
 
     try {
         $db = new Database();
 
-        $statement = $db->executeQuery($query, ['username' => $username, 'password' => $password]);
+        $statement = $db->executeQuery($query);
 
         if ($row = $db->fetchRow($statement)) {
+            $_SESSION['isAuthenticated'] = true;
             $_SESSION['username'] = $row['username'];
             $_SESSION['user_id'] = $row['user_id'];
 
             header("Location: ../HomePage/homepage.php");
             exit;
         } else {
-            echo "Invalid username or password. Please try again.";
+            $showError = "Invalid username or password. Please try again.";
         }
 
         $db->closeConnection();
@@ -46,6 +47,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
+<?php if ($showError) { ?>
+    <div style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; margin-bottom: 15px;">
+        <strong>Error!</strong> <?php echo $showError; ?>
+        <button type="button" style="background: none; border: none; color: #721c24; cursor: pointer; float: right;"
+                onclick="this.parentNode.style.display = 'none';" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<?php } ?>
 
 
 <!DOCTYPE html>
@@ -69,7 +80,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <h1>Login</h1>
                     <!-- Username or Email -->
                     <label for="userName">Username or Email:</label>
-                    <input type="text" id="userName" name="userName" required placeholder="Enter your username or email">
+                    <input type="text" id="userName" name="userName" required
+                           placeholder="Enter your username or email">
 
                     <!-- Password -->
                     <label for="password">Password:</label>
