@@ -26,7 +26,7 @@ document.getElementById('btns').innerHTML=filters.map((btn) =>{
 const product = [
     {
         id :1,
-        image : "/Image/Sourdoughbread.jpeg",
+        image : "../Image/Sourdoughbread.jpeg",
         title : "Sourdough Bread",
         price : 3.50,
         category: "Bread"
@@ -34,7 +34,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/Sandwichbread.jpg",
+        image : "../Image/Sandwichbread.jpg",
         title : "Sandwich Bread",
         price : 3.50,
         category: "Bread"
@@ -42,7 +42,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/VanillaCake.jpeg",
+        image : "../Image/VanillaCake.jpeg",
         title : "Vanilla Cake",
         price : 3.50,
         category: "Cakes"
@@ -50,7 +50,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/StrawberryCake.jpeg",
+        image : "../Image/StrawberryCake.jpeg",
         title : "Strawberry Cake",
         price : 3.50,
         category: "Cakes"
@@ -58,7 +58,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/ChocolateCake.jpeg",
+        image : "../Image/ChocolateCake.jpeg",
         title : "Chocolate Cake",
         price : 3.50,
         category: "Cakes"
@@ -66,7 +66,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/BirthdayCake.jpeg",
+        image : "../Image/BirthdayCake.jpeg",
         title : "Birthday Cake",
         price : 3.50,
         category: "Cakes"
@@ -74,7 +74,7 @@ const product = [
 
     {
         id :3,
-        image : "/Image/Chocolatechipcookies.jpeg",
+        image : "../Image/Chocolatechipcookies.jpeg",
         title : "Chocolate Chip",
         price : 3.50,
         category: "Cookies"
@@ -82,7 +82,7 @@ const product = [
 
     {
         id :3,
-        image : "/Image/Snickerdoodle.jpeg",
+        image : "../Image/Snickerdoodle.jpeg",
         title : "Snickerdoodle",
         price : 3.50,
         category: "Cookies"
@@ -90,7 +90,7 @@ const product = [
 
     {
         id :3,
-        image : "/Image/PeanutButter.jpeg",
+        image : "../Image/PeanutButter.jpeg",
         title : "Peanut Butter",
         price : 3.50,
         category: "Cookies"
@@ -98,7 +98,7 @@ const product = [
 
     {
         id :3,
-        image : "/Image/Shortbread.jpeg",
+        image : "../Image/Shortbread.jpeg",
         title : "Shortbread",
         price : 3.50,
         category: "Cookies"

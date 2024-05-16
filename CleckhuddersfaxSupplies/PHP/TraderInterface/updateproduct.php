@@ -6,10 +6,12 @@
     <title>Update Product</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="updateproduct.css">
+    <link rel="stylesheet" href="../HeaderPage/head.css">
+    <link rel="stylesheet" href="../FooterPage/footer.css">
 
 </head>
 <body>
-    <?php include('head.php');?>
+    <div><?php include('../HeaderPage/head.php');?></div>
     <div class="container-add">
         <div class="content">
             <img src="../Image/Tom.jpeg" alt="Company Image">
@@ -64,6 +66,7 @@
             </div>
         </div>
     </div>
-    <?php include('footer.php');?>
+    <?php include('../FooterPage/footer.php');?>
+    <script src="../HeaderPage/head.js"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="form_container">
-        <form action="" method="POST">
+        <form action="loginAuthentication.php" method="POST">
             <div class="login">
                 <div class="image_container">
                     <img src="image.jpg" alt="Company Image" class="company_image">
@@ -20,11 +20,11 @@
                         <input type="text" id="userName" name="userName" required placeholder="Username or Email">
                         <input type="password" id="password" name="password" required placeholder="Password">
                         <div class="input_group">
-                            <select>
+                            <select name="role" required>
                                 <option value="">Usertype</option>
-                                <option value="male">Admin</option>
-                                <option value="female">Trader</option>
-                                <option value="other">Customer</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Trader">Trader</option>
+                                <option value="Customer">Customer</option>
                             </select>
                         </div>
                         <input type="submit" name="login" value="Login" class="form_btn">

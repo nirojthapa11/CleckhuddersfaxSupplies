@@ -9,7 +9,7 @@
 <body>
 
     <div class="form_container">
-    <form action="" method="POST">
+    <form action="traderAuthentication.php" method="POST">
         <div class="signup">
             <div class="image_container">
                 <img src="image.jpg" alt="Company Image" class="company_image">
@@ -28,8 +28,7 @@
                 <input type="text" id="address" name="address" required placeholder="Address">
                 <div class="input-group">
                     <input type="number" id="age" name="age" required placeholder="Age">
-                    <select>
-                        <option value="">Gender</option>
+                    <select name="gender">
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="other">Other</option>
@@ -41,7 +40,7 @@
                     <input type="checkbox" id="terms" name="terms" value="Bike">
                     <label for="terms">I Accept the <a href="#">terms and conditions.</a></label>
                 </div>
-                <input type="submit" name="Customersignup" value="Next" class="form_btn">
+                <input type="submit" name="next" value="Next" class="form_btn">
                 <p>Already have an account? <a href="login.php">Login now</a></p>
                 <p>Become a Customer? <a href="customerSignup.php">SignUp now</a></p>
             </div>
@@ -49,9 +48,10 @@
     </form>
 </div>
 
-
-
-
 </body>
 
 </html>
+
+
+
+

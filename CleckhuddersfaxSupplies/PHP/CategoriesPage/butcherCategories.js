@@ -26,7 +26,7 @@ document.getElementById('btns').innerHTML=filters.map((btn) =>{
 const product = [
     {
         id :1,
-        image : "/Image/Chickenbreasts.jpeg",
+        image : "../Image/Chickenbreasts.jpeg",
         title : "Chicken",
         price : 3.50,
         category: "Meat"
@@ -34,7 +34,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/meat.jpeg",
+        image : "../Image/meat.jpeg",
         title : "Goat",
         price : 3.50,
         category: "Meat"
@@ -42,7 +42,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/Pork.jpeg",
+        image : "../Image/Pork.jpeg",
         title : "Pork",
         price : 3.50,
         category: "Meat"
@@ -50,7 +50,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/Kangaroo.jpeg",
+        image : "../Image/Kangaroo.jpeg",
         title : "Kangaroo",
         price : 3.50,
         category: "Meat"
@@ -58,7 +58,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/chickenlegwings.jpeg",
+        image : "../Image/chickenlegwings.jpeg",
         title : "Chicken legs & wings",
         price : 3.50,
         category: "Wings & Legs"
@@ -66,7 +66,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/GoatShoulder.jpeg",
+        image : "../Image/GoatShoulder.jpeg",
         title : "Goat Shoulder",
         price : 3.50,
         category: "Wings & Legs"
@@ -74,7 +74,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/porkleg.jpg",
+        image : "../Image/porkleg.jpg",
         title : "Pork Leg",
         price : 3.50,
         category: "Wings & Legs"
@@ -82,7 +82,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/Kangaroosolder.jpg",
+        image : "../Image/Kangaroosolder.jpg",
         title : "Kangaroo Shoulder",
         price : 3.50,
         category: "Wings & Legs"
@@ -90,7 +90,7 @@ const product = [
 
     {
         id :3,
-        image : "/Image/Sausages.jpeg",
+        image : "../Image/Sausages.jpeg",
         title : "Chicken Sausages",
         price : 3.50,
         category: "Sausages"
@@ -98,7 +98,7 @@ const product = [
 
     {
         id :3,
-        image : "/Image/PorkSausage.jpeg",
+        image : "../Image/PorkSausage.jpeg",
         title : "Pork Sausages",
         price : 3.50,
         category: "Sausages"

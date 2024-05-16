@@ -3,160 +3,160 @@
         "id" :1,
         "name" : "Fresh Apple",
         "price" : 3.50,
-        "image" : "/Image/apple.jpeg"
+        "image" : "../Image/apple.jpeg"
     },
 
     {
         "id" :2,
         "name" : "Fresh Baguettes",
         "price" : 3.50,
-        "image" : "/Image/Baguettes.jpeg"
+        "image" : "../Image/Baguettes.jpeg"
     },
 
     {
         "id" :3,
         "name" : "Fresh Banana",
         "price" : 3.50,
-        "image" : "/Image/banana.jpeg"
+        "image" : "../Image/banana.jpeg"
     },
 
     {
         "id" :4,
         "name" : "Fresh Cauliflower",
         "price" : 3.50,
-        "image" : "/Image/Cauliflower.jpeg"
+        "image" : "../Image/Cauliflower.jpeg"
     },
 
     {
         "id" :5,
         "name" : "Chicken Breasts",
         "price" : 3.50,
-        "image" : "/Image/Chickenbreasts.jpeg"
+        "image" : "../Image/Chickenbreasts.jpeg"
     },
 
     {
         "id" :6,
         "name" : "Chocolate Cookies",
         "price" : 3.50,
-        "image" : "/Image/Chocolatechipcookies.jpeg"
+        "image" : "../Image/Chocolatechipcookies.jpeg"
     },
 
     {
         "id" :7,
         "name" : "Croissants",
         "price" : 3.50,
-        "image" : "/Image/Croissants.jpeg"
+        "image" : "../Image/Croissants.jpeg"
     },
 
     {
         "id" :8,
         "name" : "Fresh Lemon",
         "price" : 3.50,
-        "image" : "/Image/Lemon.jpeg"
+        "image" : "../Image/Lemon.jpeg"
     },
 
     {
         "id" :9,
         "name" : "Goat Meat",
         "price" : 3.50,
-        "image" : "/Image/meat.jpeg"
+        "image" : "../Image/meat.jpeg"
     },
 
     {
         "id" :10,
         "name" : "Fresh Orange",
         "price" : 3.50,
-        "image" : "/Image/Orange.jpeg"
+        "image" : "../Image/Orange.jpeg"
     },
 
     {
         "id" :11,
         "name" : "Fresh Watermelon",
         "price" : 3.50,
-        "image" : "/Image/Watermelon.jpeg"
+        "image" : "../Image/Watermelon.jpeg"
     },
 
     {
         "id" :12,
         "name" : "Veal Cutlets",
         "price" : 3.50,
-        "image" : "/Image/Vealcutlets.jpeg"
+        "image" : "../Image/Vealcutlets.jpeg"
     },
 
     {
         "id" :13,
         "name" : "Tuna Steaks",
         "price" : 3.50,
-        "image" : "/Image/Tunasteaks.jpeg"
+        "image" : "../Image/Tunasteaks.jpeg"
     },
 
     {
         "id" :14,
         "name" : "Sourdough Bread",
         "price" : 3.50,
-        "image" : "/Image/Sourdoughbread.jpeg"
+        "image" : "../Image/Sourdoughbread.jpeg"
     },
 
     {
         "id" :15,
         "name" : "Smoked Salmon",
         "price" : 3.50,
-        "image" : "/Image/Smokedsalmon.jpeg"
+        "image" : "../Image/Smokedsalmon.jpeg"
     },
 
     {
         "id" :16,
         "name" : "Chicken Sausages",
         "price" : 3.50,
-        "image" : "/Image/Sausages.jpeg"
+        "image" : "../Image/Sausages.jpeg"
     },
 
     {
         "id" :17,
         "name" : "Salmon Fillets",
         "price" : 3.50,
-        "image" : "/Image/Salmonfillets.jpeg"
+        "image" : "../Image/Salmonfillets.jpeg"
     },
 
     {
         "id" :18,
         "name" : "Fresh Pineapple",
         "price" : 3.50,
-        "image" : "/Image/Pineapple.jpeg"
+        "image" : "../Image/Pineapple.jpeg"
     },
 
     {
         "id" :19,
         "name" : "Oysters",
         "price" : 3.50,
-        "image" : "/Image/Oysters.jpeg"
+        "image" : "../Image/Oysters.jpeg"
     },
 
     {
         "id" :20,
         "name" : "Fresh Onion",
         "price" : 3.50,
-        "image" : "/Image/Onion.jpeg"
+        "image" : "../Image/Onion.jpeg"
     },
 
     {
         "id" :21,
         "name" : "Frozen Pangasius",
         "price" : 3.50,
-        "image" : "/Image/FrozenPangasiusFillet.jpeg"
+        "image" : "../Image/FrozenPangasiusFillet.jpeg"
     },
 
     {
         "id" :22,
         "name" : "Gouda Cheese",
         "price" : 3.50,
-        "image" : "/Image/Goudacheese.jpeg"
+        "image" : "../Image/Goudacheese.jpeg"
     },
 
     {
         "id" :23,
         "name" : "Lamb Chops",
         "price" : 3.50,
-        "image" : "/Image/Lambchops.jpeg"
+        "image" : "../Image/Lambchops.jpeg"
     }
 ]

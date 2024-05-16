@@ -26,7 +26,7 @@ document.getElementById('btns').innerHTML=filters.map((btn) =>{
 const product = [
     {
         id :1,
-        image : "/Image/Perch.jpeg",
+        image : "../Image/Perch.jpeg",
         title : "Perch",
         price : 3.50,
         category: "Fish"
@@ -34,7 +34,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/RainbowTrout.jpeg",
+        image : "../Image/RainbowTrout.jpeg",
         title : "Rainbow Trout",
         price : 3.50,
         category: "Fish"
@@ -42,7 +42,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/Sardines.jpeg",
+        image : "../Image/Sardines.jpeg",
         title : "Sardines",
         price : 3.50,
         category: "Fish"
@@ -50,7 +50,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/Stripedbass.jpeg",
+        image : "../Image/Stripedbass.jpeg",
         title : "Stripedbass",
         price : 3.50,
         category: "Fish"
@@ -58,7 +58,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/Crab.jpeg",
+        image : "../Image/Crab.jpeg",
         title : "Crab",
         price : 3.50,
         category: "Seafood"
@@ -66,7 +66,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/Lobster.jpeg",
+        image : "../Image/Lobster.jpeg",
         title : "Lobster",
         price : 3.50,
         category: "Seafood"
@@ -74,7 +74,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/Shrimp.jpeg",
+        image : "../Image/Shrimp.jpeg",
         title : "Shrimp",
         price : 3.50,
         category: "Seafood"
@@ -82,7 +82,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/Mussels.jpeg",
+        image : "../Image/Mussels.jpeg",
         title : "Mussels",
         price : 3.50,
         category: "Seafood"
@@ -90,7 +90,7 @@ const product = [
 
     {
         id :3,
-        image : "/Image/Smokedsalmon.jpeg",
+        image : "../Image/Smokedsalmon.jpeg",
         title : "Smoked Salmon",
         price : 3.50,
         category: "Smoked & Cured Fish"
@@ -98,7 +98,7 @@ const product = [
 
     {
         id :3,
-        image : "/Image/lox.jpeg",
+        image : "../Image/lox.jpeg",
         title : "Lox",
         price : 3.50,
         category: "Smoked & Cured Fish"

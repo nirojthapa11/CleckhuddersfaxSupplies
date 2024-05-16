@@ -39,7 +39,7 @@
         <tbody>
           <tr>
             <td class="img-container">
-              <img src="/Image/apple.jpeg" alt="Product 1">
+              <img src="../Image/apple.jpeg" alt="Product 1">
             </td>
             <td class="td-product-name">Lamb</td>
             <td class="td-price">€77.00</td>
@@ -58,7 +58,7 @@
         <tbody>
           <tr>
             <td class="img-container">
-              <img src="/Image/RainbowTrout.jpeg" alt="Product 1">
+              <img src="../Image/RainbowTrout.jpeg" alt="Product 1">
             </td>
             <td class="td-product-name">Trout</td>
             <td class="td-price">€89.00 </td>

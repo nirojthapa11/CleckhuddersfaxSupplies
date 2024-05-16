@@ -11,7 +11,7 @@
 <body>
     <header class="header">
         <div class="header-1">
-            <img src="/Image/WebsiteLogo.png" alt="">
+            <img src="../Image/WebsiteLogo.png" alt="">
             <form action="" class="search-form">
                 <input type="search" name="" placeholder="Search here..." id="search-box">
                 <label for="search-box" class="fas fa-search"></label>
