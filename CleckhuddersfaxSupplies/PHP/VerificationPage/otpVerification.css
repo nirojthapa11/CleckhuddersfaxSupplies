@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -6,11 +7,11 @@
   font-family: "Poppins", sans-serif;
 }
 body {
-  margin-top: 170px;
+  margin-top: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: whitesmoke;
+  background: #eeeeee;
 }
 :where(.container, form, .input-field, header) {
   display: flex;
@@ -20,7 +21,7 @@ body {
 }
 .container {
   background: #fff;
-  padding: 30px 65px;
+  padding: 40px 60px;
   border-radius: 12px;
   row-gap: 20px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -28,7 +29,7 @@ body {
 .container header {
   height: 65px;
   width: 65px;
-  background: #4070f4;
+  background: black;
   color: #fff;
   font-size: 40px;
   border-radius: 50%;
@@ -38,10 +39,12 @@ body {
   color: #333;
   font-weight: 500;
 }
+
 form .input-field {
   flex-direction: row;
   column-gap: 10px;
 }
+
 .input-field input {
   height: 45px;
   width: 42px;
@@ -62,21 +65,18 @@ form button {
   margin-top: 25px;
   width: 100%;
   color: #fff;
-  font-size: 1rem;
+  font-size: 20px;
   border: none;
-  padding: 9px 0;
+  padding: 15px 0;
   cursor: pointer;
   border-radius: 6px;
   pointer-events: none;
-  background: #6e93f7;
+  background: black;
   transition: all 0.2s ease;
 }
 form button.active {
-  background: #4070f4;
+  background: #ff7800;
   pointer-events: auto;
-}
-form button:hover {
-  background: #0e4bf1;
 }
 
 @media screen and (max-width: 480px) {
