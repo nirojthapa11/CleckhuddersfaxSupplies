@@ -70,12 +70,23 @@
                 // Additional product details can be displayed here
                 echo '<a href="#" class="btn">Add to Cart</a>';
                 echo '</div>';
+
+                // Second block of PHP code to decode and display the image
+                echo '<div class="swiper-slide box">';
+                $imageData = base64_decode($product['image_path']);
+                echo '<img src="data:image/jpeg;base64,' . base64_encode($imageData) . '" alt="">';
+                echo '<h3>' . $product['name'] . '</h3>';
+                echo '<div class="price">$' . $product['price'] . '</div>';
+                // Additional product details can be displayed here
+                echo '<a href="#" class="btn">Add to Cart</a>';
+                echo '</div>';
             }
             ?>
 
         </div>
     </div>
 </section>
+
 
 <section class="categores" id="categores">
     <h1 class="heading">Our <span>Shops</span></h1>
