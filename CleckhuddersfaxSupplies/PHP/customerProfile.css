@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root{
+    --orange: #ff7800;
+    --black: #130f40;
+    --light-color: #666;
+    --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
+    --border:.2rem solid rgba(0,0,0,.1);
+    --outline:.1rem solid rgba(0,0,0,.1);
+    --outline-hover:.1rem solid var(--black);
+}
+
+*{
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: all .2s linear;
+}
+  
+body{
+    background-color: #eeeeee;
+}
+  
+.wrapper{
+    display: flex;
+    position: relative;
+}
+
+.sidebar{
+    width: 300px;
+    height: 800px;
+    background: #666;
+}
+
+.sidebar ul li{
+    font-size: 20px;
+    padding: 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-top: 1px solid rgba(255,255,255,0.05);
+}    
+
+.sidebar ul li a{
+    color: #fff;
+    display: block;
+}
+
+.sidebar ul li i{
+    width: 25px;
+}
+
+.sidebar ul li:hover{
+    background-color: var(--orange);
+}
+    
+.sidebar ul li:hover a{
+    color: #fff;
+}
+
+.main_content {
+    width: 100%;
+}
+
+.main_content .he{
+    font-size: 20px;
+    padding: 20px;
+    background: #666;
+    color: white;
+    border-bottom: 1px solid #e0e4e8;
+}
+
+.profile-content {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    text-align: left;
+    display: flex;
+}
+
+.profile-content img {
+    width: 200px;
+    height: 200px;
+    margin: 20px 70px 0 20px;
+}
+
+.but{
+    background-color: black;
+    color: white;
+    height: 35px;
+    width: 140px;
+    margin-top: 10px;
+    margin-left: 50px;
+    border-radius: 7px;
+    cursor: pointer;
+    border: none;
+}
+
+.profile-container {
+    max-width: 1600px;
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-container h2 {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.form-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+}
+
+.form-group.full-width {
+    width: 100%;
+}
+
+.form-group label{
+    font-size: 20px;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+select {
+    width: 400px;
+    padding: 7px;
+    margin-bottom: 30px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.button-group {
+    background-color: black;
+    color: white;
+    height: 35px;
+    width: 140px;
+    margin-left: 10px;
+    border-radius: 7px;
+    cursor: pointer;
+    border: none;
+}
+  
+@media screen and (max-width: 480px) {
+.sidebar {
+    width: 100%;
+    position: relative;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+}
+
+.sidebar ul li {
+    padding: 10px;
+}
+
+.main_content {
+    margin-left: 0;
+}
+
+.profile-content img {
+    width: 100px;
+    height: 100px;
+    margin-left: 10px;
+}
+
+.profile-container h2 {
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.button-group {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 10px;
+}
+
+.checkout-btn {
+    width: 100%;
+}
+
+.small-cart {
+    width: 100%;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+.cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.product-image {
+    width: 80px;
+    margin: 0 auto 10px;
+}
+
+.product-details {
+    text-align: center;
+    margin-left: 0;
+}
+
+.product-details p {
+    margin: 5px;
+}
+
+.remove-btn {
+    margin-top: 5px;
+}
+}
