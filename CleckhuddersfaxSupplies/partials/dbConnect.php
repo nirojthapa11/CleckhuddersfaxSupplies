@@ -44,6 +44,29 @@ class Database
     {
         oci_close($this->conn);
     }
+
+
+    function getProducts() {
+        $products = array();
+
+        try {
+            $db = new Database();
+
+            $query = "SELECT * FROM product";
+
+            $statement = $db->executeQuery($query);
+
+            while ($row = $db->fetchRow($statement)) {
+                $products[] = $row;
+            }
+
+            $db->closeConnection();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        return $products;
+    }
+
 }
 
 ?>
