@@ -26,7 +26,7 @@ document.getElementById('btns').innerHTML=filters.map((btn) =>{
 const product = [
     {
         id :1,
-        image : "/Image/Bresaola.jpeg",
+        image : "../Image/Bresaola.jpeg",
         title : "Bresaola",
         price : 3.50,
         category: "Cured Meats"
@@ -34,7 +34,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/Coppa.jpeg",
+        image : "../Image/Coppa.jpeg",
         title : "Coppa",
         price : 3.50,
         category: "Cured Meats"
@@ -42,7 +42,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/Genoa.jpeg",
+        image : "../Image/Genoa.jpeg",
         title : "Genoa",
         price : 3.50,
         category: "Cured Meats"
@@ -50,7 +50,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/Guanciale.jpeg",
+        image : "../Image/Guanciale.jpeg",
         title : "Guanciale",
         price : 3.50,
         category: "Cured Meats"
@@ -58,7 +58,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/GreekFeta.jpeg",
+        image : "../Image/GreekFeta.jpeg",
         title : "Greek Feta",
         price : 3.50,
         category: "Cheeses"
@@ -66,7 +66,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/Goudacheese.jpeg",
+        image : "../Image/Goudacheese.jpeg",
         title : "Gouda Cheese",
         price : 3.50,
         category: "Cheeses"
@@ -74,7 +74,7 @@ const product = [
 
     {
         id :3,
-        image : "/Image/ChickenSandwich.jpeg",
+        image : "../Image/ChickenSandwich.jpeg",
         title : "Chicken Sandwich",
         price : 3.50,
         category: "Sandwiches"
@@ -82,7 +82,7 @@ const product = [
 
     {
         id :3,
-        image : "/Image/EggSandwich.jpeg",
+        image : "../Image/EggSandwich.jpeg",
         title : "Egg Sandwich",
         price : 3.50,
         category: "Sandwiches"
@@ -90,7 +90,7 @@ const product = [
 
     {
         id :3,
-        image : "/Image/SeafoodSandwich.jpeg",
+        image : "../Image/SeafoodSandwich.jpeg",
         title : "Seafood Sandwich",
         price : 3.50,
         category: "Sandwiches"
@@ -98,7 +98,7 @@ const product = [
 
     {
         id :3,
-        image : "/Image/HamSandwich.jpeg",
+        image : "../Image/HamSandwich.jpeg",
         title : "Ham Sandwich",
         price : 3.50,
         category: "Sandwiches"

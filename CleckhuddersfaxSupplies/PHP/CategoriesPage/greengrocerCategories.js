@@ -22,7 +22,7 @@ document.getElementById('btns').innerHTML=filters.map((btn) =>{
 const product = [
     {
         id :1,
-        image : "/Image/apple.jpeg",
+        image : "../Image/apple.jpeg",
         title : "Fresh Apple",
         price : 3.50,
         category: "Fruits"
@@ -30,7 +30,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/Orange.jpeg",
+        image : "../Image/Orange.jpeg",
         title : "Fresh Orange",
         price : 3.50,
         category: "Fruits"
@@ -38,7 +38,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/banana.jpeg",
+        image : "../Image/banana.jpeg",
         title : "Fresh Banana",
         price : 3.50,
         category: "Fruits"
@@ -46,7 +46,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/Pineapple.jpeg",
+        image : "../Image/Pineapple.jpeg",
         title : "Fresh Pineapple",
         price : 3.50,
         category: "Fruits"
@@ -54,7 +54,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/Watermelon.jpeg",
+        image : "../Image/Watermelon.jpeg",
         title : "Watermelon",
         price : 3.50,
         category: "Fruits"
@@ -62,7 +62,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/Chocolatechipcookies.jpeg",
+        image : "../Image/Chocolatechipcookies.jpeg",
         title : "Chocolate Cookies",
         price : 3.50,
         category: "Vegetables"
@@ -70,7 +70,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/Cauliflower.jpeg",
+        image : "../Image/Cauliflower.jpeg",
         title : "Fresh Cauliflower",
         price : 3.50,
         category: "Vegetables"
@@ -78,7 +78,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/Lemon.jpeg",
+        image : "../Image/Lemon.jpeg",
         title : "Fresh Lemon",
         price : 3.50,
         category: "Vegetables"
@@ -86,7 +86,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/Onion.jpeg",
+        image : "../Image/Onion.jpeg",
         title : "Fresh Onion",
         price : 3.50,
         category: "Vegetables"
@@ -94,7 +94,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/Tomato.jpeg",
+        image : "../Image/Tomato.jpeg",
         title : "Fresh Tomato",
         price : 3.50,
         category: "Vegetables"

@@ -34,7 +34,7 @@ document.getElementById('btns').innerHTML=filters.map((btn) =>{
 const product = [
     {
         id :1,
-        image : "/Image/apple.jpeg",
+        image : "../Image/apple.jpeg",
         title : "Fresh Apple",
         price : 3.50,
         category: "Greengrocer"
@@ -42,7 +42,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/Orange.jpeg",
+        image : "../Image/Orange.jpeg",
         title : "Fresh Orange",
         price : 3.50,
         category: "Greengrocer"
@@ -50,7 +50,7 @@ const product = [
 
     {
         id :1,
-        image : "/Image/banana.jpeg",
+        image : "../Image/banana.jpeg",
         title : "Fresh Banana",
         price : 3.50,
         category: "Greengrocer"
@@ -58,7 +58,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/Baguettes.jpeg",
+        image : "../Image/Baguettes.jpeg",
         title : "Fresh Baguettes",
         price : 3.50,
         category: "Delicatessen"
@@ -66,7 +66,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/Croissants.jpeg",
+        image : "../Image/Croissants.jpeg",
         title : "Croissants",
         price : 3.50,
         category: "Delicatessen"
@@ -74,7 +74,7 @@ const product = [
 
     {
         id :2,
-        image : "/Image/Chocolatechipcookies.jpeg",
+        image : "../Image/Chocolatechipcookies.jpeg",
         title : "Chocolate Cookies",
         price : 3.50,
         category: "Bakery"
@@ -82,7 +82,7 @@ const product = [
 
     {
         id :3,
-        image : "/Image/Sausages.jpeg",
+        image : "../Image/Sausages.jpeg",
         title : "Chicken Sausages",
         price : 3.50,
         category: "Butcher"
@@ -90,7 +90,7 @@ const product = [
 
     {
         id :3,
-        image : "/Image/meat.jpeg",
+        image : "../Image/meat.jpeg",
         title : "Goat Meat",
         price : 3.50,
         category: "Butcher"
@@ -98,7 +98,7 @@ const product = [
 
     {
         id :4,
-        image : "/Image/Vealcutlets.jpeg",
+        image : "../Image/Vealcutlets.jpeg",
         title : "Veal Cutlets",
         price : 3.50,
         category: "Fishmonger"
@@ -106,7 +106,7 @@ const product = [
 
     {
         id :4,
-        image : "/Image/Oysters.jpeg",
+        image : "../Image/Oysters.jpeg",
         title : "Oysters",
         price : 3.50,
         category: "Fishmonger"
@@ -114,7 +114,7 @@ const product = [
 
     {
         id :5,
-        image : "/Image/Sourdoughbread.jpeg",
+        image : "../Image/Sourdoughbread.jpeg",
         title : "Sourdough Bread",
         price : 3.50,
         category: "Bakery"
