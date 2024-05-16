@@ -13,14 +13,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usertype = $_POST['usertype'];
     $query = '';
 
+    echo $username . $password . $usertype;
+
     if ($usertype == 'customer') {
-        $query = "SELECT * FROM Customer WHERE username = :username AND password = :password";
+        $query = "SELECT username, password FROM Customer WHERE username = '$username' AND password = '$password'";
     }
     elseif ($usertype == 'trader') {
-        $query = "SELECT * FROM Trader WHERE username = :username AND password = :password";
+        $query = "SELECT username, password FROM Trader WHERE username = '$username' AND password = '$password'";
     }
     elseif ($usertype == 'admin') {
-        $query = "SELECT * FROM Admin WHERE username = :username AND password = :password";
+        $query = "SELECT username, password FROM Customer WHERE username = '$username' AND password = '$password'";
     }
 
     try {

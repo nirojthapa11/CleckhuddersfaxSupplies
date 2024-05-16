@@ -18,15 +18,12 @@ class Database
     /**
      * @throws Exception
      */
-    public function executeQuery($query, $params = [])
+    public function executeQuery($query)
     {
         $statement = oci_parse($this->conn, $query);
         if (!$statement) {
             $m = oci_error($this->conn);
             throw new Exception("Error preparing query: " . $m['message']);
-        }
-        foreach ($params as $key => $value) {
-            oci_bind_by_name($statement, ":" . $key, $value);
         }
         if (!oci_execute($statement)) {
             $m = oci_error($statement);
@@ -34,6 +31,7 @@ class Database
         }
         return $statement;
     }
+    
 
     // Function to fetch a single row
     public function fetchRow($statement)
