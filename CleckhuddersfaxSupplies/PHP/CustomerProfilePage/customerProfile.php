@@ -25,7 +25,7 @@
             <div class="he">My Profile</div>  
             <div class="profile-content">
                 <div>
-                <img src="/Image/usericon.png" alt="User Image">
+                <img src="../Image/usericon.png" alt="User Image">
                 <button type="submit" class="but">Upload Picture</button>
                 </div>
                 <div class="profile-container">

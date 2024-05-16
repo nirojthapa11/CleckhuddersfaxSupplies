@@ -20,7 +20,7 @@
                 <a href="../HomePage/homepage.php">Back to Home</a>
             </div>
                 <div class="abt-banner">
-                    <img src="/Image/AboutImage.jpeg" alt="">
+                    <img src="../Image/AboutImage.jpeg" alt="">
                 </div>
                 <h1 class="quotes">Where shopping meets convenience, and quality meets affordability.</h1>
                 <p class="text">
@@ -35,7 +35,7 @@
                     
                 <div class="heading-2">
                     <h1>OUR VISION</h1>
-                    <img class="img-2" src="/Image/vegitables.jpeg"  alt="">
+                    <img class="img-2" src="../Image/vegitables.jpeg"  alt="">
                 </div>
                 <p class="text-2" > 
                     At Cleckhuddersfax Supplies, we envision a world where shopping is not just a transaction, but an experience—a journey of discovery, connection, and empowerment.
