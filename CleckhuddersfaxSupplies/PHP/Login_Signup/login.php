@@ -2,51 +2,55 @@
 session_start();
 require_once '../../partials/dbConnect.php';
 
-function sanitizeInput($data)
-{
+function sanitizeInput($data) {
     return htmlspecialchars(trim($data));
 }
 
-if (empty($_POST['userName']) || empty($_POST['password'])) {
-    $showError = "Username or password is missing.";
-} else {
-    $username = sanitizeInput($_POST['userName']);
-    $password = sanitizeInput($_POST['password']);
-    $usertype = $_POST['usertype'];
-    $query = '';
-    $showError = false;
+$showError = false; 
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    if ($usertype == 'customer') {
-        $query = "SELECT username, password FROM Customer WHERE username = '$username' AND password = '$password'";
-    } elseif ($usertype == 'trader') {
-        $query = "SELECT username, password FROM Trader WHERE username = '$username' AND password = '$password'";
-    } elseif ($usertype == 'admin') {
-        $query = "SELECT username, password FROM Customer WHERE username = '$username' AND password = '$password'";
-    }
+    if (empty($_POST['userName']) || empty($_POST['password'])) {
+        $showError = "Username/email or password is missing.";
+    } else {
+        $username = sanitizeInput($_POST['userName']);
+        $password = sanitizeInput($_POST['password']);
+        $usertype = $_POST['usertype'];
+        $query = '';
 
-    try {
-        $db = new Database();
-
-        $statement = $db->executeQuery($query);
-
-        if ($row = $db->fetchRow($statement)) {
-            $_SESSION['isAuthenticated'] = true;
-            $_SESSION['username'] = $row['username'];
-            $_SESSION['user_id'] = $row['user_id'];
-
-            header("Location: ../HomePage/homepage.php");
-            exit;
-        } else {
-            $showError = "Invalid username or password. Please try again.";
+        
+        if ($usertype == 'customer') {
+            $query = "SELECT username, password FROM Customer WHERE username = '$username' AND password = '$password'";
+        } elseif ($usertype == 'trader') {
+            $query = "SELECT username, password FROM Trader WHERE username = '$username' AND password = '$password'";
+        } elseif ($usertype == 'admin') {
+            $query = "SELECT username, password FROM Customer WHERE username = '$username' AND password = '$password'";
         }
 
-        $db->closeConnection();
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        try {
+            $db = new Database();
+
+            $statement = $db->executeQuery($query);
+
+            if ($row = $db->fetchRow($statement)) {
+                $_SESSION['isAuthenticated'] = true;
+                $_SESSION['username'] = $row['username'];
+                $_SESSION['user_id'] = $row['user_id'];
+
+                header("Location: ../HomePage/homepage.php");
+                exit;
+            } else {
+                $showError = "Invalid username or password. Please try again.";
+            }
+
+            $db->closeConnection();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
 }
 ?>
+
 
 <?php if ($showError) { ?>
     <div style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; margin-bottom: 15px;">
