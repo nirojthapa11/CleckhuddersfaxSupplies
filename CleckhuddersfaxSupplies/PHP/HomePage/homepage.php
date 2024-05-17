@@ -15,7 +15,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <title>Cleckhuddersfax Supplies</title>
+
 
 </head>
 <body>
@@ -58,10 +60,11 @@
 
 
 <!-- Product container starts here -->
+<!-- Product container starts here -->
+<!-- Product container starts here -->
 <div class="container my-4" id="ques">
-    <h2 class="text-center my-3">iDiscuss - Browse Products</h2>
+    <h1 class="heading">Our <span>Products</span></h1>
     <div class="row my-3">
-
         <!-- fetch all the products and use a loop to iterate through products -->
         <?php
         include '../../partials/dbConnect.php';
@@ -69,28 +72,54 @@
         $products = $db->getProducts();
 
         foreach ($products as $product) {
-            // $id = $product["PRODUCT_ID"];
-            // $name = $product["PRODUCT_NAME"];
-            // $desc = $product["DESCRIPTION"];
-            // $price = $product["PRICE"];
-            // $rating = $product["RATING"]; // Assuming rating is out of 5
-            $id =$product["PRODUCT_ID"];
-            $cat = $product["PRODUCT_NAME"];
+            $id = $product["PRODUCT_ID"];
+            $name = $product["PRODUCT_NAME"];
             $desc = $product["DESCRIPTION"];
-            echo '<div class="col-md-4 my-2">
-                                    <div class="card" style="width: 18rem;">
-                                        <img src="https://source.unsplash.com/500x400/?' . $cat . ',coding" class="card-img-top" alt="image for this category">
-                                        <div class="card-body">
-                                            <h5 class="card-title"><a href="/forum/threadlist.php?catid=' . $id . '">' . $cat . '</a></h5>
-                                            <p class="card-text">' . substr($desc, 0, 30) . '...</p>
-                                            <a href="/forum/threadlist.php?catid=' . $id . '" class="btn btn-primary">View Threads</a>
-                                        </div>
-                                    </div>
-                                </div>';
+            $rating = $product["RATING"]; // Assuming rating is out of 5
+            $imageBase64 = $db->getProductImage($id);
+                    
+            echo '<div class="col-md-4 my-4 product-card">
+                    <div class="card border rounded shadow-sm" style="width: 100%; border-color: #ddd; height: 350px;">'; // Set a fixed height for the card container
+
+            echo '<div style="height: 200px; overflow: hidden;">'; // Set a fixed height for the image container and hide overflow
+            if($imageBase64) {
+                echo '<img src="data:image/jpeg;base64,' . $imageBase64 . '" alt="Customer Image" style="width: 100%; height: auto;">'; // Set the width to 100% and height to auto to maintain aspect ratio
+            } else {
+                echo '<img src="path_to_placeholder_image.jpg" alt="Placeholder Image" style="width: 100%; height: auto;">'; // Provide a placeholder image or handle the absence of image here
+            }
+            echo '</div>'; // Close image container
+
+            echo '<div class="card-body" style="padding: 1.5rem;">';
+
+            echo '<h5 class="card-title" style="font-family: \'Roboto\', sans-serif; font-size: 2rem;"><a href="/shop/product.php?productid=' . $id . '" style="color: #333;">' . $name . '</a></h5>
+                  <p class="card-text text-muted" style="font-family: \'Roboto\', sans-serif; font-size: 1.5rem;">' . substr($desc, 0, 50) . '...</p>
+                  <div class="ratings">';
+        
+            // Display star rating
+            for ($i = 0; $i < 5; $i++) {
+                if ($i < $rating) {
+                    echo '<i class="fas fa-star text-warning"></i>';
+                } else {
+                    echo '<i class="far fa-star"></i>';
+                }
+            }
+            echo '</div>
+                    <div class="btn-group mt-3" role="group" aria-label="Product Actions">'; // Increased margin top for the button group
+        
+            // Increased font size for buttons
+            echo '<a href="/shop/cart.php?add=' . $id . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">Add to Cart</a>'; 
+            echo '<a href="/shop/wishlist.php?add=' . $id . '" class="btn btn-outline-secondary ml-2" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">Add to Wishlist</a>';
+        
+            echo '</div>
+                </div>
+            </div>
+        </div>';
         }
         ?>
     </div>
 </div>
+
+
 
 
 

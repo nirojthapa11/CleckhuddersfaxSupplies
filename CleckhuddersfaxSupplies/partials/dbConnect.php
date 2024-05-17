@@ -63,6 +63,36 @@ class Database
         }
         return $products;
     }
+
+
+    public function getProductImage($id) 
+    {
+        $query = 'SELECT PRODUCT_IMAGE FROM Product WHERE PRODUCT_ID = :id';
+        $statement = oci_parse($this->conn, $query);
+        oci_bind_by_name($statement, ":id", $id);
+        oci_execute($statement);
+        if (!$statement) {
+            $m = oci_error($this->conn);
+            throw new Exception("Error preparing query: " . $m['message']);
+        }
+        if (!oci_execute($statement)) {
+            $m = oci_error($statement);
+            throw new Exception("Error executing query: " . $m['message']);
+        }
+        $row = oci_fetch_array($statement, OCI_ASSOC + OCI_RETURN_LOBS);
+
+    
+        if ($row) {
+            $imageData = $row['PRODUCT_IMAGE'];
+            $imageBase64 = base64_encode($imageData);
+            return $imageBase64;
+        } else {
+            $imageBase64 = ''; 
+        }
+    }
+    
+
+
 }
 
 ?>
