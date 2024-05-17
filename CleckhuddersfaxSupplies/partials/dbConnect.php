@@ -52,7 +52,13 @@ class Database
         try {
             $db = new Database();
 
-            $query = "SELECT * FROM product";
+            $query = "SELECT p.*, ROUND(r.average_rating, 2) AS rating
+            FROM product p
+            LEFT JOIN (
+                SELECT product_id, AVG(rating) AS average_rating
+                FROM review
+                GROUP BY product_id
+            ) r ON p.product_id = r.product_id";
 
             $statement = $db->executeQuery($query);
 
