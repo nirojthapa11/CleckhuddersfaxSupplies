@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfdccd17-bc41-4eb6-9dc8-f1a1b916cdc5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/logout.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HeaderPage/head.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HeaderPage/head.php" afterDir="false" />
     </list>
@@ -71,7 +70,7 @@
       <updated>1715868517918</updated>
       <workItem from="1715868520203" duration="4105000" />
       <workItem from="1715918709989" duration="4708000" />
-      <workItem from="1715958855269" duration="4510000" />
+      <workItem from="1715958855269" duration="4953000" />
     </task>
     <servers />
   </component>

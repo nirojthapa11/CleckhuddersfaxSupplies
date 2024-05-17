@@ -30,14 +30,14 @@
                                 <a href="#"> <i class="fa-sharp fa-solid fa-box-open"></i> My Orders</a>
                                 <a href="../CustomerProfilePage/myWishlist.php"> <i class="fa-regular fa-heart"></i> My Wishlist</a>
                                 <a href="#"> <i class="fa-regular fa-star"></i> My Reviews</a>
-                                <a href="../Login_Signup/logout.php"> <i class="fa-solid fa-person-walking-arrow-right"></i> Logout</a>
+                                <a href="../Login_Signup/logout.php"> <i class="fa-solid fa-person-walking-arrow-right"></i> Log out</a>
                             </div>
                         </div>';
-                    echo '<a href="../Login_Signup/logout.php">LogOut</a>';
+                    echo '<a href="../Login_Signup/logout.php">Log out</a>';
                 } else {
                     // If the user is not logged in, display login and signup buttons
-                    echo '<a href="../Login_Signup/login.php">LogIn</a>';
-                    echo '<a href="../Login_Signup/customerSignup.php">SignUp</a>';
+                    echo '<a href="../Login_Signup/login.php">Log in</a>';
+                    echo '<a href="../Login_Signup/customerSignup.php">Sign up</a>';
                 }
                 ?>
             </div>
