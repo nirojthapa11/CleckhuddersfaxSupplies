@@ -20,11 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         
         if ($usertype == 'customer') {
-            $query = "SELECT username, password FROM Customer WHERE username = '$username' AND password = '$password'";
+            $query = "SELECT customer_id as user_id, username, password FROM Customer WHERE username = '$username' AND password = '$password'";
         } elseif ($usertype == 'trader') {
-            $query = "SELECT username, password FROM Trader WHERE username = '$username' AND password = '$password'";
+            $query = "SELECT trader_id as user_id, username, password FROM Trader WHERE username = '$username' AND password = '$password'";
         } elseif ($usertype == 'admin') {
-            $query = "SELECT username, password FROM Customer WHERE username = '$username' AND password = '$password'";
+            $query = "SELECT admin_id as user_id, username, password FROM Admin WHERE username = '$username' AND password = '$password'";
         }
 
         try {
@@ -33,7 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $statement = $db->executeQuery($query);
 
             if ($row = $db->fetchRow($statement)) {
+                var_dump($row);
                 $_SESSION['isAuthenticated'] = true;
+                $_SESSION['loggedin'] = true;
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['user_id'] = $row['user_id'];
 
