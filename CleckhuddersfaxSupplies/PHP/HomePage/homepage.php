@@ -58,39 +58,39 @@
 
 
 <!-- Product container starts here -->
-<!--<div class="container my-4" id="ques">-->
-<!--    <h2 class="text-center my-3">iDiscuss - Browse Products</h2>-->
-<!--    <div class="row my-3">-->
-<!---->
-<!--        <!-- fetch all the products and use a loop to iterate through products -->-->
-<!--        --><?php
-//        include '../../partials/dbConnect.php';
-//        $db = new Database();
-//        $products = $db->getProducts();
-//
-//        foreach ($products as $product) {
-//            // $id = $product["PRODUCT_ID"];
-//            // $name = $product["PRODUCT_NAME"];
-//            // $desc = $product["DESCRIPTION"];
-//            // $price = $product["PRICE"];
-//            // $rating = $product["RATING"]; // Assuming rating is out of 5
-//            $id =$product["PRODUCT_ID"];
-//            $cat = $product["PRODUCT_NAME"];
-//            $desc = $product["DESCRIPTION"];
-//            echo '<div class="col-md-4 my-2">
-//                                    <div class="card" style="width: 18rem;">
-//                                        <img src="https://source.unsplash.com/500x400/?' . $cat . ',coding" class="card-img-top" alt="image for this category">
-//                                        <div class="card-body">
-//                                            <h5 class="card-title"><a href="/forum/threadlist.php?catid=' . $id . '">' . $cat . '</a></h5>
-//                                            <p class="card-text">' . substr($desc, 0, 30) . '...</p>
-//                                            <a href="/forum/threadlist.php?catid=' . $id . '" class="btn btn-primary">View Threads</a>
-//                                        </div>
-//                                    </div>
-//                                </div>';
-//        }
-//        ?>
-<!--    </div>-->
-<!--</div>-->
+<div class="container my-4" id="ques">
+    <h2 class="text-center my-3">iDiscuss - Browse Products</h2>
+    <div class="row my-3">
+
+        <!-- fetch all the products and use a loop to iterate through products -->
+        <?php
+        include '../../partials/dbConnect.php';
+        $db = new Database();
+        $products = $db->getProducts();
+
+        foreach ($products as $product) {
+            // $id = $product["PRODUCT_ID"];
+            // $name = $product["PRODUCT_NAME"];
+            // $desc = $product["DESCRIPTION"];
+            // $price = $product["PRICE"];
+            // $rating = $product["RATING"]; // Assuming rating is out of 5
+            $id =$product["PRODUCT_ID"];
+            $cat = $product["PRODUCT_NAME"];
+            $desc = $product["DESCRIPTION"];
+            echo '<div class="col-md-4 my-2">
+                                    <div class="card" style="width: 18rem;">
+                                        <img src="https://source.unsplash.com/500x400/?' . $cat . ',coding" class="card-img-top" alt="image for this category">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><a href="/forum/threadlist.php?catid=' . $id . '">' . $cat . '</a></h5>
+                                            <p class="card-text">' . substr($desc, 0, 30) . '...</p>
+                                            <a href="/forum/threadlist.php?catid=' . $id . '" class="btn btn-primary">View Threads</a>
+                                        </div>
+                                    </div>
+                                </div>';
+        }
+        ?>
+    </div>
+</div>
 
 
 
