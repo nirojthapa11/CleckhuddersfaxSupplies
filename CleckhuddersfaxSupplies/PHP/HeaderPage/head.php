@@ -33,11 +33,11 @@
                                 <a href="../Login_Signup/logout.php"> <i class="fa-solid fa-person-walking-arrow-right"></i> Log out</a>
                             </div>
                         </div>';
-                    echo '<a href="../Login_Signup/logout.php">Log out</a>';
+                    echo '<div class="login-btn-container"><a href="../Login_Signup/logout.php" class="login-btn">Log out</a></div>';
                 } else {
                     // If the user is not logged in, display login and signup buttons
-                    echo '<a href="../Login_Signup/login.php">Log in</a>';
-                    echo '<a href="../Login_Signup/customerSignup.php">Sign up</a>';
+                    echo '<div class="login-btn-container"><a href="../Login_Signup/login.php" class="login-btn">Log in</a></div>';
+                    echo '<div class="login-btn-container"><a href="../Login_Signup/customerSignup.php" class="login-btn">Sign up</a></div>';
                 }
                 ?>
             </div>

@@ -21,6 +21,9 @@
 
 </head>
 <body>
+
+
+
 <div>
     <?php
     include('../HeaderPage/head.php');
@@ -110,7 +113,7 @@
                     <div class="btn-group mt-3" role="group" aria-label="Product Actions">'; // Increased margin top for the button group
 
             // Increased font size for buttons
-            echo '<a href="addToCart.php?add=' . $id . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">Add to Cart</a>';
+            echo '<a href="addToCart.php?productid=' . $id . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">Add to Cart</a>';
             echo '<a href="/shop/wishlist.php?add=' . $id . '" class="btn btn-outline-secondary ml-2" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">Add to Wishlist</a>';
 
             echo '</div>

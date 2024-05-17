@@ -20,11 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         
         if ($usertype == 'customer') {
-            $query = "SELECT customer_id as user_id, username, password FROM Customer WHERE username = '$username' AND password = '$password'";
+            $query = "SELECT customer_id, username, password FROM Customer WHERE username = '$username' AND password = '$password'";
         } elseif ($usertype == 'trader') {
-            $query = "SELECT trader_id as user_id, username, password FROM Trader WHERE username = '$username' AND password = '$password'";
+            $query = "SELECT trader_id, username, password FROM Trader WHERE username = '$username' AND password = '$password'";
         } elseif ($usertype == 'admin') {
-            $query = "SELECT admin_id as user_id, username, password FROM Admin WHERE username = '$username' AND password = '$password'";
+            $query = "SELECT admin_id, username, password FROM Admin WHERE username = '$username' AND password = '$password'";
         }
 
         try {
@@ -33,11 +33,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $statement = $db->executeQuery($query);
 
             if ($row = $db->fetchRow($statement)) {
-                var_dump($row);
                 $_SESSION['isAuthenticated'] = true;
                 $_SESSION['loggedin'] = true;
                 $_SESSION['username'] = $row['username'];
-                $_SESSION['user_id'] = $row['user_id'];
+                // Assigning the correct user_id based on the user type
+                if ($usertype == 'customer') {
+                    $_SESSION['user_id'] = $row['customer_id'];
+                } elseif ($usertype == 'trader') {
+                    $_SESSION['user_id'] = $row['trader_id'];
+                } elseif ($usertype == 'admin') {
+                    $_SESSION['user_id'] = $row['admin_id'];
+                }
 
                 header("Location: ../HomePage/homepage.php");
                 exit;

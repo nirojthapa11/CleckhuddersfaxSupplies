@@ -148,6 +148,32 @@ class Database
         }
     }
 
+    public function getCartItems($user_id)
+    {
+        try {
+            $query = "SELECT product_id, quantity, special_instruction
+                      FROM cart_product
+                      WHERE cart_id = (SELECT cart_id FROM cart WHERE customer_id = :user_id)";
+
+            $params = array('user_id' => $user_id);
+
+            $statement = $this->executeQuery($query, $params);
+
+            $cartItems = array();
+            while ($row = $this->fetchRow($statement)) {
+                $cartItems[$row['PRODUCT_ID']] = array(
+                    'quantity' => $row['QUANTITY'],
+                    'special_instruction' => $row['SPECIAL_INSTRUCTION']
+                );
+            }
+
+            return $cartItems;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return array();
+        }
+    }
+
 }
 
 ?>
