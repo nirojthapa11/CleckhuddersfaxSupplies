@@ -60,8 +60,6 @@
 
 
 <!-- Product container starts here -->
-<!-- Product container starts here -->
-<!-- Product container starts here -->
 <div class="container my-4" id="ques">
     <h1 class="heading">Our <span>Products</span></h1>
     <div class="row my-3">
@@ -85,7 +83,7 @@
             if($imageBase64) {
                 echo '<img src="data:image/jpeg;base64,' . $imageBase64 . '" alt="Customer Image" style="width: 100%; height: auto;">'; // Set the width to 100% and height to auto to maintain aspect ratio
             } else {
-                echo '<img src="path_to_placeholder_image.jpg" alt="Placeholder Image" style="width: 100%; height: auto;">'; // Provide a placeholder image or handle the absence of image here
+                echo '<img src="path_to_placeholder_image.jpg" alt="' . $name . ' Image" style="width: 100%; height: auto;">'; // Provide a placeholder image or handle the absence of image here
             }
             echo '</div>'; // Close image container
 
@@ -118,9 +116,6 @@
         ?>
     </div>
 </div>
-
-
-
 
 
 <!-- Include Bootstrap JS and dependencies here -->

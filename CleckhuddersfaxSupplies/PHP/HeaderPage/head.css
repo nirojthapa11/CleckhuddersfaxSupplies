@@ -156,10 +156,12 @@ html::-webkit-scrollbar-thumb{
 	width: 100%;
 	position: relative;
 	z-index: 99;
-	padding:15px;
+	padding: 10px;
 }
 
+
 .header .header-2 .item-center{
+    text-align: center;
 	flex:0 0 66%;
 }
 

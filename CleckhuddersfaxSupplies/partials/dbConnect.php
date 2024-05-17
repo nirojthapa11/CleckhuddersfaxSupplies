@@ -64,7 +64,6 @@ class Database
         return $products;
     }
 
-
     public function getProductImage($id) 
     {
         $query = 'SELECT PRODUCT_IMAGE FROM Product WHERE PRODUCT_ID = :id';
@@ -81,7 +80,6 @@ class Database
         }
         $row = oci_fetch_array($statement, OCI_ASSOC + OCI_RETURN_LOBS);
 
-    
         if ($row) {
             $imageData = $row['PRODUCT_IMAGE'];
             $imageBase64 = base64_encode($imageData);
@@ -90,9 +88,6 @@ class Database
             $imageBase64 = ''; 
         }
     }
-    
-
-
 }
 
 ?>
