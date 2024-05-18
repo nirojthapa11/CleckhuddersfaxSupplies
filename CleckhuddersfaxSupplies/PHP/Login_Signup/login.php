@@ -2,11 +2,14 @@
 session_start();
 require_once '../../partials/dbConnect.php';
 
-function sanitizeInput($data) {
+
+
+function sanitizeInput($data)
+{
     return htmlspecialchars(trim($data));
 }
 
-$showError = false; 
+$showError = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -18,26 +21,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usertype = $_POST['usertype'];
         $query = '';
 
-        
         if ($usertype == 'customer') {
-            $query = "SELECT username, password FROM Customer WHERE username = '$username' AND password = '$password'";
+            $query = "SELECT CUSTOMER_ID, USERNAME, PASSWORD FROM Customer WHERE USERNAME = :username AND PASSWORD = :password";
         } elseif ($usertype == 'trader') {
-            $query = "SELECT username, password FROM Trader WHERE username = '$username' AND password = '$password'";
+            $query = "SELECT TRADER_ID, USERNAME, PASSWORD FROM Trader WHERE USERNAME = :username AND PASSWORD = :password";
         } elseif ($usertype == 'admin') {
-            $query = "SELECT username, password FROM Customer WHERE username = '$username' AND password = '$password'";
+            $query = "SELECT ADMIN_ID, USERNAME, PASSWORD FROM Admin WHERE USERNAME = :username AND PASSWORD = :password";
         }
 
         try {
             $db = new Database();
 
-            $statement = $db->executeQuery($query);
+            $statement = $db->executeQuery($query, [
+                'username' => $username,
+                'password' => $password,
+            ]);
 
             if ($row = $db->fetchRow($statement)) {
                 $_SESSION['isAuthenticated'] = true;
-                $_SESSION['username'] = $row['username'];
-                $_SESSION['user_id'] = $row['user_id'];
+                $_SESSION['loggedin'] = true;
+                $_SESSION['username'] = $row['USERNAME'];
+                // Assigning the correct user_id based on the user type
+                if ($usertype == 'customer') {
+                    $_SESSION['user_id'] = $row['CUSTOMER_ID'];
+                } elseif ($usertype == 'trader') {
+                    $_SESSION['user_id'] = $row['TRADER_ID'];
+                } elseif ($usertype == 'admin') {
+                    $_SESSION['user_id'] = $row['ADMIN_ID'];
+                }               
+                // require_once '../cartUtils.php';
 
-                header("Location: ../HomePage/homepage.php");
+
+                // updateCartFromCookies($_SESSION['user_id']);
+
+
+                header("Location: ../cartUtils.php");
+                // header("Location: ../HomePage/homepage.php");
                 exit;
             } else {
                 $showError = "Invalid username or password. Please try again.";
@@ -51,7 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-
 <?php if ($showError) { ?>
     <div style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; margin-bottom: 15px;">
         <strong>Error!</strong> <?php echo $showError; ?>
@@ -61,7 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </button>
     </div>
 <?php } ?>
-
 
 <!DOCTYPE html>
 <html lang="en">

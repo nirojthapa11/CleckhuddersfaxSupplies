@@ -88,7 +88,7 @@ html::-webkit-scrollbar-thumb{
 .header .header-1 .icons div,
 .header .header-1 .icons a{
     font-size: 2.5rem;
-    margin-left: 1.5rem;
+    margin-left: 0.6rem;
     color: var(--black);
     cursor: pointer;
 }
@@ -156,10 +156,12 @@ html::-webkit-scrollbar-thumb{
 	width: 100%;
 	position: relative;
 	z-index: 99;
-	padding:15px;
+	padding: 10px;
 }
 
+
 .header .header-2 .item-center{
+    text-align: center;
 	flex:0 0 66%;
 }
 
@@ -340,3 +342,16 @@ html::-webkit-scrollbar-thumb{
 
 }
 
+
+.login-btn-container {
+    display: inline-block;
+    margin-right: 10px; /* Adjust as needed */
+    border: 1px solid #ccc; /* Border style and color */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px 10px; /* Padding for the container */
+}
+
+.login-btn {
+    text-decoration: none;
+    color: #333; /* Text color */
+}
