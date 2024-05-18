@@ -355,3 +355,24 @@ html::-webkit-scrollbar-thumb{
     text-decoration: none;
     color: #333; /* Text color */
 }
+
+
+.header .icons {
+    display: flex;
+    align-items: center;
+}
+
+.header .icons a,
+.header .icons .fas,
+.header .login-btn-container {
+    margin-left: 100px; /* Adjust margin as needed */
+    color: #333;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+.header .login-btn {
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: #333;
+}

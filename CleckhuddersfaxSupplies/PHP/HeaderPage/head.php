@@ -7,6 +7,7 @@
     <title>Cleckhuddersfax Supplies Header</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="head.css">
+
 </head>
 <body>
     <header class="header">
@@ -18,6 +19,7 @@
             </form>
             <div class="icons">
                 <div id="search-btn" class="fas fa-search"></div>
+                <a href="../CartPage/cart.php" class="fas fa-shopping-cart"></a>
                 <?php
                 session_start();
 
@@ -108,7 +110,7 @@
 
     <nav class="bottom-navbar">
         <a href="../HomePage/homepage.php" class="fas fa-home"></a>
-        <a href="../AboutUsPage/aboutus.php" class="fa-solid fa-address-card""></a>
+        <a href="../AboutUsPage/aboutus.php" class="fa-solid fa-address-card"></a>
         <a href="../ContactUsPage/contactus.php" class="fas fa-comments"></a>
         <a href="../ProductPage/product.php" class="fa-solid fa-bowl-food"></a>
         <a href="../ShopPage/shop.php" class="fa-solid fa-store"></a>
