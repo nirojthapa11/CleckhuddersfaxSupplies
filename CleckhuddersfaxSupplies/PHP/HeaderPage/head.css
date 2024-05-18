@@ -88,7 +88,7 @@ html::-webkit-scrollbar-thumb{
 .header .header-1 .icons div,
 .header .header-1 .icons a{
     font-size: 2.5rem;
-    margin-left: 1.5rem;
+    margin-left: 0.6rem;
     color: var(--black);
     cursor: pointer;
 }
@@ -156,17 +156,19 @@ html::-webkit-scrollbar-thumb{
 	width: 100%;
 	position: relative;
 	z-index: 99;
+	padding: 10px;
 }
 
+
 .header .header-2 .item-center{
-	flex:0 0 66%;
     text-align: center;
+	flex:0 0 66%;
 }
 
 .header .header-2 .menu > ul > li{
 	display: inline-block;
 	line-height: 50px;
-	margin-left: 50px;
+	margin-left: 25px;
 }
 
 .header .header-2 .menu > ul > li > a{
@@ -340,3 +342,37 @@ html::-webkit-scrollbar-thumb{
 
 }
 
+
+.login-btn-container {
+    display: inline-block;
+    margin-right: 10px; /* Adjust as needed */
+    border: 1px solid #ccc; /* Border style and color */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px 10px; /* Padding for the container */
+}
+
+.login-btn {
+    text-decoration: none;
+    color: #333; /* Text color */
+}
+
+
+.header .icons {
+    display: flex;
+    align-items: center;
+}
+
+.header .icons a,
+.header .icons .fas,
+.header .login-btn-container {
+    margin-left: 100px; /* Adjust margin as needed */
+    color: #333;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+.header .login-btn {
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: #333;
+}
