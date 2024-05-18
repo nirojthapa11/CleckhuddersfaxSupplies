@@ -129,6 +129,79 @@ class Database
         }
     }
 
+
+
+    public function getCartItems($user_id)
+    {
+        $cartItems = array();
+    
+        try {
+            // Prepare the SQL query to fetch cart items for the user
+            $cartId = $this->getCartIdUsingCustomerId($user_id); // Ensure this function is secure
+            $query = "SELECT * FROM cart_product WHERE cart_id = :cart_id";
+            $statement = $this->executeQuery($query, array('cart_id' => $cartId));
+    
+            // Fetch cart items and store them in an array
+            while ($row = $this->fetchRow($statement)) {
+                $cartItems[$row['product_id']] = array(
+                    'quantity' => $row['quantity'],
+                    'special_instruction' => $row['special_instruction']
+                );
+            }
+    
+            $this->closeConnection();
+        } catch (Exception $e) {
+            throw new Exception("Error fetching cart items: " . $e->getMessage());
+        }
+    
+        return $cartItems;
+    }
+    
+
+    public function updateCartItem($user_id, $product_id, $quantity, $special_instruction)
+    {
+        try {
+            // Get the database connection
+            $conn = $this->getConnection();
+            $cartId = $this->getCartIdUsingCustomerId($user_id);
+            var_dump($cartId);
+    
+            // Prepare the SQL query
+            $query = "UPDATE cart_product 
+                      SET quantity = :quantity, special_instruction = :special_instruction 
+                      WHERE cart_id = :cart_id AND product_id = :product_id";
+    
+            // Prepare the statement
+            $statement = oci_parse($conn, $query);
+    
+            // Bind parameters
+            oci_bind_by_name($statement, ":cart_id", $cartId);
+            oci_bind_by_name($statement, ":product_id", $product_id);
+            oci_bind_by_name($statement, ":quantity", $quantity);
+            oci_bind_by_name($statement, ":special_instruction", $special_instruction);
+    
+            // Execute the statement
+            if (!oci_execute($statement)) {
+                $m = oci_error($statement);
+                throw new Exception("Error executing query: " . $m['message']);
+            }
+    
+            // Commit the transaction
+            oci_commit($conn);
+    
+            // Free the statement
+            oci_free_statement($statement);
+    
+            return true; // Return true on successful update
+        } catch (Exception $e) {
+            throw new Exception("Error updating cart item: " . $e->getMessage());
+        }
+    }
+    
+    
+
+
+
 }
 
 ?>

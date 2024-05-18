@@ -64,6 +64,13 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
         setcookie('cart', '', time() - 3600, '/');
     }
 } else {
+
+    // Testing
+    // To-be deleted
+    var_dump($product_id);
+    var_dump($quantity);
+    var_dump($special_instruction);
+
     // If the user is not logged in, add the item to the cart in cookies
     if (isset($_COOKIE['cart'])) {
         $cart = json_decode($_COOKIE['cart'], true);
@@ -83,6 +90,14 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
 
     // Save the updated cart in the cookie
     setcookie('cart', json_encode($cart), time() + (86400 * 30), "/"); // 30 days expiration
+
+
+    // To-be deleted
+    if (isset($_COOKIE['cart'])) {
+        var_dump($_COOKIE['cart']);
+    } else {
+        echo 'Cookie "cart" not set.';
+    }
 
     echo 'Item added to cart in cookies.';
 }

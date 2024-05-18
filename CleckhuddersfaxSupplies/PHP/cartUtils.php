@@ -1,46 +1,50 @@
 <?php
-require_once '../../partials/dbConnect.php';
+session_start();
+require_once '../partials/dbConnect.php';
+$user_id = $_SESSION['user_id'];
+updateCartFromCookies($user_id);
 
+// Correctly access user_id from the session
 function updateCartFromCookies($user_id) {
     if (isset($_COOKIE['cart'])) {
         $db = new Database();
         $conn = $db->getConnection();
         $cartItems = json_decode($_COOKIE['cart'], true);
+        var_dump($cartItems); // Debugging line to check cart items
 
         try {
+            // Fetch existing cart data from the database
+            $existingCart = $db->getCartItems($user_id);
+            var_dump($existingCart); // Debugging line to check existing cart data
+
+            // Merge cart data from cookies with existing cart data
             foreach ($cartItems as $product_id => $item) {
                 $quantity = $item['quantity'];
                 $special_instruction = isset($item['special_instruction']) ? $item['special_instruction'] : '';
 
-                // Get cart ID for the user
-                $cart_id = $db->getCartIdUsingCustomerId($user_id);
-
-                // Use a MERGE statement for the upsert operation
-                $query = "
-                    MERGE INTO cart_product cp
-                    USING (SELECT :cart_id AS cart_id, :product_id AS product_id FROM dual) src
-                    ON (cp.cart_id = src.cart_id AND cp.product_id = src.product_id)
-                    WHEN MATCHED THEN 
-                        UPDATE SET cp.quantity = cp.quantity + :quantity, cp.special_instruction = :special_instruction
-                    WHEN NOT MATCHED THEN 
-                        INSERT (cp.cart_id, cp.product_id, cp.quantity, cp.special_instruction)
-                        VALUES (:cart_id, :product_id, :quantity, :special_instruction)
-                ";
-
-                $statement = oci_parse($conn, $query);
-
-                // Bind parameters
-                oci_bind_by_name($statement, ":cart_id", $cart_id);
-                oci_bind_by_name($statement, ":product_id", $product_id);
-                oci_bind_by_name($statement, ":quantity", $quantity);
-                oci_bind_by_name($statement, ":special_instruction", $special_instruction);
-
-                if (!oci_execute($statement)) {
-                    $m = oci_error($statement);
-                    throw new Exception("Error executing query: " . $m['message']);
+                // Update existing cart data with data from cookies
+                if (isset($existingCart[$product_id])) {
+                    $existingCart[$product_id]['quantity'] += $quantity;
+                    $existingCart[$product_id]['special_instruction'] = $special_instruction;
+                } else {
+                    $existingCart[$product_id] = array(
+                        'quantity' => $quantity,
+                        'special_instruction' => $special_instruction
+                    );
                 }
+            }
 
-                oci_free_statement($statement);
+            // Update the database with the merged cart data
+            foreach ($existingCart as $product_id => $cartItem) {
+                $quantity = $cartItem['quantity'];
+                $special_instruction = $cartItem['special_instruction'];
+
+                // Update or insert the cart item into the database
+                if ($db->updateCartItem($user_id, $product_id, $quantity, $special_instruction)) {
+                    echo 'Cart item updated in database.';
+                } else {
+                    echo 'Failed to update cart item in database.';
+                }
             }
 
             // Commit the transaction
