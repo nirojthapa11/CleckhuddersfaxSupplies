@@ -11,58 +11,42 @@ $conn = $db->getConnection();
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
     $user_id = $_SESSION['user_id'];
-
-    // Prepare the merge statement for upserting the cart item
-    $query = "
-        MERGE INTO cart_product cp
-        USING (SELECT :cart_id AS cart_id, :product_id AS product_id FROM dual) src
-        ON (cp.cart_id = src.cart_id AND cp.product_id = src.product_id)
-        WHEN MATCHED THEN 
-            UPDATE SET cp.quantity = cp.quantity + :quantity, cp.special_instruction = :special_instruction
-        WHEN NOT MATCHED THEN 
-            INSERT (cp.cart_id, cp.product_id, cp.quantity, cp.special_instruction)
-            VALUES (:cart_id, :product_id, :quantity, :special_instruction)
-    ";
-
-    // Get the user's cart ID
     $cart_id = $db->getCartIdUsingCustomerId($user_id);
 
-    // Execute the query to add/update the cart item in the database
+    $query = "SELECT quantity, special_instruction FROM cart_product WHERE cart_id = :cart_id AND product_id = :product_id";
+
+    // Prepare the statement
     $statement = oci_parse($conn, $query);
-    oci_bind_by_name($statement, ':cart_id', $cart_id);
-    oci_bind_by_name($statement, ':product_id', $product_id);
-    oci_bind_by_name($statement, ':quantity', $quantity);
-    oci_bind_by_name($statement, ':special_instruction', $special_instruction);
 
-    if (oci_execute($statement)) {
-        echo 'Item added to cart in database.';
-    } else {
-        echo 'Failed to add item to cart in database.';
-    }
+    oci_bind_by_name($statement, ":cart_id", $cart_id);
+    oci_bind_by_name($statement, ":product_id", $product_id);
 
-    // Merge cookies cart into the database if it exists
-    if (isset($_COOKIE['cart'])) {
-        $cartFromCookies = json_decode($_COOKIE['cart'], true);
+    // Execute the statement
+    oci_execute($statement);
 
-        foreach ($cartFromCookies as $cookieProductId => $cookieItem) {
-            $cookieQuantity = $cookieItem['quantity'];
-            $cookieSpecialInstruction = isset($cookieItem['special_instruction']) ? $cookieItem['special_instruction'] : '';
+    // Fetch the row
+    $existingCartItem = oci_fetch_assoc($statement);
 
-            // Execute the query to add/update the cart item from cookies
-            oci_bind_by_name($statement, ':product_id', $cookieProductId);
-            oci_bind_by_name($statement, ':quantity', $cookieQuantity);
-            oci_bind_by_name($statement, ':special_instruction', $cookieSpecialInstruction);
+    if ($existingCartItem) {
+        // Product exists, update its quantity and special instruction
+        $existingQuantity = $existingCartItem['QUANTITY'];
+        $existingSpecialInstruction = $existingCartItem['SPECIAL_INSTRUCTION'];
+        $newQuantity = $existingQuantity + $quantity;
 
-            if (oci_execute($statement)) {
-                echo 'Item from cookie added to cart in database.';
-            } else {
-                echo 'Failed to add item from cookie to cart in database.';
-            }
+        if ($db->updateCartItem($user_id, $product_id, $newQuantity, $special_instruction)) {
+            echo 'Item updated in cart in database.';
+        } else {
+            echo 'Failed to update item in cart in database.';
         }
-
-        // Clear the cart cookie after updating the database
-        setcookie('cart', '', time() - 3600, '/');
+    } else {
+        // Product doesn't exist, insert it into the cart
+        if ($db->insertCartItem($user_id, $product_id, $quantity, $special_instruction)) {
+            echo 'Item added to cart in database.';
+        } else {
+            echo 'Failed to add item to cart in database.';
+        }
     }
+
 } else {
 
     // Testing

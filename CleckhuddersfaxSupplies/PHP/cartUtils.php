@@ -82,6 +82,7 @@ if (isset($_COOKIE['cart'])) {
 
         // Clear the cookie after updating the database
         setcookie('cart', '', time() - 3600, "/");
+       
 
     } catch (Exception $e) {
         oci_rollback($conn); // Rollback in case of an error
@@ -92,4 +93,5 @@ if (isset($_COOKIE['cart'])) {
 }
 
 echo 'in cart utils';
+header("Location: HomePage/homepage.php");
 ?>
