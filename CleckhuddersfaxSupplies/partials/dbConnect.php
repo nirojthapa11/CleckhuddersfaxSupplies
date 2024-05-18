@@ -75,30 +75,53 @@ class Database
         return $products;
     }
 
-    public function getProductImage($id)
-    {
-        $query = 'SELECT PRODUCT_IMAGE FROM Product WHERE PRODUCT_ID = :id';
-        $statement = oci_parse($this->conn, $query);
-        oci_bind_by_name($statement, ":id", $id);
-        oci_execute($statement);
-        if (!$statement) {
-            $m = oci_error($this->conn);
-            throw new Exception("Error preparing query: " . $m['message']);
-        }
-        if (!oci_execute($statement)) {
-            $m = oci_error($statement);
-            throw new Exception("Error executing query: " . $m['message']);
-        }
-        $row = oci_fetch_array($statement, OCI_ASSOC + OCI_RETURN_LOBS);
+    // public function getProductImage($id)
+    // {
+    //     $query = 'SELECT PRODUCT_IMAGE FROM Product WHERE PRODUCT_ID = :id';
+    //     $statement = oci_parse($this->conn, $query);
+    //     oci_bind_by_name($statement, ":id", $id);
+    //     oci_execute($statement);
+    //     if (!$statement) {
+    //         $m = oci_error($this->conn);
+    //         throw new Exception("Error preparing query: " . $m['message']);
+    //     }
+    //     if (!oci_execute($statement)) {
+    //         $m = oci_error($statement);
+    //         throw new Exception("Error executing query: " . $m['message']);
+    //     }
+    //     $row = oci_fetch_array($statement, OCI_ASSOC + OCI_RETURN_LOBS);
 
-        if ($row) {
-            $imageData = $row['PRODUCT_IMAGE'];
-            $imageBase64 = base64_encode($imageData);
-            return $imageBase64;
-        } else {
-            $imageBase64 = '';
-        }
+    //     if ($row) {
+    //         $imageData = $row['PRODUCT_IMAGE'];
+    //         $imageBase64 = base64_encode($imageData);
+    //         return $imageBase64;
+    //     } else {
+    //         $imageBase64 = '';
+    //     }
+    // }
+
+    public function getProductImage($id)
+{
+    $query = 'SELECT PRODUCT_IMAGE FROM Product WHERE PRODUCT_ID = :id';
+    $statement = oci_parse($this->conn, $query);
+    oci_bind_by_name($statement, ":id", $id);
+    
+    if (!oci_execute($statement)) {
+        $m = oci_error($statement);
+        throw new Exception("Error executing query: " . $m['message']);
     }
+    
+    $row = oci_fetch_array($statement, OCI_ASSOC + OCI_RETURN_LOBS);
+
+    if ($row && isset($row['PRODUCT_IMAGE'])) {
+        $imageData = $row['PRODUCT_IMAGE'];
+        $imageBase64 = base64_encode($imageData);
+        return $imageBase64;
+    } else {
+        return ''; 
+    }
+}
+
 
 
     public function getCartIdUsingCustomerId($id)
@@ -278,10 +301,12 @@ class Database
     {
         $wishlistProducts = array();
         try {
-            $query = "SELECT p.*
-                      FROM product p
-                      INNER JOIN favourite f ON p.product_id = f.product_id
-                      WHERE f.customer_id = :customer_id";
+            $query = "SELECT p.*, c.category_name, s.shop_name
+                  FROM product p 
+                  JOIN favourite f ON p.product_id = f.product_id
+                  JOIN category c ON p.category_id = c.category_id
+                  JOIN shop s ON s.shop_id = p.shop_id
+                  WHERE f.customer_id = :customer_id";
             $statement = $this->executeQuery($query, array("customer_id" => $customerId));
             while ($row = $this->fetchRow($statement)) {
                 $wishlistProducts[] = $row;

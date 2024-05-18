@@ -24,23 +24,28 @@
                 session_start();
 
                 // Check if the user is logged in
-                if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+                if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+                    $customerId = $_SESSION['user_id'];
+                
                     // If the user is logged in, display user options
                     echo '<div id="login-btn" class="fas fa-user">
                             <div class="login-options">
                                 <a href="../CustomerProfilePage/customerProfile.php"> <i class="fa-regular fa-face-smile"></i> Manage My Account</a>
                                 <a href="#"> <i class="fa-sharp fa-solid fa-box-open"></i> My Orders</a>
-                                <a href="../CustomerProfilePage/myWishlist.php"> <i class="fa-regular fa-heart"></i> My Wishlist</a>
+                                <a href="../CustomerProfilePage/myWishlist.php?customer_id=' . $customerId . '">
+                                    <i class="fa-regular fa-heart"></i> My Wishlist
+                                </a>
                                 <a href="#"> <i class="fa-regular fa-star"></i> My Reviews</a>
                                 <a href="../Login_Signup/logout.php"> <i class="fa-solid fa-person-walking-arrow-right"></i> Log out</a>
                             </div>
-                        </div>';
+                          </div>';
                     echo '<div class="login-btn-container"><a href="../Login_Signup/logout.php" class="login-btn">Log out</a></div>';
                 } else {
                     // If the user is not logged in, display login and signup buttons
                     echo '<div class="login-btn-container"><a href="../Login_Signup/login.php" class="login-btn">Log in</a></div>';
                     echo '<div class="login-btn-container"><a href="../Login_Signup/customerSignup.php" class="login-btn">Sign up</a></div>';
                 }
+                
                 ?>
             </div>
         </div>
