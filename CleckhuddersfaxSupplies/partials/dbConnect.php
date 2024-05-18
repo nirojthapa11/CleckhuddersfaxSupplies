@@ -235,7 +235,7 @@ class Database
     }
 
     public function insertCartItem($user_id, $product_id, $quantity, $special_instruction)
-{
+    {
     try {
         // Get the database connection
         $conn = $this->getConnection();
@@ -271,7 +271,7 @@ class Database
     } catch (Exception $e) {
         throw new Exception("Error inserting cart item: " . $e->getMessage());
     }
-}
+    }
 
 }
 
