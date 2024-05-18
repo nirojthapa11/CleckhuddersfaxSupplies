@@ -14,6 +14,11 @@ class Database
         }
     }
 
+    public function getConnection()
+    {
+        return $this->conn;
+    }
+
     public function executeQuery($query, $params = [])
     {
         $statement = oci_parse($this->conn, $query);
@@ -121,56 +126,6 @@ class Database
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return null;
-        }
-    }
-
-    public function addCartItem($user_id, $product_id, $quantity, $special_instruction)
-    {
-        $cart_id = $this->getCartIdUsingCustomerId($user_id);
-
-        try {
-            $query = "INSERT INTO cart_product (cart_id, product_id, quantity, special_instruction) 
-                      VALUES (:cart_id, :product_id, :quantity, :special_instruction)
-                      ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity)";
-
-            $params = array(
-                'cart_id' => $cart_id,
-                'product_id' => $product_id,
-                'quantity' => $quantity,
-                'special_instruction' => $special_instruction
-            );
-
-            $this->executeQuery($query, $params);
-            return true;
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-            return false;
-        }
-    }
-
-    public function getCartItems($user_id)
-    {
-        try {
-            $query = "SELECT product_id, quantity, special_instruction
-                      FROM cart_product
-                      WHERE cart_id = (SELECT cart_id FROM cart WHERE customer_id = :user_id)";
-
-            $params = array('user_id' => $user_id);
-
-            $statement = $this->executeQuery($query, $params);
-
-            $cartItems = array();
-            while ($row = $this->fetchRow($statement)) {
-                $cartItems[$row['PRODUCT_ID']] = array(
-                    'quantity' => $row['QUANTITY'],
-                    'special_instruction' => $row['SPECIAL_INSTRUCTION']
-                );
-            }
-
-            return $cartItems;
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-            return array();
         }
     }
 

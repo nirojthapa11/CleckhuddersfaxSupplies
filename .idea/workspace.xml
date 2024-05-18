@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfdccd17-bc41-4eb6-9dc8-f1a1b916cdc5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/cartUtils.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HeaderPage/head.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HeaderPage/head.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HomePage/addToCart.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HomePage/addToCart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/partials/dbConnect.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/partials/dbConnect.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +73,8 @@
       <updated>1715868517918</updated>
       <workItem from="1715868520203" duration="4105000" />
       <workItem from="1715918709989" duration="4708000" />
-      <workItem from="1715958855269" duration="4953000" />
+      <workItem from="1715958855269" duration="6981000" />
+      <workItem from="1716005911197" duration="1564000" />
     </task>
     <servers />
   </component>

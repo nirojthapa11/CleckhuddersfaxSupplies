@@ -1,12 +1,14 @@
 <?php
 session_start();
 require_once '../../partials/dbConnect.php';
+require_once '../cartUtils.php';
 
-function sanitizeInput($data) {
+function sanitizeInput($data)
+{
     return htmlspecialchars(trim($data));
 }
 
-$showError = false; 
+$showError = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -18,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usertype = $_POST['usertype'];
         $query = '';
 
-        
+
         if ($usertype == 'customer') {
             $query = "SELECT customer_id, username, password FROM Customer WHERE username = '$username' AND password = '$password'";
         } elseif ($usertype == 'trader') {
@@ -44,6 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } elseif ($usertype == 'admin') {
                     $_SESSION['user_id'] = $row['admin_id'];
                 }
+
+                updateCartFromCookies($_SESSION['user_id']);
 
                 header("Location: ../HomePage/homepage.php");
                 exit;
