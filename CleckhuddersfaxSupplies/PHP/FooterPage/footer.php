@@ -15,14 +15,10 @@
             <div class="box">
                 <h3>Cleckhuddersfax Supplies<i class="fas fa-shooping-basket"></i></h3>
                 <p>We're More Than Just An Online Marketplace</p>
-                <h3>Follow Us</h3>
                 <div class="share">
-                    <a href="#" class="fab fa-facebook-f"></a>
-                    <a href="#" class="fab fa-twitter"></a>
-                    <a href="#" class="fab fa-instagram"></a>
-                    <a href="#" class="fab fa-linkedin"></a>
                     <img src="../Image/WebsiteLogo.png" alt="">
                 </div>
+                
             </div>
 
             <div class="box">
@@ -43,6 +39,14 @@
             </div>
 
             <div class="box">
+            <h3>Follow Us</h3>
+                <div class="share">
+                    <a href="#" class="fab fa-facebook-f"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-instagram"></a>
+                    <a href="#" class="fab fa-linkedin"></a>
+                </div>
+                <br><br>
                 <h3>Payment Patner</h3>
                 <img src="../Image/PayPal.jpeg" class="payment" alt="">
             </div>

@@ -11,7 +11,9 @@
 <body>
     <header class="header">
         <div class="header-1">
-            <img src="../Image/WebsiteLogo.png" alt="">
+            <a href="../HomePage/homepage.php">
+                <img src="../Image/WebsiteLogo.png" alt="">
+            </a>
             <form action="" class="search-form">
                 <input type="search" name="" placeholder="Search here..." id="search-box">
                 <label for="search-box" class="fas fa-search"></label>
@@ -23,7 +25,7 @@
                 <div id="login-btn" class="fas fa-user">
                     <div class="login-options">
                         <a href="../CustomerProfilePage/customerProfile.php"> <i class="fa-regular fa-face-smile"></i> Manage My Account</a>
-                        <a href="#"> <i class="fa-sharp fa-solid fa-box-open"></i> My Orders</a>
+                        <a href="../CustomerProfilePage/myOrder.php"> <i class="fa-sharp fa-solid fa-box-open"></i> My Orders</a>
                         <a href="../CustomerProfilePage/myWishlist.php"> <i class="fa-regular fa-heart"></i> My Wishlist</a>
                         <a href="#"> <i class="fa-regular fa-star"></i> My Reviews</a>
                         <a href="#"> <i class="fa-solid fa-person-walking-arrow-right"></i> Logout</a>

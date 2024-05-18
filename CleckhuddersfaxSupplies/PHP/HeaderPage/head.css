@@ -156,17 +156,17 @@ html::-webkit-scrollbar-thumb{
 	width: 100%;
 	position: relative;
 	z-index: 99;
-	padding:15px;
 }
 
 .header .header-2 .item-center{
 	flex:0 0 66%;
+    text-align: center;
 }
 
 .header .header-2 .menu > ul > li{
 	display: inline-block;
 	line-height: 50px;
-	margin-left: 25px;
+	margin-left: 50px;
 }
 
 .header .header-2 .menu > ul > li > a{
