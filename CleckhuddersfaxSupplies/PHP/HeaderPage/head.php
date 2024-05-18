@@ -21,7 +21,10 @@
                 <div id="search-btn" class="fas fa-search"></div>
                 <a href="../CartPage/cart.php" class="fas fa-shopping-cart"></a>
                 <?php
-                session_start();
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+                
 
                 // Check if the user is logged in
                 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {

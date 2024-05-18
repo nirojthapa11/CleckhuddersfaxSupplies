@@ -75,30 +75,6 @@ class Database
         return $products;
     }
 
-    // public function getProductImage($id)
-    // {
-    //     $query = 'SELECT PRODUCT_IMAGE FROM Product WHERE PRODUCT_ID = :id';
-    //     $statement = oci_parse($this->conn, $query);
-    //     oci_bind_by_name($statement, ":id", $id);
-    //     oci_execute($statement);
-    //     if (!$statement) {
-    //         $m = oci_error($this->conn);
-    //         throw new Exception("Error preparing query: " . $m['message']);
-    //     }
-    //     if (!oci_execute($statement)) {
-    //         $m = oci_error($statement);
-    //         throw new Exception("Error executing query: " . $m['message']);
-    //     }
-    //     $row = oci_fetch_array($statement, OCI_ASSOC + OCI_RETURN_LOBS);
-
-    //     if ($row) {
-    //         $imageData = $row['PRODUCT_IMAGE'];
-    //         $imageBase64 = base64_encode($imageData);
-    //         return $imageBase64;
-    //     } else {
-    //         $imageBase64 = '';
-    //     }
-    // }
 
     public function getProductImage($id)
 {
@@ -218,13 +194,11 @@ class Database
             // Get the database connection
             $conn = $this->getConnection();
             $cartId = $this->getCartIdUsingCustomerId($user_id);
-            echo '<br>cartid: ';
-            var_dump($cartId);
-            echo '<br>';
+            // echo '<br>cartid: ';
+            // var_dump($cartId);
+            // echo '<br>';
 
-            echo
-
-                // Prepare the SQL query
+            // Prepare the SQL query
             $query = "UPDATE cart_product 
                       SET quantity = :quantity, special_instruction = :special_instruction 
                       WHERE cart_id = :cart_id AND product_id = :product_id";
@@ -262,9 +236,10 @@ class Database
             // Get the database connection
             $conn = $this->getConnection();
             $cartId = $this->getCartIdUsingCustomerId($user_id);
-            echo '<br>cartid: ';
-            var_dump($cartId);
-            echo '<br>';
+
+            // echo '<br>cartid: ';
+            // var_dump($cartId);
+            // echo '<br>';
 
             // Prepare the SQL query
             $query = "INSERT INTO cart_product (cart_id, product_id, quantity, special_instruction) 
@@ -316,6 +291,85 @@ class Database
         }
         return $wishlistProducts;
     }
+
+
+    // From wishlist to cart in database when clicked addto cart.
+    public function updateOrInsertCartItem($userId, $productId, $quantity, $specialInstruction)
+    {
+        $cartId = $this->getCartIdUsingCustomerId($userId);
+        $conn = $this->getConnection();
+
+        $query = "SELECT quantity, special_instruction FROM cart_product WHERE cart_id = :cart_id AND product_id = :product_id";
+        $statement = oci_parse($conn, $query);
+
+        oci_bind_by_name($statement, ":cart_id", $cartId);
+        oci_bind_by_name($statement, ":product_id", $productId);
+
+        oci_execute($statement);
+
+        $existingCartItem = oci_fetch_assoc($statement);
+
+        if ($existingCartItem) {
+            $existingQuantity = $existingCartItem['QUANTITY'];
+            $existingSpecialInstruction = $existingCartItem['SPECIAL_INSTRUCTION'];
+            $newQuantity = $existingQuantity + $quantity;
+            $this->updateCartItem($userId, $productId, $newQuantity, $specialInstruction);
+            return; 
+        } else {
+            $this->insertCartItem($userId, $productId, 1, '');
+            return;
+        }
+    }
+
+    // Remove the product from wishlist after the product is added into the cart.
+    public function removeFromWishlist($customerId, $productId)
+    {
+        $conn = $this->getConnection();
+        $query = "DELETE FROM favourite WHERE customer_id = :customer_id AND product_id = :product_id";
+
+        $statement = oci_parse($conn, $query);
+
+        oci_bind_by_name($statement, ":customer_id", $customerId);
+        oci_bind_by_name($statement, ":product_id", $productId);
+
+        if (oci_execute($statement)) {
+            return; 
+        } else {
+            return;
+        }
+    }
+
+    // Update favourtite table when clicked add to wishlist on a product.
+    public function addToWishlist($productId, $customerId)
+    {
+        $conn = $this->getConnection();
+        
+        // Check if the product already exists in the wishlist
+        $query = "SELECT * FROM Favourite WHERE product_id = :product_id AND customer_id = :customer_id";
+        $statement = oci_parse($conn, $query);
+        oci_bind_by_name($statement, ":product_id", $productId);
+        oci_bind_by_name($statement, ":customer_id", $customerId);
+        oci_execute($statement);
+    
+        $existingProduct = oci_fetch_assoc($statement);
+        if ($existingProduct) {
+            // Product already exists in the wishlist
+            return;
+        }
+    
+        // Insert the product into the wishlist
+        $query = "INSERT INTO Favourite (product_id, customer_id) VALUES (:product_id, :customer_id)";
+        $statement = oci_parse($conn, $query);
+        oci_bind_by_name($statement, ":product_id", $productId);
+        oci_bind_by_name($statement, ":customer_id", $customerId);
+        oci_execute($statement);
+    }
+    
+
+
+
+
+
 
 }
 
