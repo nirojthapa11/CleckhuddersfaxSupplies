@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>customer Profile</title>
-    <link rel="stylesheet" href="customerProfile.css">
+    <title>Side Navigation Bar</title>
+    <link rel="stylesheet" href="eg.css">
     <link rel="stylesheet" href="../HeaderPage/head.css">
     <link rel="stylesheet" href="../FooterPage/footer.css">
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
@@ -15,9 +15,9 @@
         <div class="sidebar">
             <ul>
                 <li><a href="customerProfile.php"><i class="fas fa-user"></i>My Profile</a></li>
-                <li><a href="myOrder.php"><i class="fas fa-cart-shopping"></i>My Orders</a></li>
-                <li><a href="myWishlist.php"><i class="fas fa-heart"></i>My Wishlists</a></li>
-                <li><a href="#"><i class="fas fa-money-bill"></i>My Reviews</a></li>
+                <li><a href="#"><i class="fas fa-cart-shopping"></i>My Orders</a></li>
+                <li><a href="myWishlist.php"><i class="fas fa-heart"></i>My Wishlist</a></li>
+                <li><a href="#"><i class="fas fa-money-bill"></i>Payment</a></li>
                 <li><a href="#"><i class="fas fa-cart-shopping"></i>My Cart</a></li>
             </ul> 
         </div>

@@ -11,35 +11,28 @@
 <body>
     <header class="header">
         <div class="header-1">
-            <img src="../Image/WebsiteLogo.png" alt="">
+            <a href="../HomePage/homepage.php">
+                <img src="../Image/WebsiteLogo.png" alt="">
+            </a>
             <form action="" class="search-form">
                 <input type="search" name="" placeholder="Search here..." id="search-box">
                 <label for="search-box" class="fas fa-search"></label>
             </form>
             <div class="icons">
                 <div id="search-btn" class="fas fa-search"></div>
-                <?php
-                session_start();
-
-                // Check if the user is logged in
-                if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-                    // If the user is logged in, display user options
-                    echo '<div id="login-btn" class="fas fa-user">
-                            <div class="login-options">
-                                <a href="../CustomerProfilePage/customerProfile.php"> <i class="fa-regular fa-face-smile"></i> Manage My Account</a>
-                                <a href="#"> <i class="fa-sharp fa-solid fa-box-open"></i> My Orders</a>
-                                <a href="../CustomerProfilePage/myWishlist.php"> <i class="fa-regular fa-heart"></i> My Wishlist</a>
-                                <a href="#"> <i class="fa-regular fa-star"></i> My Reviews</a>
-                                <a href="../Login_Signup/logout.php"> <i class="fa-solid fa-person-walking-arrow-right"></i> Log out</a>
-                            </div>
-                        </div>';
-                    echo '<div class="login-btn-container"><a href="../Login_Signup/logout.php" class="login-btn">Log out</a></div>';
-                } else {
-                    // If the user is not logged in, display login and signup buttons
-                    echo '<div class="login-btn-container"><a href="../Login_Signup/login.php" class="login-btn">Log in</a></div>';
-                    echo '<div class="login-btn-container"><a href="../Login_Signup/customerSignup.php" class="login-btn">Sign up</a></div>';
-                }
-                ?>
+                <a href="#" class="fas fa-shopping-cart"></a>
+                
+                <div id="login-btn" class="fas fa-user">
+                    <div class="login-options">
+                        <a href="../CustomerProfilePage/customerProfile.php"> <i class="fa-regular fa-face-smile"></i> Manage My Account</a>
+                        <a href="../CustomerProfilePage/myOrder.php"> <i class="fa-sharp fa-solid fa-box-open"></i> My Orders</a>
+                        <a href="../CustomerProfilePage/myWishlist.php"> <i class="fa-regular fa-heart"></i> My Wishlist</a>
+                        <a href="#"> <i class="fa-regular fa-star"></i> My Reviews</a>
+                        <a href="#"> <i class="fa-solid fa-person-walking-arrow-right"></i> Logout</a>
+                    </div>
+                </div>
+                <a href="../Login_Signup/login.php">LogIn</a>
+                <a href="../Login_Signup/customerSignup.php">SignUp</a>
             </div>
         </div>
         <div class="header-2">
