@@ -130,7 +130,6 @@ class Database
     }
 
 
-
     public function getCartItems($user_id)
     {
         $cartItems = array();
@@ -138,24 +137,59 @@ class Database
         try {
             // Prepare the SQL query to fetch cart items for the user
             $cartId = $this->getCartIdUsingCustomerId($user_id); // Ensure this function is secure
-            $query = "SELECT * FROM cart_product WHERE cart_id = :cart_id";
-            $statement = $this->executeQuery($query, array('cart_id' => $cartId));
-    
-            // Fetch cart items and store them in an array
-            while ($row = $this->fetchRow($statement)) {
-                $cartItems[$row['product_id']] = array(
-                    'quantity' => $row['quantity'],
-                    'special_instruction' => $row['special_instruction']
-                );
+            $query = "SELECT product_id, quantity, special_instruction FROM cart_product WHERE cart_id = :cart_id";
+            
+            // Get the database connection
+            $conn = $this->getConnection();
+            
+            // Prepare the statement
+            $statement = oci_parse($conn, $query);
+            
+            // Bind parameters
+            oci_bind_by_name($statement, ":cart_id", $cartId);
+            
+            // Execute the statement
+            oci_execute($statement);
+            
+            // Fetch rows one by one
+            while ($row = oci_fetch_assoc($statement)) {
+                // Ensure that the fetched row has the required keys
+                if (isset($row['PRODUCT_ID'], $row['QUANTITY'], $row['SPECIAL_INSTRUCTION'])) {
+                    // Store the cart item with product_id as key in the cartItems array
+                    $cartItems[$row['PRODUCT_ID']] = array(
+                        'quantity' => $row['QUANTITY'],
+                        'special_instruction' => $row['SPECIAL_INSTRUCTION']
+                    );
+                    
+                    // Log debug information for each row
+                    var_dump($row['PRODUCT_ID']);
+                    var_dump($row['QUANTITY']);
+                    var_dump($row['SPECIAL_INSTRUCTION']);
+                } else {
+                    // Log or handle the missing keys in the fetched row
+                    // You can choose to skip or handle this case based on your requirements
+                    // For now, we'll skip adding the item to the cartItems array
+                }
             }
-    
-            $this->closeConnection();
+        
+            // Close the connection
+            oci_close($conn);
+                
         } catch (Exception $e) {
+            // Handle exceptions
             throw new Exception("Error fetching cart items: " . $e->getMessage());
         }
-    
+        
+        // Log debug information
+        echo '<br>inside db getcartitems '; var_dump($cartItems); echo'<br>';
+        
         return $cartItems;
     }
+    
+    
+    
+    
+    
     
 
     public function updateCartItem($user_id, $product_id, $quantity, $special_instruction)
@@ -164,7 +198,9 @@ class Database
             // Get the database connection
             $conn = $this->getConnection();
             $cartId = $this->getCartIdUsingCustomerId($user_id);
-            var_dump($cartId);
+            echo '<br>cartid: ';  var_dump($cartId); echo '<br>';
+
+            echo
     
             // Prepare the SQL query
             $query = "UPDATE cart_product 
@@ -197,10 +233,45 @@ class Database
             throw new Exception("Error updating cart item: " . $e->getMessage());
         }
     }
-    
-    
 
+    public function insertCartItem($user_id, $product_id, $quantity, $special_instruction)
+{
+    try {
+        // Get the database connection
+        $conn = $this->getConnection();
+        $cartId = $this->getCartIdUsingCustomerId($user_id);
+        echo '<br>cartid: ';  var_dump($cartId); echo '<br>';
 
+        // Prepare the SQL query
+        $query = "INSERT INTO cart_product (cart_id, product_id, quantity, special_instruction) 
+                  VALUES (:cart_id, :product_id, :quantity, :special_instruction)";
+
+        // Prepare the statement
+        $statement = oci_parse($conn, $query);
+
+        // Bind parameters
+        oci_bind_by_name($statement, ":cart_id", $cartId);
+        oci_bind_by_name($statement, ":product_id", $product_id);
+        oci_bind_by_name($statement, ":quantity", $quantity);
+        oci_bind_by_name($statement, ":special_instruction", $special_instruction);
+
+        // Execute the statement
+        if (!oci_execute($statement)) {
+            $m = oci_error($statement);
+            throw new Exception("Error executing query: " . $m['message']);
+        }
+
+        // Commit the transaction
+        oci_commit($conn);
+
+        // Free the statement
+        oci_free_statement($statement);
+
+        return true; // Return true on successful update
+    } catch (Exception $e) {
+        throw new Exception("Error inserting cart item: " . $e->getMessage());
+    }
+}
 
 }
 

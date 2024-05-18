@@ -3,6 +3,7 @@ session_start();
 require_once '../../partials/dbConnect.php';
 
 
+
 function sanitizeInput($data)
 {
     return htmlspecialchars(trim($data));
@@ -48,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } elseif ($usertype == 'admin') {
                     $_SESSION['user_id'] = $row['ADMIN_ID'];
                 }               
-                require_once '../cartUtils.php';
+                // require_once '../cartUtils.php';
 
 
                 // updateCartFromCookies($_SESSION['user_id']);
