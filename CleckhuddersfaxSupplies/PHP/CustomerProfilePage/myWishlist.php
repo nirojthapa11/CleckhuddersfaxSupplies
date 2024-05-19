@@ -85,8 +85,10 @@ $wishlistItems = $db->getProductFromWishlist($customerId);
                     <td class="td-category"><?php echo htmlspecialchars($item['CATEGORY_NAME']); ?></td>
                     <td class="td-shop-name"><?php echo htmlspecialchars($item['SHOP_NAME']); ?></td>
                     <td class="td-actions">
-                        <a href="myWishlist.php?remove_product_id=<?php echo $item['PRODUCT_ID']; ?>" class="btn btn-danger btn-sm">Remove</a>
-                        <a href="myWishList.php?product_id=<?php echo $product_id; ?>"class="btn btn-primary btn-sm" style="font-family: 'Roboto', sans-serif; 
+                        <a href="myWishlist.php?remove_product_id=<?php echo $item['PRODUCT_ID']; ?>"
+                           class="btn btn-danger btn-sm">Remove</a>
+                        <a href="myWishList.php?product_id=<?php echo $product_id; ?>" class="btn btn-primary btn-sm"
+                           style="font-family: 'Roboto', sans-serif;
                         font-size: 1.8rem;">Add to Cart</a>
                     </td>
                 </tr>

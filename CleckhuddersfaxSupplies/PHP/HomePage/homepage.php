@@ -23,7 +23,6 @@
 <body>
 
 
-
 <div>
     <?php
 
@@ -91,11 +90,11 @@
             echo '<div style="height: 200px; overflow: hidden;">'; // Set a fixed height for the image container and hide overflow
             if ($imageBase64) {
                 echo '<a href="productdtl.php?product_id=' . $id . '">';
-                echo '<img src="data:image/jpeg;base64,' . $imageBase64 . '" alt="Customer Image" style="width: 100%; height: auto;">'; 
+                echo '<img src="data:image/jpeg;base64,' . $imageBase64 . '" alt="Customer Image" style="width: 100%; height: auto;">';
                 echo '</a>';
             } else {
                 echo '<a href="productdtl.php?product_id=' . $id . '">';
-                echo '<img src="path_to_placeholder_image.jpg" alt="' . $name . ' Image" style="width: 100%; height: auto;">'; 
+                echo '<img src="path_to_placeholder_image.jpg" alt="' . $name . ' Image" style="width: 100%; height: auto;">';
                 echo '</a>';
             }
             echo '</div>'; // Close image container

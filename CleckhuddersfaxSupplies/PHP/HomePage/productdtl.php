@@ -1,5 +1,5 @@
 <?php
-require_once('../../partials/dbconnect.php'); 
+require_once('../../partials/dbconnect.php');
 
 $database = new Database();
 
@@ -17,8 +17,6 @@ $database->closeConnection();
 ?>
 
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,23 +29,25 @@ $database->closeConnection();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          integrity="sha512-..." crossorigin="anonymous"/>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-        integrity="sha512-..." crossorigin="anonymous" />
+          integrity="sha512-..." crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 <div>
     <?php
-        include('../HeaderPage/head.php');
+    include('../HeaderPage/head.php');
     ?>
-   
-    </div>
 
+</div>
 
 
 <div class="container my-5">
@@ -58,19 +58,24 @@ $database->closeConnection();
             <div class="col-md-5">
                 <div class="main-img">
                     <!-- Resize and display the product image -->
-                    <img class="img-fluid" src="data:image/png;base64, <?php echo $imageBase64; ?>" alt="Product" width="100" height="100">
+                    <img class="img-fluid" src="data:image/png;base64, <?php echo $imageBase64; ?>" alt="Product"
+                         width="100" height="100">
                 </div>
                 <div class="text-center mt-3">
                     <div class="d-flex justify-content-between">
                         <!-- "Add to Wishlist" button with icon -->
-                        <a href="addToWishlist.php?product_id=<?php echo $productID; ?>" class="btn btn-outline-secondary" style="font-family: 'Roboto', sans-serif; font-size: 1.8rem;">
+                        <a href="addToWishlist.php?product_id=<?php echo $productID; ?>"
+                           class="btn btn-outline-secondary"
+                           style="font-family: 'Roboto', sans-serif; font-size: 1.8rem;">
                             <i class="fas fa-heart"></i> Add to Wishlist
                         </a>
                         <!-- Quantity increase and decrease buttons -->
                         <div class="quantity-buttons my-2">
-                            <button class="btn btn-secondary" onclick="updateQuantity('decrease')"><i class="fas fa-minus"></i></button>
+                            <button class="btn btn-secondary" onclick="updateQuantity('decrease')"><i
+                                        class="fas fa-minus"></i></button>
                             <span id="productQuantity" class="mx-2">1</span>
-                            <button class="btn btn-secondary" onclick="updateQuantity('increase')"><i class="fas fa-plus"></i></button>
+                            <button class="btn btn-secondary" onclick="updateQuantity('increase')"><i
+                                        class="fas fa-plus"></i></button>
                         </div>
                         <!-- Add to Cart button -->
                         <?php
@@ -82,7 +87,7 @@ $database->closeConnection();
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-7">
                 <!-- Product details -->
                 <div class="main-description px-2">
@@ -115,7 +120,7 @@ $database->closeConnection();
                         <p><strong>Allergy Info:</strong> <?php echo $product['ALLERGY_INFO']; ?></p>
                     </div>
                 </div>
-            </div>  
+            </div>
         <?php else : ?>
             <div class="col-md-12">
                 <p>Product not found.</p>
@@ -124,7 +129,7 @@ $database->closeConnection();
     </div>
 
 
-<script>
+    <script>
         // Initialize productQuantity JavaScript variable with the value from PHP
         var productQuantity = <?php echo $productQuantity; ?>;
 
@@ -137,7 +142,7 @@ $database->closeConnection();
             }
             document.getElementById('productQuantity').innerText = productQuantity;
         }
-</script>
+    </script>
 
     <div class="container">
         <div class="row">
@@ -163,13 +168,11 @@ $database->closeConnection();
                         </li>
                     <?php endforeach; ?>
                 </ul>
-                <label class="btn_a" for="btnBox"><span class="btn1">See More</span><span class="btn2">See Less</span></label>
+                <label class="btn_a" for="btnBox"><span class="btn1">See More</span><span
+                            class="btn2">See Less</span></label>
             </div>
         </div>
     </div>
-
-
-
 
 
     <div class="container similar-products my-4">
@@ -194,7 +197,8 @@ $database->closeConnection();
                             <p class="title"><?php echo htmlspecialchars($product['PRODUCT_NAME']); ?></p>
                             <p class="price">$<?php echo $product['PRICE']; ?></p>
                             <p><?php echo htmlspecialchars($product['DESCRIPTION']); ?></p>
-                            <button type="button" class="btn btn-outline-primary">Add to Cart</button><br><br>
+                            <button type="button" class="btn btn-outline-primary">Add to Cart</button>
+                            <br><br>
                             <button type="button" class="btn btn-dark">Review</button>
                         </div>
                     </div>
@@ -208,21 +212,20 @@ $database->closeConnection();
     </div>
 
 
-
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const container = document.querySelector(".scrollable-row");
             const leftArrow = document.querySelector(".left-arrow");
             const rightArrow = document.querySelector(".right-arrow");
 
-            leftArrow.addEventListener("click", function() {
+            leftArrow.addEventListener("click", function () {
                 container.scrollBy({
                     left: -200, // Adjust this value to change scroll distance
                     behavior: "smooth"
                 });
             });
 
-            rightArrow.addEventListener("click", function() {
+            rightArrow.addEventListener("click", function () {
                 container.scrollBy({
                     left: 200, // Adjust this value to change scroll distance
                     behavior: "smooth"
@@ -230,11 +233,6 @@ $database->closeConnection();
             });
         });
     </script>
-
-
-
-
-
 
 
 </div>

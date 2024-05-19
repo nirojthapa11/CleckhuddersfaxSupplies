@@ -77,10 +77,10 @@ class Database
 
     public function getProductById($id)
     {
-    $product = null;
+        $product = null;
 
-    try {
-        $query = "
+        try {
+            $query = "
         SELECT p.*, ROUND(r.average_rating, 2) AS rating, ct.category_name, sh.shop_name, ds.discount_percentage
         FROM product p
         LEFT JOIN (
@@ -93,42 +93,39 @@ class Database
         JOIN DISCOUNT ds ON ds.discount_id = p.discount_id
         WHERE p.product_id = :id";
 
-        $statement = $this->executeQuery($query, array("id" => $id));
+            $statement = $this->executeQuery($query, array("id" => $id));
 
-        $product = $this->fetchRow($statement);
+            $product = $this->fetchRow($statement);
 
-        $this->closeConnection();
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+            $this->closeConnection();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        return $product;
     }
-    return $product;
-    }
-
-    
 
 
     public function getProductImage($id)
     {
-    $query = 'SELECT PRODUCT_IMAGE FROM Product WHERE PRODUCT_ID = :id';
-    $statement = oci_parse($this->conn, $query);
-    oci_bind_by_name($statement, ":id", $id);
-    
-    if (!oci_execute($statement)) {
-        $m = oci_error($statement);
-        throw new Exception("Error executing query: " . $m['message']);
-    }
-    
-    $row = oci_fetch_array($statement, OCI_ASSOC + OCI_RETURN_LOBS);
+        $query = 'SELECT PRODUCT_IMAGE FROM Product WHERE PRODUCT_ID = :id';
+        $statement = oci_parse($this->conn, $query);
+        oci_bind_by_name($statement, ":id", $id);
 
-    if ($row && isset($row['PRODUCT_IMAGE'])) {
-        $imageData = $row['PRODUCT_IMAGE'];
-        $imageBase64 = base64_encode($imageData);
-        return $imageBase64;
-    } else {
-        return ''; 
-    }
-    }
+        if (!oci_execute($statement)) {
+            $m = oci_error($statement);
+            throw new Exception("Error executing query: " . $m['message']);
+        }
 
+        $row = oci_fetch_array($statement, OCI_ASSOC + OCI_RETURN_LOBS);
+
+        if ($row && isset($row['PRODUCT_IMAGE'])) {
+            $imageData = $row['PRODUCT_IMAGE'];
+            $imageBase64 = base64_encode($imageData);
+            return $imageBase64;
+        } else {
+            return '';
+        }
+    }
 
 
     public function getCartIdUsingCustomerId($id)
@@ -345,33 +342,32 @@ class Database
             $existingSpecialInstruction = $existingCartItem['SPECIAL_INSTRUCTION'];
             $newQuantity = $existingQuantity + $quantity;
             $this->updateCartItem($userId, $productId, $newQuantity, $specialInstruction);
-            return; 
+            return;
         } else {
             $this->insertCartItem($userId, $productId, 1, '');
             return;
         }
     }
 
-   
 
     // Update favourtite table when clicked add to wishlist on a product.
     public function addToWishlist($productId, $customerId)
     {
         $conn = $this->getConnection();
-        
+
         // Check if the product already exists in the wishlist
         $query = "SELECT * FROM Favourite WHERE product_id = :product_id AND customer_id = :customer_id";
         $statement = oci_parse($conn, $query);
         oci_bind_by_name($statement, ":product_id", $productId);
         oci_bind_by_name($statement, ":customer_id", $customerId);
         oci_execute($statement);
-    
+
         $existingProduct = oci_fetch_assoc($statement);
         if ($existingProduct) {
             // Product already exists in the wishlist
             return;
         }
-    
+
         // Insert the product into the wishlist
         $query = "INSERT INTO Favourite (product_id, customer_id) VALUES (:product_id, :customer_id)";
         $statement = oci_parse($conn, $query);
@@ -384,31 +380,31 @@ class Database
     // Function to fetch reviews for a specific product
     public function getReviewsForAProduct($productId)
     {
-    $reviews = array();
-    try {
-        $query = "SELECT r.comments AS review_text, r.rating, r.reviewed_date AS review_date, 
+        $reviews = array();
+        try {
+            $query = "SELECT r.comments AS review_text, r.rating, r.reviewed_date AS review_date, 
                          c.first_name || ' ' || c.last_name AS customer_name
                   FROM review r
                   JOIN customer c ON r.customer_id = c.customer_id
                   WHERE r.product_id = :product_id
                   ORDER BY r.reviewed_date DESC";
-        $statement = $this->executeQuery($query, array("product_id" => $productId));
-        while ($row = $this->fetchRow($statement)) {
-            $reviews[] = $row;
+            $statement = $this->executeQuery($query, array("product_id" => $productId));
+            while ($row = $this->fetchRow($statement)) {
+                $reviews[] = $row;
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
         }
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
-    }
-    return $reviews;
+        return $reviews;
     }
 
 
     public function getProductsByShopId($shopId)
     {
-    $products = array();
+        $products = array();
 
-    try {
-        $query = "SELECT p.*, ROUND(r.average_rating, 2) AS rating
+        try {
+            $query = "SELECT p.*, ROUND(r.average_rating, 2) AS rating
                   FROM product p
                   LEFT JOIN (
                       SELECT product_id, AVG(rating) AS average_rating
@@ -418,44 +414,37 @@ class Database
                   JOIN shop sh ON sh.shop_id = p.shop_id
                   WHERE sh.shop_id = :shop_id";
 
-        $statement = $this->executeQuery($query, array("shop_id" => $shopId));
+            $statement = $this->executeQuery($query, array("shop_id" => $shopId));
 
-        while ($row = $this->fetchRow($statement)) {
-            $products[] = $row;
+            while ($row = $this->fetchRow($statement)) {
+                $products[] = $row;
+            }
+
+            $this->closeConnection();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
         }
-
-        $this->closeConnection();
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        return $products;
     }
-    return $products;
+
+
+    // Remove the product from wishlist after the product is added into the cart.
+    public function removeFromWishlist($customerId, $productId)
+    {
+        $conn = $this->getConnection();
+        $query = "DELETE FROM favourite WHERE customer_id = :customer_id AND product_id = :product_id";
+
+        $statement = oci_parse($conn, $query);
+
+        oci_bind_by_name($statement, ":customer_id", $customerId);
+        oci_bind_by_name($statement, ":product_id", $productId);
+
+        if (oci_execute($statement)) {
+            return;
+        } else {
+            return;
+        }
     }
-    
-    
-
-     // Remove the product from wishlist after the product is added into the cart.
-     public function removeFromWishlist($customerId, $productId)
-     {
-         $conn = $this->getConnection();
-         $query = "DELETE FROM favourite WHERE customer_id = :customer_id AND product_id = :product_id";
- 
-         $statement = oci_parse($conn, $query);
- 
-         oci_bind_by_name($statement, ":customer_id", $customerId);
-         oci_bind_by_name($statement, ":product_id", $productId);
- 
-         if (oci_execute($statement)) {
-             return; 
-         } else {
-             return;
-         }
-     }
-
-    
-
-
-
-
 
 
 }

@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     oci_bind_by_name($stmt, ':description', $description);
 
     $result = oci_execute($stmt);
-    
+
     if ($result) {
         // Redirect or display a success message
         echo "<script>alert('Shop registered successfully!'); window.location.href='login.php';</script>";
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = oci_error($stmt);
         echo "Error inserting data: " . $error['message'];
     }
-    
+
     oci_free_statement($stmt);
     oci_close($conn);
 }
