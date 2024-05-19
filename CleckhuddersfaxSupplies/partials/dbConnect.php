@@ -446,6 +446,144 @@ class Database
         }
     }
 
+    
+    // Function to fetch order details
+    function getOrderDetailsFromDatabase($customerId) {
+        $conn = $this->getConnection();
+        
+        $orders = array();
+        
+        try {
+            // Your SQL query to fetch order details
+            $query = "SELECT ord.ORDER_ID, ord.ORDER_STATUS, ord.ORDER_DATE, op.ORDER_PRODUCT_ID, op.SPECIAL_INSTRUCTION, op.QUANTITY, 
+                             p.PRODUCT_ID, p.PRODUCT_NAME, p.PRICE, d.DISCOUNT_PERCENTAGE
+                      FROM orders ord
+                      JOIN order_product op ON ord.ORDER_ID = op.ORDER_ID
+                      JOIN product p ON op.PRODUCT_ID = p.PRODUCT_ID
+                      JOIN discount d ON d.DISCOUNT_ID = p.DISCOUNT_ID
+                      WHERE ord.CUSTOMER_ID = :customer_id
+                      ORDER BY ord.ORDER_ID DESC";
+    
+            $statement = oci_parse($conn, $query);
+            oci_bind_by_name($statement, ':customer_id', $customerId);
+            oci_execute($statement);
+    
+            // Loop through the results to organize them by order ID
+            while ($row = oci_fetch_assoc($statement)) {
+                $orderId = $row['ORDER_ID'];
+                // If the order ID is not already present in the array, initialize it
+                if (!isset($orders[$orderId])) {
+                    $orders[$orderId] = array(
+                        'order_id' => $orderId,
+                        'status' => $row['ORDER_STATUS'],
+                        'order_date' => $row['ORDER_DATE'],
+                        'order_products' => array()
+                    );
+                }
+    
+                // Add product details to the corresponding order ID
+                $orders[$orderId]['order_products'][] = array(
+                    'product_id' => $row['PRODUCT_ID'],
+                    'product_name' => $row['PRODUCT_NAME'],
+                    'price' => $row['PRICE'],
+                    'discount' => $row['DISCOUNT_PERCENTAGE'],
+                    'special_instruction' => $row['SPECIAL_INSTRUCTION'],
+                    'quantity' => $row['QUANTITY']
+                );
+            }
+    
+            oci_free_statement($statement);
+    
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    
+        return $orders;
+    }
+
+
+    public function getCustomerById($customerId) {
+        $customer = array();
+        try {
+            $query = "SELECT * FROM customer WHERE CUSTOMER_ID = :customerId";
+            $statement = oci_parse($this->conn, $query);
+            oci_bind_by_name($statement, ":customerId", $customerId);
+            oci_execute($statement);
+            $customer = oci_fetch_assoc($statement);
+            oci_free_statement($statement);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        return $customer;
+    }
+
+    public function getProfileImage($customerId)
+    {
+        $query = "SELECT cust_image FROM customer WHERE customer_id = :customerId";
+        $statement = oci_parse($this->conn, $query);
+        oci_bind_by_name($statement, ":customerId", $customerId);
+
+        if (!oci_execute($statement)) {
+            $m = oci_error($statement);
+            throw new Exception("Error executing query: " . $m['message']);
+        }
+
+        $row = oci_fetch_array($statement, OCI_ASSOC + OCI_RETURN_LOBS);
+
+        if ($row && isset($row['CUST_IMAGE'])) {
+            $imageData = $row['CUST_IMAGE'];
+            $imageBase64 = base64_encode($imageData);
+            return $imageBase64;
+        } else {
+            return '';
+        }
+    }
+
+
+    public function insertProfileImage($customerId, $imageData)
+    {
+        try {
+            // Initialize the LOB locator
+            $lob = oci_new_descriptor($this->conn, OCI_D_LOB);
+    
+            // Prepare the query
+            $query = "UPDATE customer SET cust_image = EMPTY_BLOB() WHERE customer_id = :customerId RETURNING cust_image INTO :imageData";
+            $statement = oci_parse($this->conn, $query);
+    
+            // Bind parameters
+            oci_bind_by_name($statement, ":customerId", $customerId);
+            oci_bind_by_name($statement, ":imageData", $lob, -1, OCI_B_BLOB);
+    
+            // Execute the query
+            if (!oci_execute($statement, OCI_DEFAULT)) {
+                $m = oci_error($statement);
+                throw new Exception("Error executing query: " . $m['message']);
+            }
+    
+            // Write the image data to the BLOB
+            if ($lob->save($imageData)) {
+                oci_commit($this->conn);
+                $lob->free();
+                return true;
+            } else {
+                oci_rollback($this->conn);
+                $lob->free();
+                return false;
+            }
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+    
+
+
+    
+    
+    
+    
+    
+    
+
 
 }
 
