@@ -90,15 +90,19 @@
 
             echo '<div style="height: 200px; overflow: hidden;">'; // Set a fixed height for the image container and hide overflow
             if ($imageBase64) {
-                echo '<img src="data:image/jpeg;base64,' . $imageBase64 . '" alt="Customer Image" style="width: 100%; height: auto;">'; // Set the width to 100% and height to auto to maintain aspect ratio
+                echo '<a href="productdtl.php?product_id=' . $id . '">';
+                echo '<img src="data:image/jpeg;base64,' . $imageBase64 . '" alt="Customer Image" style="width: 100%; height: auto;">'; 
+                echo '</a>';
             } else {
-                echo '<img src="path_to_placeholder_image.jpg" alt="' . $name . ' Image" style="width: 100%; height: auto;">'; // Provide a placeholder image or handle the absence of image here
+                echo '<a href="productdtl.php?product_id=' . $id . '">';
+                echo '<img src="path_to_placeholder_image.jpg" alt="' . $name . ' Image" style="width: 100%; height: auto;">'; 
+                echo '</a>';
             }
             echo '</div>'; // Close image container
 
             echo '<div class="card-body" style="padding: 1.5rem;">';
 
-            echo '<h5 class="card-title" style="font-family: \'Roboto\', sans-serif; font-size: 2rem;"><a href="/shop/product.php?productid=' . $id . '" style="color: #333;">' . $name . '</a></h5>
+            echo '<h5 class="card-title" style="font-family: \'Roboto\', sans-serif; font-size: 2rem;"><a href="productdtl.php?productid=' . $id . '" style="color: #333;">' . $name . '</a></h5>
                   <p class="card-text text-muted" style="font-family: \'Roboto\', sans-serif; font-size: 1.5rem;">' . substr($desc, 0, 50) . '...</p>
                   <div class="ratings">';
 

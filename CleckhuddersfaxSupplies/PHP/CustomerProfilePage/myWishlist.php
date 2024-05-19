@@ -39,7 +39,7 @@ $wishlistItems = $db->getProductFromWishlist($customerId);
             <li><a href="#"><i class="fas fa-cart-shopping"></i>My Orders</a></li>
             <li><a href="myWishlist.php"><i class="fas fa-heart"></i>My Wishlist</a></li>
             <li><a href="#"><i class="fas fa-money-bill"></i></i>Payment</a></li>
-            <li><a href="#"><i class="fas fa-home"></i>Back to Home</a></li>
+            <li><a href="../HomePage/homepage.php"><i class="fas fa-home"></i>Back to Home</a></li>
         </ul>
     </div>
     <div class="main_content">
