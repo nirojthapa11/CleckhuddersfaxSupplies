@@ -3,7 +3,12 @@ session_start();
 include '../../partials/dbConnect.php';
 
 $product_id = $_GET['productid'];
+echo  'helloooo'.$product_id;
+
 $quantity = isset($_GET['quantity']) ? $_GET['quantity'] : 1;
+echo ' the qty is: ' . $quantity;
+
+echo 'qty is: ' . $quantity;
 $special_instruction = isset($_GET['special_instruction']) ? $_GET['special_instruction'] : '';
 
 $db = new Database();
@@ -61,6 +66,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
     } else {
         $cart = array();
     }
+
+    var_dump($cart);
 
     if (isset($cart[$product_id])) {
         $cart[$product_id]['quantity'] += $quantity;

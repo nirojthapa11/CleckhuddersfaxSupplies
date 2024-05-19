@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <div class="form_container">
+<div class="form_container">
     <form action="CustomerAuthentication.php" method="POST">
         <div class="signup">
             <div class="image_container">
@@ -35,7 +35,8 @@
                     </select>
                 </div>
                 <input type="password" id="password" name="password" required placeholder="Password">
-                <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm Password">
+                <input type="password" id="confirmPassword" name="confirmPassword" required
+                       placeholder="Confirm Password">
                 <div class="checkbox-container">
                     <input type="checkbox" id="terms" name="terms" value="Bike">
                     <label for="terms">I Accept the <a href="#">terms and conditions.</a></label>

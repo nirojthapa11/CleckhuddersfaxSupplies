@@ -75,28 +75,55 @@ class Database
         return $products;
     }
 
+    public function getProductById($id)
+    {
+        $product = null;
+
+        try {
+            $query = "
+        SELECT p.*, ROUND(r.average_rating, 2) AS rating, ct.category_name, sh.shop_name, ds.discount_percentage
+        FROM product p
+        LEFT JOIN (
+                    SELECT product_id, AVG(rating) AS average_rating
+                    FROM review
+                    GROUP BY product_id
+                    ) r ON p.product_id = r.product_id
+        JOIN CATEGORY ct on p.category_id = ct.category_id
+        join shop sh on sh.shop_id = p.shop_id
+        JOIN DISCOUNT ds ON ds.discount_id = p.discount_id
+        WHERE p.product_id = :id";
+
+            $statement = $this->executeQuery($query, array("id" => $id));
+
+            $product = $this->fetchRow($statement);
+
+            $this->closeConnection();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        return $product;
+    }
+
+
     public function getProductImage($id)
     {
         $query = 'SELECT PRODUCT_IMAGE FROM Product WHERE PRODUCT_ID = :id';
         $statement = oci_parse($this->conn, $query);
         oci_bind_by_name($statement, ":id", $id);
-        oci_execute($statement);
-        if (!$statement) {
-            $m = oci_error($this->conn);
-            throw new Exception("Error preparing query: " . $m['message']);
-        }
+
         if (!oci_execute($statement)) {
             $m = oci_error($statement);
             throw new Exception("Error executing query: " . $m['message']);
         }
+
         $row = oci_fetch_array($statement, OCI_ASSOC + OCI_RETURN_LOBS);
 
-        if ($row) {
+        if ($row && isset($row['PRODUCT_IMAGE'])) {
             $imageData = $row['PRODUCT_IMAGE'];
             $imageBase64 = base64_encode($imageData);
             return $imageBase64;
         } else {
-            $imageBase64 = '';
+            return '';
         }
     }
 
@@ -133,24 +160,24 @@ class Database
     public function getCartItems($user_id)
     {
         $cartItems = array();
-    
+
         try {
             // Prepare the SQL query to fetch cart items for the user
             $cartId = $this->getCartIdUsingCustomerId($user_id); // Ensure this function is secure
             $query = "SELECT product_id, quantity, special_instruction FROM cart_product WHERE cart_id = :cart_id";
-            
+
             // Get the database connection
             $conn = $this->getConnection();
-            
+
             // Prepare the statement
             $statement = oci_parse($conn, $query);
-            
+
             // Bind parameters
             oci_bind_by_name($statement, ":cart_id", $cartId);
-            
+
             // Execute the statement
             oci_execute($statement);
-            
+
             // Fetch rows one by one
             while ($row = oci_fetch_assoc($statement)) {
                 // Ensure that the fetched row has the required keys
@@ -160,7 +187,7 @@ class Database
                         'quantity' => $row['QUANTITY'],
                         'special_instruction' => $row['SPECIAL_INSTRUCTION']
                     );
-                    
+
                     // Log debug information for each row
                     var_dump($row['PRODUCT_ID']);
                     var_dump($row['QUANTITY']);
@@ -171,26 +198,23 @@ class Database
                     // For now, we'll skip adding the item to the cartItems array
                 }
             }
-        
+
             // Close the connection
             oci_close($conn);
-                
+
         } catch (Exception $e) {
             // Handle exceptions
             throw new Exception("Error fetching cart items: " . $e->getMessage());
         }
-        
+
         // Log debug information
-        echo '<br>inside db getcartitems '; var_dump($cartItems); echo'<br>';
-        
+        echo '<br>inside db getcartitems ';
+        var_dump($cartItems);
+        echo '<br>';
+
         return $cartItems;
     }
-    
-    
-    
-    
-    
-    
+
 
     public function updateCartItem($user_id, $product_id, $quantity, $special_instruction)
     {
@@ -198,36 +222,36 @@ class Database
             // Get the database connection
             $conn = $this->getConnection();
             $cartId = $this->getCartIdUsingCustomerId($user_id);
-            echo '<br>cartid: ';  var_dump($cartId); echo '<br>';
+            // echo '<br>cartid: ';
+            // var_dump($cartId);
+            // echo '<br>';
 
-            echo
-    
             // Prepare the SQL query
             $query = "UPDATE cart_product 
                       SET quantity = :quantity, special_instruction = :special_instruction 
                       WHERE cart_id = :cart_id AND product_id = :product_id";
-    
+
             // Prepare the statement
             $statement = oci_parse($conn, $query);
-    
+
             // Bind parameters
             oci_bind_by_name($statement, ":cart_id", $cartId);
             oci_bind_by_name($statement, ":product_id", $product_id);
             oci_bind_by_name($statement, ":quantity", $quantity);
             oci_bind_by_name($statement, ":special_instruction", $special_instruction);
-    
+
             // Execute the statement
             if (!oci_execute($statement)) {
                 $m = oci_error($statement);
                 throw new Exception("Error executing query: " . $m['message']);
             }
-    
+
             // Commit the transaction
             oci_commit($conn);
-    
+
             // Free the statement
             oci_free_statement($statement);
-    
+
             return true; // Return true on successful update
         } catch (Exception $e) {
             throw new Exception("Error updating cart item: " . $e->getMessage());
@@ -235,43 +259,193 @@ class Database
     }
 
     public function insertCartItem($user_id, $product_id, $quantity, $special_instruction)
-{
-    try {
-        // Get the database connection
-        $conn = $this->getConnection();
-        $cartId = $this->getCartIdUsingCustomerId($user_id);
-        echo '<br>cartid: ';  var_dump($cartId); echo '<br>';
+    {
+        try {
+            // Get the database connection
+            $conn = $this->getConnection();
+            $cartId = $this->getCartIdUsingCustomerId($user_id);
 
-        // Prepare the SQL query
-        $query = "INSERT INTO cart_product (cart_id, product_id, quantity, special_instruction) 
+            // echo '<br>cartid: ';
+            // var_dump($cartId);
+            // echo '<br>';
+
+            // Prepare the SQL query
+            $query = "INSERT INTO cart_product (cart_id, product_id, quantity, special_instruction) 
                   VALUES (:cart_id, :product_id, :quantity, :special_instruction)";
 
-        // Prepare the statement
+            // Prepare the statement
+            $statement = oci_parse($conn, $query);
+
+            // Bind parameters
+            oci_bind_by_name($statement, ":cart_id", $cartId);
+            oci_bind_by_name($statement, ":product_id", $product_id);
+            oci_bind_by_name($statement, ":quantity", $quantity);
+            oci_bind_by_name($statement, ":special_instruction", $special_instruction);
+
+            // Execute the statement
+            if (!oci_execute($statement)) {
+                $m = oci_error($statement);
+                throw new Exception("Error executing query: " . $m['message']);
+            }
+
+            // Commit the transaction
+            oci_commit($conn);
+
+            // Free the statement
+            oci_free_statement($statement);
+
+            return true; // Return true on successful update
+        } catch (Exception $e) {
+            throw new Exception("Error inserting cart item: " . $e->getMessage());
+        }
+    }
+
+    public function getProductFromWishlist($customerId)
+    {
+        $wishlistProducts = array();
+        try {
+            $query = "SELECT p.*, c.category_name, s.shop_name
+                  FROM product p 
+                  JOIN favourite f ON p.product_id = f.product_id
+                  JOIN category c ON p.category_id = c.category_id
+                  JOIN shop s ON s.shop_id = p.shop_id
+                  WHERE f.customer_id = :customer_id";
+            $statement = $this->executeQuery($query, array("customer_id" => $customerId));
+            while ($row = $this->fetchRow($statement)) {
+                $wishlistProducts[] = $row;
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        return $wishlistProducts;
+    }
+
+
+    // From wishlist to cart in database when clicked addto cart.
+    public function updateOrInsertCartItem($userId, $productId, $quantity, $specialInstruction)
+    {
+        $cartId = $this->getCartIdUsingCustomerId($userId);
+        $conn = $this->getConnection();
+
+        $query = "SELECT quantity, special_instruction FROM cart_product WHERE cart_id = :cart_id AND product_id = :product_id";
         $statement = oci_parse($conn, $query);
 
-        // Bind parameters
         oci_bind_by_name($statement, ":cart_id", $cartId);
-        oci_bind_by_name($statement, ":product_id", $product_id);
-        oci_bind_by_name($statement, ":quantity", $quantity);
-        oci_bind_by_name($statement, ":special_instruction", $special_instruction);
+        oci_bind_by_name($statement, ":product_id", $productId);
 
-        // Execute the statement
-        if (!oci_execute($statement)) {
-            $m = oci_error($statement);
-            throw new Exception("Error executing query: " . $m['message']);
+        oci_execute($statement);
+
+        $existingCartItem = oci_fetch_assoc($statement);
+
+        if ($existingCartItem) {
+            $existingQuantity = $existingCartItem['QUANTITY'];
+            $existingSpecialInstruction = $existingCartItem['SPECIAL_INSTRUCTION'];
+            $newQuantity = $existingQuantity + $quantity;
+            $this->updateCartItem($userId, $productId, $newQuantity, $specialInstruction);
+            return;
+        } else {
+            $this->insertCartItem($userId, $productId, 1, '');
+            return;
+        }
+    }
+
+
+    // Update favourtite table when clicked add to wishlist on a product.
+    public function addToWishlist($productId, $customerId)
+    {
+        $conn = $this->getConnection();
+
+        // Check if the product already exists in the wishlist
+        $query = "SELECT * FROM Favourite WHERE product_id = :product_id AND customer_id = :customer_id";
+        $statement = oci_parse($conn, $query);
+        oci_bind_by_name($statement, ":product_id", $productId);
+        oci_bind_by_name($statement, ":customer_id", $customerId);
+        oci_execute($statement);
+
+        $existingProduct = oci_fetch_assoc($statement);
+        if ($existingProduct) {
+            // Product already exists in the wishlist
+            return;
         }
 
-        // Commit the transaction
-        oci_commit($conn);
-
-        // Free the statement
-        oci_free_statement($statement);
-
-        return true; // Return true on successful update
-    } catch (Exception $e) {
-        throw new Exception("Error inserting cart item: " . $e->getMessage());
+        // Insert the product into the wishlist
+        $query = "INSERT INTO Favourite (product_id, customer_id) VALUES (:product_id, :customer_id)";
+        $statement = oci_parse($conn, $query);
+        oci_bind_by_name($statement, ":product_id", $productId);
+        oci_bind_by_name($statement, ":customer_id", $customerId);
+        oci_execute($statement);
     }
-}
+
+
+    // Function to fetch reviews for a specific product
+    public function getReviewsForAProduct($productId)
+    {
+        $reviews = array();
+        try {
+            $query = "SELECT r.comments AS review_text, r.rating, r.reviewed_date AS review_date, 
+                         c.first_name || ' ' || c.last_name AS customer_name
+                  FROM review r
+                  JOIN customer c ON r.customer_id = c.customer_id
+                  WHERE r.product_id = :product_id
+                  ORDER BY r.reviewed_date DESC";
+            $statement = $this->executeQuery($query, array("product_id" => $productId));
+            while ($row = $this->fetchRow($statement)) {
+                $reviews[] = $row;
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        return $reviews;
+    }
+
+
+    public function getProductsByShopId($shopId)
+    {
+        $products = array();
+
+        try {
+            $query = "SELECT p.*, ROUND(r.average_rating, 2) AS rating
+                  FROM product p
+                  LEFT JOIN (
+                      SELECT product_id, AVG(rating) AS average_rating
+                      FROM review
+                      GROUP BY product_id
+                  ) r ON p.product_id = r.product_id
+                  JOIN shop sh ON sh.shop_id = p.shop_id
+                  WHERE sh.shop_id = :shop_id";
+
+            $statement = $this->executeQuery($query, array("shop_id" => $shopId));
+
+            while ($row = $this->fetchRow($statement)) {
+                $products[] = $row;
+            }
+
+            $this->closeConnection();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        return $products;
+    }
+
+
+    // Remove the product from wishlist after the product is added into the cart.
+    public function removeFromWishlist($customerId, $productId)
+    {
+        $conn = $this->getConnection();
+        $query = "DELETE FROM favourite WHERE customer_id = :customer_id AND product_id = :product_id";
+
+        $statement = oci_parse($conn, $query);
+
+        oci_bind_by_name($statement, ":customer_id", $customerId);
+        oci_bind_by_name($statement, ":product_id", $productId);
+
+        if (oci_execute($statement)) {
+            return;
+        } else {
+            return;
+        }
+    }
+
 
 }
 
