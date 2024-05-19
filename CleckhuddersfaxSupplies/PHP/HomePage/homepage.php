@@ -121,7 +121,7 @@
             echo '<a href="addToCart.php?productid=' . $id . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">Add to Cart</a>';
             echo '<a href="addToWishlist.php?product_id=' . $id . '" class="btn btn-outline-secondary ml-2" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">Add to Wishlist</a>';
             echo '</div>
-                </div>
+            </div>
             </div>
         </div>';
         }

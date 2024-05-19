@@ -5,8 +5,11 @@ $database = new Database();
 
 $productID = isset($_GET['product_id']) ? $_GET['product_id'] : null;
 $product = $database->getProductById($productID);
+$shopId = $product['SHOP_ID'];
+echo $shopId;
 
 $imageBase64 = $database->getProductImage($productID);
+$reviews = $database->getReviewsForAProduct($productID);
 
 $productQuantity = 1;
 
@@ -72,9 +75,9 @@ $database->closeConnection();
                         <!-- Add to Cart button -->
                         <?php
                         // Increased font size for buttons
-                        echo '<a href="addToCart.php?productid=' . $productID . '&quantity=" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">
-                                <i class="fas fa-shopping-cart"></i> Add to Cart
-                            </a>';
+                        echo '<a href="addToCart.php?productid=' . $productID . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart </a>';
+
                         ?>
                     </div>
                 </div>
@@ -137,127 +140,99 @@ $database->closeConnection();
 </script>
 
     <div class="container">
-		<div class="row">
+        <div class="row">
             <div class="review">
                 <input id="btnBox" type="checkbox">
                 <p class="display-5">Product Reviews</p>
                 <ul>
-                <li>
-                <div class="rev">
-                    <div class="name_date">
-                        <p class="pname">Person Name</p>
-                        <p class="rev_date">05/02/2024</p>
-                    </div>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, sit quam eligendi eaque libero odio possimus illo voluptas soluta, distinctio repellat ullam ut modi. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor, est?.</p>
-                </div>
-            </li>
-            <li>
-                <div class="rev">
-                    <div class="name_date">
-                        <p class="pname">Person Name</p>
-                        <p class="rev_date">05/04/2024</p>
-                    </div>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, sit quam eligendi eaque libero odio possimus illo voluptas soluta, distinctio repellat ullam ut modi. Lorem, ipsum dolor sit amet consectetur adipisicing.</p>
-                </div>
-
-            </li>
-
-            <li>
-                <div class="rev">
-                    <div class="name_date">
-                        <p class="pname">Person Name</p>
-                        <p class="rev_date">05/07/2024</p>
-                    </div>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, sit quam eligendi eaque libero odio possimus illo voluptas soluta, distinctio repellat ullam ut modi. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore, est!.</p>
-                </div>
-            </li>
-            <li>
-                <div class="rev">
-                    <div class="name_date">
-                        <p class="pname">Person Name</p>
-                        <p class="rev_date">05/08/2024</p>
-                    </div>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, sit quam eligendi eaque libero odio possimus illo voluptas soluta, distinctio repellat ullam ut modi. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore, est!.</p>
-                </div>
-            </li>
-            <li>
-                <div class="rev">
-                    <div class="name_date">
-                        <p class="pname">Person Name</p>
-                        <p class="rev_date">05/09/2024</p>
-                    </div>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, sit quam eligendi eaque libero odio possimus illo voluptas soluta, distinctio repellat ullam ut modi. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore, est!.</p>
-                </div>
-            </li>
-            </ul>
+                    <?php foreach ($reviews as $review): ?>
+                        <li>
+                            <div class="rev" style="width: 1094px;">
+                                <div class="name_date">
+                                    <p class="pname"><?php echo htmlspecialchars($review['CUSTOMER_NAME']); ?></p>
+                                    <p class="rev_date"><?php echo htmlspecialchars($review['REVIEW_DATE']); ?></p>
+                                </div>
+                                <?php for ($i = 0; $i < $review['RATING']; $i++): ?>
+                                    <span class="fa fa-star"></span>
+                                <?php endfor; ?>
+                                <?php for ($i = $review['RATING']; $i < 5; $i++): ?>
+                                    <span class="fa fa-star-o"></span>
+                                <?php endfor; ?>
+                                <p><?php echo htmlspecialchars($review['REVIEW_TEXT']); ?></p>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
                 <label class="btn_a" for="btnBox"><span class="btn1">See More</span><span class="btn2">See Less</span></label>
             </div>
-	    </div>
+        </div>
     </div>
+
+
 
 
 
     <div class="container similar-products my-4">
         <hr>
         <p class="display-5">Similar Products</p>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="similar-product">
-                    <img class="w-100" src="../gallery/cross.png" alt="Preview">
-                    <p class="title">Bakery Item</p>
-                    <p class="price">$6</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni tempora rem expedita laborum! Magnam.</p>
-                    <button type="button" class="btn btn-outline-primary">Add to Cart</button><br><br>
-                    <button type="button" class="btn btn-dark">Review</button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="similar-product">
-                    <img class="w-100" src="../gallery/cross.png" alt="Preview">
-                    <p class="title">Bakery Item</p>
-                    <p class="price">$20</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni tempora rem expedita laborum! Magnam.</p>
-                    <button type="button" class="btn btn-outline-primary">Add to Cart</button><br><br>
-                    <button type="button" class="btn btn-dark">Review</button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="similar-product">
-                    <img class="w-100" src="../gallery/cross.png" alt="Preview">
-                    <p class="title">Bakery Item</p>
-                    <p class="price">$12</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni tempora rem expedita laborum! Magnam.</p>
-                    <button type="button" class="btn btn-outline-primary">Add to Cart</button><br><br>
-                    <button type="button" class="btn btn-dark">Review</button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="similar-product">
-                    <img class="w-100" src="../gallery/cross.png" alt="Preview">
-                    <p class="title">Bakery Item</p>
-                    <p class="price">$10</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni tempora rem expedita laborum! Magnam.</p>
-                    <button type="button" class="btn btn-outline-primary">Add to Cart</button><br> <br>
-                    <button type="button" class="btn btn-dark">Review</button>
-                </div>
+        <div class="scrollable-row">
+            <div class="row">
+                <?php
+                // Assuming you have instantiated your class and $shopId is available
+
+                // Fetch similar products
+                $similarProducts = $database->getProductsByShopId($shopId);
+
+                // Loop through similar products and display them
+                foreach ($similarProducts as $product) {
+                    // Fetch image base64
+                    $imageBase64 = $database->getProductImage($product['PRODUCT_ID']);
+                    ?>
+                    <div class="col-md-3">
+                        <div class="similar-product">
+                            <img class="w-100" src="data:image/jpeg;base64,<?php echo $imageBase64; ?>" alt="Preview">
+                            <p class="title"><?php echo htmlspecialchars($product['PRODUCT_NAME']); ?></p>
+                            <p class="price">$<?php echo $product['PRICE']; ?></p>
+                            <p><?php echo htmlspecialchars($product['DESCRIPTION']); ?></p>
+                            <button type="button" class="btn btn-outline-primary">Add to Cart</button><br><br>
+                            <button type="button" class="btn btn-dark">Review</button>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
         </div>
+        <div class="arrow left-arrow">&lt;</div>
+        <div class="arrow right-arrow">&gt;</div>
     </div>
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const container = document.querySelector(".scrollable-row");
+            const leftArrow = document.querySelector(".left-arrow");
+            const rightArrow = document.querySelector(".right-arrow");
+
+            leftArrow.addEventListener("click", function() {
+                container.scrollBy({
+                    left: -200, // Adjust this value to change scroll distance
+                    behavior: "smooth"
+                });
+            });
+
+            rightArrow.addEventListener("click", function() {
+                container.scrollBy({
+                    left: 200, // Adjust this value to change scroll distance
+                    behavior: "smooth"
+                });
+            });
+        });
+    </script>
+
+
+
 
 
 

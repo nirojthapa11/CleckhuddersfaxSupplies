@@ -108,7 +108,7 @@ class Database
 
 
     public function getProductImage($id)
-{
+    {
     $query = 'SELECT PRODUCT_IMAGE FROM Product WHERE PRODUCT_ID = :id';
     $statement = oci_parse($this->conn, $query);
     oci_bind_by_name($statement, ":id", $id);
@@ -127,7 +127,7 @@ class Database
     } else {
         return ''; 
     }
-}
+    }
 
 
 
@@ -352,23 +352,7 @@ class Database
         }
     }
 
-    // Remove the product from wishlist after the product is added into the cart.
-    public function removeFromWishlist($customerId, $productId)
-    {
-        $conn = $this->getConnection();
-        $query = "DELETE FROM favourite WHERE customer_id = :customer_id AND product_id = :product_id";
-
-        $statement = oci_parse($conn, $query);
-
-        oci_bind_by_name($statement, ":customer_id", $customerId);
-        oci_bind_by_name($statement, ":product_id", $productId);
-
-        if (oci_execute($statement)) {
-            return; 
-        } else {
-            return;
-        }
-    }
+   
 
     // Update favourtite table when clicked add to wishlist on a product.
     public function addToWishlist($productId, $customerId)
@@ -395,6 +379,78 @@ class Database
         oci_bind_by_name($statement, ":customer_id", $customerId);
         oci_execute($statement);
     }
+
+
+    // Function to fetch reviews for a specific product
+    public function getReviewsForAProduct($productId)
+    {
+    $reviews = array();
+    try {
+        $query = "SELECT r.comments AS review_text, r.rating, r.reviewed_date AS review_date, 
+                         c.first_name || ' ' || c.last_name AS customer_name
+                  FROM review r
+                  JOIN customer c ON r.customer_id = c.customer_id
+                  WHERE r.product_id = :product_id
+                  ORDER BY r.reviewed_date DESC";
+        $statement = $this->executeQuery($query, array("product_id" => $productId));
+        while ($row = $this->fetchRow($statement)) {
+            $reviews[] = $row;
+        }
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+    return $reviews;
+    }
+
+
+    public function getProductsByShopId($shopId)
+    {
+    $products = array();
+
+    try {
+        $query = "SELECT p.*, ROUND(r.average_rating, 2) AS rating
+                  FROM product p
+                  LEFT JOIN (
+                      SELECT product_id, AVG(rating) AS average_rating
+                      FROM review
+                      GROUP BY product_id
+                  ) r ON p.product_id = r.product_id
+                  JOIN shop sh ON sh.shop_id = p.shop_id
+                  WHERE sh.shop_id = :shop_id";
+
+        $statement = $this->executeQuery($query, array("shop_id" => $shopId));
+
+        while ($row = $this->fetchRow($statement)) {
+            $products[] = $row;
+        }
+
+        $this->closeConnection();
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+    return $products;
+    }
+    
+    
+
+     // Remove the product from wishlist after the product is added into the cart.
+     public function removeFromWishlist($customerId, $productId)
+     {
+         $conn = $this->getConnection();
+         $query = "DELETE FROM favourite WHERE customer_id = :customer_id AND product_id = :product_id";
+ 
+         $statement = oci_parse($conn, $query);
+ 
+         oci_bind_by_name($statement, ":customer_id", $customerId);
+         oci_bind_by_name($statement, ":product_id", $productId);
+ 
+         if (oci_execute($statement)) {
+             return; 
+         } else {
+             return;
+         }
+     }
+
     
 
 
