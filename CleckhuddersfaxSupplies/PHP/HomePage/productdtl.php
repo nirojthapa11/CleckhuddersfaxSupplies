@@ -1,3 +1,21 @@
+<?php
+require_once('../../partials/dbconnect.php'); 
+
+$database = new Database();
+
+$productID = isset($_GET['product_id']) ? $_GET['product_id'] : null;
+$product = $database->getProductById($productID);
+
+$imageBase64 = $database->getProductImage($productID);
+
+$productQuantity = 1;
+
+$database->closeConnection();
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,62 +30,111 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
         integrity="sha512-..." crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js" integrity="sha512-naukR7I+Nk6gp7p5TMA4ycgfxaZBJ7MO5iC3Fp6ySQyKFHOGfpkSZkYVWV5R7u7cfAicxanwYQ5D1e17EfJcMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 </head>
 <body>
 <div>
     <?php
-
-
         include('../HeaderPage/head.php');
     ?>
    
     </div>
 
-    git
+
 
 <div class="container my-5">
-        <div class="row">
+
+
+    <div class="row">
+        <?php if ($product && $imageBase64) : ?>
             <div class="col-md-5">
                 <div class="main-img">
-                    <img class="img-fluid" src="../gallery/crossiant.png" alt="ProductS">
+                    <!-- Resize and display the product image -->
+                    <img class="img-fluid" src="data:image/png;base64, <?php echo $imageBase64; ?>" alt="Product" width="100" height="100">
+                </div>
+                <div class="text-center mt-3">
+                    <div class="d-flex justify-content-between">
+                        <!-- "Add to Wishlist" button with icon -->
+                        <a href="addToWishlist.php?product_id=<?php echo $productID; ?>" class="btn btn-outline-secondary" style="font-family: 'Roboto', sans-serif; font-size: 1.8rem;">
+                            <i class="fas fa-heart"></i> Add to Wishlist
+                        </a>
+                        <!-- Quantity increase and decrease buttons -->
+                        <div class="quantity-buttons my-2">
+                            <button class="btn btn-secondary" onclick="updateQuantity('decrease')"><i class="fas fa-minus"></i></button>
+                            <span id="productQuantity" class="mx-2">1</span>
+                            <button class="btn btn-secondary" onclick="updateQuantity('increase')"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <!-- Add to Cart button -->
+                        <?php
+                        // Increased font size for buttons
+                        echo '<a href="addToCart.php?productid=' . $productID . '&quantity=" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">
+                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                            </a>';
+                        ?>
+                    </div>
                 </div>
             </div>
+            
             <div class="col-md-7">
+                <!-- Product details -->
                 <div class="main-description px-2">
                     <div class="product-title text-bold my-3">
-                        Croissant
+                        <?php echo $product['PRODUCT_NAME']; ?> <!-- Product Name -->
                     </div>
-
-
                     <div class="price-area my-4">
-                        <p class="new-price text-bold mb-1">Price: $7</p>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                        <?php if ($product['PRICE']) : ?>
+                            <!-- Display Price -->
+                            <p class="new-price text-bold mb-1">Price: $<?php echo $product['PRICE']; ?></p>
+                        <?php endif; ?>
+                        <!-- Display Rating -->
+                        <?php
+                        $rating = $product['RATING'];
+                        for ($i = 0; $i < $rating; $i++) {
+                            echo '<span class="fa fa-star"></span>';
+                        }
+                        ?>
+                    </div>
+                    <div class="product-details my-4">
+                        <!-- Display Product Description -->
+                        <p class="description"><?php echo $product['DESCRIPTION']; ?></p>
+                    </div>
+                    <!-- Additional Product Details -->
+                    <div class="product-details my-4">
+                        <p><strong>Category:</strong> <?php echo $product['CATEGORY_NAME']; ?></p>
+                        <p><strong>Shop:</strong> <?php echo $product['SHOP_NAME']; ?></p>
+                        <p><strong>Stock:</strong> <?php echo $product['STOCK']; ?></p>
+                        <p><strong>Discount:</strong> <?php echo $product['DISCOUNT_PERCENTAGE']; ?></p>
+                        <p><strong>Allergy Info:</strong> <?php echo $product['ALLERGY_INFO']; ?></p>
                     </div>
                 </div>
-
-                <div class="product-details my-4">
-                    <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat excepturi odio recusandae aliquid ad impedit autem commodi earum voluptatem laboriosam. Quam accusamus, sequi nisi nulla nemo maxime nesciunt quos, quod ut reprehenderit totam molestias a natus numquam quae. Sapiente sed maiores voluptate? </p>
-                </div>
-
-                <div class="buttons d-flex my-5">
-                    <div class="block">
-                        <a href="#" class="shadow btn custom-btn ">Add to cart</a>
-                    </div>
-                    <div class="block">
-                        <a href="#" class="shadow btn custom-btn ">Add to Wishlist</a>
-                    </div>
-                </div>
+            </div>  
+        <?php else : ?>
+            <div class="col-md-12">
+                <p>Product not found.</p>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 
+
+<script>
+        // Initialize productQuantity JavaScript variable with the value from PHP
+        var productQuantity = <?php echo $productQuantity; ?>;
+
+        // JavaScript function to update quantity
+        function updateQuantity(action) {
+            if (action === 'increase') {
+                productQuantity++;
+            } else if (action === 'decrease' && productQuantity > 1) {
+                productQuantity--;
+            }
+            document.getElementById('productQuantity').innerText = productQuantity;
+        }
+</script>
 
     <div class="container">
 		<div class="row">
@@ -142,6 +209,9 @@
             </div>
 	    </div>
     </div>
+
+
+
     <div class="container similar-products my-4">
         <hr>
         <p class="display-5">Similar Products</p>

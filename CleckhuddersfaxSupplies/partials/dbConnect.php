@@ -75,6 +75,37 @@ class Database
         return $products;
     }
 
+    public function getProductById($id)
+    {
+    $product = null;
+
+    try {
+        $query = "
+        SELECT p.*, ROUND(r.average_rating, 2) AS rating, ct.category_name, sh.shop_name, ds.discount_percentage
+        FROM product p
+        LEFT JOIN (
+                    SELECT product_id, AVG(rating) AS average_rating
+                    FROM review
+                    GROUP BY product_id
+                    ) r ON p.product_id = r.product_id
+        JOIN CATEGORY ct on p.category_id = ct.category_id
+        join shop sh on sh.shop_id = p.shop_id
+        JOIN DISCOUNT ds ON ds.discount_id = p.discount_id
+        WHERE p.product_id = :id";
+
+        $statement = $this->executeQuery($query, array("id" => $id));
+
+        $product = $this->fetchRow($statement);
+
+        $this->closeConnection();
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+    return $product;
+    }
+
+    
+
 
     public function getProductImage($id)
 {

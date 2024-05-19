@@ -162,3 +162,20 @@ a:hover {
     text-decoration: none !important;
     opacity: 0.7 !important;
 }
+
+/* Add the CSS rule for fa-star */
+.fa-star {
+    color: #ffc107 !important; /* Important to override any existing styles */
+}
+
+/* Other CSS rules remain unchanged */
+.container {
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Remaining CSS rules... */
+

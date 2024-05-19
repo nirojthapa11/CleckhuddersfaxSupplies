@@ -102,7 +102,7 @@
 
             echo '<div class="card-body" style="padding: 1.5rem;">';
 
-            echo '<h5 class="card-title" style="font-family: \'Roboto\', sans-serif; font-size: 2rem;"><a href="productdtl.php?productid=' . $id . '" style="color: #333;">' . $name . '</a></h5>
+            echo '<h5 class="card-title" style="font-family: \'Roboto\', sans-serif; font-size: 2rem;"><a href="productdtl.php?product_id=' . $id . '" style="color: #333;">' . $name . '</a></h5>
                   <p class="card-text text-muted" style="font-family: \'Roboto\', sans-serif; font-size: 1.5rem;">' . substr($desc, 0, 50) . '...</p>
                   <div class="ratings">';
 
