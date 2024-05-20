@@ -134,6 +134,7 @@ $db->closeConnection();
                             </div>
                         </div>
                         <div class="form-row">
+                            <input type="hidden" name="update-profile" value="my_value">
                             <button type="button" class="button-group" id="edit-button">Edit</button>
                             <button type="submit" class="button-group" id="save-button" disabled>Save</button>
                         </div>

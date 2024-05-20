@@ -652,6 +652,26 @@ class Database
             return false;
         }
     }
+
+
+    public function getEmailByCustomerId($customerId)
+    {
+        try {
+            $query = 'SELECT email FROM customer WHERE customer_id = :customer_id';
+            
+            $statement = $this->executeQuery($query, array('customer_id' => $customerId));
+            $row = $this->fetchRow($statement);
+            oci_free_statement($statement);
+            if ($row && isset($row['EMAIL'])) {
+                return $row['EMAIL'];
+            } else {
+                return null;
+            }
+        } catch (Exception $e) {
+            throw new Exception("Error fetching email by customer ID: " . $e->getMessage());
+        }
+    }
+
     
     
 

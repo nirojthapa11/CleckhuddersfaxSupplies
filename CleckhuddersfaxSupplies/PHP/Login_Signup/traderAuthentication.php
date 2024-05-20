@@ -1,13 +1,13 @@
 <?php
-session_start();
-$conn = oci_connect('hembikram', 'Hem#123', '//localhost/xe');
-if (!$conn) {
-    $m = oci_error();
-    echo $m['message'], "\n";
-    exit;
-}
+include '../../partials/dbConnect.php';
+require_once '../MailerService.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$db = new Database();
+$conn = $db->getConnection();
+
+session_start();
+
+if (isset($_POST['submit'])) {
     // Retrieve form data
     $email = $_POST['email'];
     $fname = $_POST['firstName'];
@@ -20,57 +20,71 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $cpassword = $_POST['confirmPassword'];
 
+    $_SESSION['email'] = $_POST['email'];
+    $_SESSION['firstName'] = $_POST['firstName'];
+    $_SESSION['lastName'] = $_POST['lastName'];
+    $_SESSION['phoneNumber'] = $_POST['phoneNumber'];
+    $_SESSION['address'] = $_POST['address'];
+    $_SESSION['age'] = $_POST['age'];
+    $_SESSION['gender'] = $_POST['gender'];
+    $_SESSION['userName'] = $_POST['userName'];
+    $_SESSION['password'] = $_POST['password'];
+    $_SESSION['confirmPassword'] = $_POST['confirmPassword'];
+
     // Password validation
-    if ($password != $cpassword) {
-        $error_message = 'Password and Confirm Password do not match!';
-    } elseif (strlen($password) < 8 || strlen($password) > 32) {
-        $error_message = "Password should be 8 to 32 characters long.";
-    } elseif (!preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', $password)) {
-        $error_message = "Password should contain an uppercase letter, a number, and a special character.";
-    } else {
-        // Check for existing username, email, and contact
-        $stmt = oci_parse($conn, "SELECT count(*) AS COUNT FROM TRADER WHERE Username = :username");
-        oci_bind_by_name($stmt, ':username', $username);
-        oci_execute($stmt);
-        $row = oci_fetch_array($stmt, OCI_ASSOC);
-        if ($row['COUNT'] != 0) {
-            $error_message = 'Username already exists!';
-        } else {
-            $stmt = oci_parse($conn, "SELECT count(*) AS COUNT FROM TRADER WHERE Email = :email");
-            oci_bind_by_name($stmt, ':email', $email);
-            oci_execute($stmt);
-            $row = oci_fetch_array($stmt, OCI_ASSOC);
-            if ($row['COUNT'] != 0) {
-                $error_message = 'Email already exists!';
-            } else {
-                $stmt = oci_parse($conn, "SELECT count(*) AS COUNT FROM TRADER WHERE Phone = :number");
-                oci_bind_by_name($stmt, ':number', $number);
-                oci_execute($stmt);
-                $row = oci_fetch_array($stmt, OCI_ASSOC);
-                if ($row['COUNT'] != 0) {
-                    $error_message = 'Contact number already exists!';
-                } else {
-                    // Hash the password before storing it
-                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-                    // Store user data in the session
-                    $_SESSION['traderSignupData'] = [
-                        'First_Name' => $fname,
-                        'Last_Name' => $lname,
-                        'Address' => $address,
-                        'Phone' => $number,
-                        'Email' => $email,
-                        'Username' => $username,
-                        'Password' => $hashedPassword
-                    ];
-                    // Redirect to the next page
-                    header("Location: Shop.php");
-                    exit;
-                }
-            }
+    if (strlen($password) < 8 || strlen($password) > 32) {
+        $_SESSION['error'] = "Password must be at least 8 or less than 32 characters long.";
+        $_SESSION['form_data'] = $_POST;
+        header("Location: customerSignup.php");
+        exit();
+    }
+    if ($password !== $cpassword) {
+        $_SESSION['error'] = "Password and Confirm Password do not match. Please try again.";
+        $_SESSION['form_data'] = $_POST;
+        header("Location: customerSignup.php");
+        exit();
+    }
+    if (!preg_match('/[!@#$%^&*()\-_=+]/', $password)) {
+        $_SESSION['error'] = "Password must contain at least one special character.";
+        $_SESSION['form_data'] = $_POST;
+        header("Location: customerSignup.php");
+        exit();
+    }
+
+    
+    // Check if email, username, or contact number already exists
+    $query_check = "SELECT Email, Username, Phone FROM Trader WHERE Email = '$email' OR Username = '$Uname' OR Phone = '$number'";
+    $statement_check = oci_parse($conn, $query_check);
+    oci_execute($statement_check);
+    $row = oci_fetch_assoc($statement_check);
+
+    if ($row !== false) {
+        $message = "Email, username, or phone number already exists. Please use different ones.";
+        if ($email === $row['EMAIL']) {
+            $message = "Email already exists. Please use a different email.";
+        } elseif ($Uname === $row['USERNAME']) {
+            $message = "Username already exists. Please use a different username.";
+        } elseif ($number === $row['PHONE']) {
+            $message = "Phone number already exists. Please use a different one.";
         }
+        $_SESSION['error'] = $message;
+        $_SESSION['form_data'] = $_POST; 
+        header("Location: customerSignup.php");
+        exit();
     }
-    if (isset($error_message)) {
-        echo "<script>alert('$error_message');</script>";
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 ?>

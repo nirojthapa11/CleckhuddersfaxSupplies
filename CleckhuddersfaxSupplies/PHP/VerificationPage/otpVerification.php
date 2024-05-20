@@ -12,6 +12,18 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_SESSION['isVerifiedCustSig
         $_SESSION['error'] = 'Invalid OTP. Please try again.';
     }
 }
+elseif (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_SESSION['isVerifiedCustUpdateOtp'] )) {
+    $enteredOtp = htmlspecialchars(trim($_POST['otp']));
+
+    if (isset($_SESSION['custUpdateOtp']) && $enteredOtp == $_SESSION['custUpdateOtp']) {
+        $_SESSION['isVerifiedCustUpdateOtp'] = TRUE;
+        header("Location: ../CustomerProfilePage/updateProfile.php");
+        exit;
+    } else {
+        $_SESSION['error'] = 'Invalid OTP. Please try again.';
+    }
+}
+
 elseif (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_SESSION['isVerifiedCustResetOtp'] )) {
     $enteredOtp = htmlspecialchars(trim($_POST['otp']));
 
