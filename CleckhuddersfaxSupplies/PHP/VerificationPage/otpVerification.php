@@ -1,16 +1,30 @@
 <?php
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_SESSION['isVerifiedCustSignupOtp'])) {
+    $enteredOtp = htmlspecialchars(trim($_POST['otp']));
+
+    if (isset($_SESSION['custSignupOtp']) && $enteredOtp == $_SESSION['custSignupOtp']) {
+        $_SESSION['isVerifiedCustSignupOtp'] = TRUE;
+        header("Location: ../Login_Signup/CustomerAuthentication.php");
+        exit;
+    } else {
+        $_SESSION['error'] = 'Invalid OTP. Please try again.';
+    }
+}
+elseif (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_SESSION['isVerifiedCustResetOtp'] )) {
     $enteredOtp = htmlspecialchars(trim($_POST['otp']));
 
     if (isset($_SESSION['otp']) && $enteredOtp == $_SESSION['otp']) {
+        $_SESSION['isVerifiedCustResetOtp'] = TRUE;
         header("Location: passwordReset.php");
         exit;
     } else {
         $_SESSION['error'] = 'Invalid OTP. Please try again.';
     }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

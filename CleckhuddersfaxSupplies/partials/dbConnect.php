@@ -520,24 +520,31 @@ class Database
     public function getProfileImage($customerId)
     {
         $query = "SELECT cust_image FROM customer WHERE customer_id = :customerId";
-        $statement = oci_parse($this->conn, $query);
-        oci_bind_by_name($statement, ":customerId", $customerId);
+        try {
+            $statement = oci_parse($this->conn, $query);
+            oci_bind_by_name($statement, ":customerId", $customerId);
 
-        if (!oci_execute($statement)) {
-            $m = oci_error($statement);
-            throw new Exception("Error executing query: " . $m['message']);
-        }
+            if (!oci_execute($statement)) {
+                $m = oci_error($statement);
+                throw new Exception("Error executing query: " . $m['message']);
+            }
 
-        $row = oci_fetch_array($statement, OCI_ASSOC + OCI_RETURN_LOBS);
+            $row = oci_fetch_array($statement, OCI_ASSOC + OCI_RETURN_LOBS);
 
-        if ($row && isset($row['CUST_IMAGE'])) {
-            $imageData = $row['CUST_IMAGE'];
-            $imageBase64 = base64_encode($imageData);
-            return $imageBase64;
-        } else {
-            return '';
+            if ($row !== false && isset($row['CUST_IMAGE'])) {
+                $imageData = $row['CUST_IMAGE'];
+                $imageBase64 = base64_encode($imageData);
+                return $imageBase64;
+            } else {
+                return null; 
+            }
+        } catch (Exception $e) {
+            // Handle the exception and return null
+            return null;
         }
     }
+
+
 
 
     public function insertProfileImage($customerId, $imageData)

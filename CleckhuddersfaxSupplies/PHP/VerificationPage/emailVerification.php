@@ -10,6 +10,7 @@
     $otp = generateOTP();
     $_SESSION['otp'] = $otp;
     $_SESSION['email'] = $email;
+    $_SESSION['isVerifiedCustResetOtp'] = FALSE;
 
     $mailer = new MailerService();
 
@@ -26,8 +27,6 @@
       return rand(pow(10, $length - 1), pow(10, $length) - 1);
   }
 
-
-  
 
 ?>
 

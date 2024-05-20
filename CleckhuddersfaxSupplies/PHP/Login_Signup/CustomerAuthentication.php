@@ -1,12 +1,12 @@
 <?php
-$conn = oci_connect('hembikram', 'Hem#123', '//localhost/xe');
-if (!$conn) {
-    $m = oci_error();
-    echo $m['message'], "\n";
-    exit;
-} else {
-    print "Connected to Oracle!";
-}
+
+include '../../partials/dbConnect.php';
+require_once '../MailerService.php';
+
+$db = new Database();
+$conn = $db->getConnection();
+
+session_start();
 
 if(isset($_POST['submit']))
 {
@@ -22,6 +22,37 @@ if(isset($_POST['submit']))
     $Uname = $_POST['userName'];
     $cpassword = $_POST['confirmPassword'];
 
+    $_SESSION['email'] = $_POST['email'];
+    $_SESSION['password'] = $_POST['password'];
+    $_SESSION['fname'] = $_POST['firstName'];
+    $_SESSION['lname'] = $_POST['firstName'];
+    $_SESSION['number'] = $_POST['phoneNumber'];
+    $_SESSION['address'] = $_POST['address'];
+    $_SESSION['age'] = $_POST['age'];
+    $_SESSION['gender'] = $_POST['gender'];
+    $_SESSION['Uname'] = $_POST['userName'];
+
+
+
+    if (strlen($password) < 8 || strlen($password) > 32) {
+        $_SESSION['error'] = "Password must be at least 8 or less than 32 characters long.";
+        $_SESSION['form_data'] = $_POST;
+        header("Location: customerSignup.php");
+        exit();
+    }
+    if ($password !== $cpassword) {
+        $_SESSION['error'] = "Password and Confirm Password do not match. Please try again.";
+        $_SESSION['form_data'] = $_POST;
+        header("Location: customerSignup.php");
+        exit();
+    }
+    if (!preg_match('/[!@#$%^&*()\-_=+]/', $password)) {
+        $_SESSION['error'] = "Password must contain at least one special character.";
+        $_SESSION['form_data'] = $_POST;
+        header("Location: customerSignup.php");
+        exit();
+    }
+
     // Check if email, username, or contact number already exists
     $query_check = "SELECT Email, Username, Phone FROM Customer WHERE Email = '$email' OR Username = '$Uname' OR Phone = '$number'";
     $statement_check = oci_parse($conn, $query_check);
@@ -30,36 +61,51 @@ if(isset($_POST['submit']))
 
     if ($row !== false) {
         $message = "Email, username, or phone number already exists. Please use different ones.";
-        if ($email === $row['Email']) {
+        if ($email === $row['EMAIL']) {
             $message = "Email already exists. Please use a different email.";
-        } elseif ($Uname === $row['Username']) {
+        } elseif ($Uname === $row['USERNAME']) {
             $message = "Username already exists. Please use a different username.";
-        } elseif ($number === $row['Phone']) {
+        } elseif ($number === $row['PHONE']) {
             $message = "Phone number already exists. Please use a different one.";
         }
-        echo '<script>alert("' . $message . '")</script>';
+        $_SESSION['error'] = $message;
+        $_SESSION['form_data'] = $_POST; 
+        header("Location: customerSignup.php");
         exit();
     }
 
-    // password validation
-    if ($password !== $cpassword) {
-        echo '<script>alert("Password and Confirm Password do not match. Please try again.")</script>';
-        exit();  
-    }
-    
-    if (strlen($password) < 8 || strlen($password) > 32 ) {
-        echo '<script>alert("Password must be at least 8 or less than 32 characters long.")</script>';
-        exit();
-    }
 
-    if (!preg_match('/[!@#$%^&*()\-_=+]/', $password)) {
-        echo '<script>alert("Password must contain at least one special charcater.")</script>';
-        exit();
+
+    $custSignupOtp = generateOTP();
+    $_SESSION['custSignupOtp'] = $custSignupOtp;
+    $_SESSION['isVerifiedCustSignupOtp'] = FALSE;
+
+    $mailer = new MailerService();
+
+    if ($mailer->signupEmailVerification($email, $custSignupOtp)) {
+        header("Location: ../VerificationPage/otpVerification.php");
+        exit;
+    } else {
+        echo "Failed to send verification email.";
     }
-    
-    // SQL query
+    oci_close($conn);
+}
+
+
+if(isset($_SESSION['isVerifiedCustSignupOtp']) && ($_SESSION['isVerifiedCustSignupOtp'] == TRUE))
+{
+    $Uname = $_SESSION['Uname'];
+    $email = $_SESSION['email'];
+    $password = $_SESSION['password'];
+    $fname = $_SESSION['fname'];
+    $lname = $_SESSION['lname'];
+    $number = $_SESSION['number'];
+    $address = $_SESSION['address'];
+    $age = $_SESSION['age'];
+    $gender = $_SESSION['gender'];
+
     $query = "INSERT INTO Customer (Cust_image, First_Name, Last_Name, Address, Age, Email, Phone, Gender, Username, Password, Registration_Date) 
-    VALUES (null, '$fname', '$lname', '$address', '$age', '$email', '$number', '$gender', '$Uname', '$password', SYSDATE)";
+    VALUES (empty_blob(), '$fname', '$lname', '$address', '$age', '$email', '$number', '$gender', '$Uname', '$password', SYSDATE)";
 
     $statement = oci_parse($conn, $query);
     $result = oci_execute($statement);
@@ -71,9 +117,17 @@ if(isset($_POST['submit']))
     }
     else {
         $error = oci_error($statement);
-        echo "Error: " . $error['message']; // Display Oracle error message
+        echo "Error: " . $error['message']; 
     }
-
+    unset($_SESSION['isVerifiedCustSignupOtp']);
+    session_destroy();
     oci_close($conn);
+
+}    
+
+function generateOTP($length = 6)
+{
+    return rand(pow(10, $length - 1), pow(10, $length) - 1);
 }
+
 ?>
