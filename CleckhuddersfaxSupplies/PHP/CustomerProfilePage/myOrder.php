@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Orders</title>
@@ -10,59 +11,60 @@
     <script defer src="order.js"></script>
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
+
 <body>
 
-<div><?php include('../HeaderPage/head.php'); ?></div>
-<div class="modal" id="reviewModal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 class="modal-title">Add Review For: <span id="productName"></span></h2>
-        <div class="review-form">
-            <form id="reviewForm">
-                <div class="rating-section">
-                    <label for="rating">Rating:</label>
-                    <div class="rating-stars" id="ratingStars">
-                        <!-- Five stars, initially all empty -->
-                        <i class="far fa-star star" data-rating="1"></i>
-                        <i class="far fa-star star" data-rating="2"></i>
-                        <i class="far fa-star star" data-rating="3"></i>
-                        <i class="far fa-star star" data-rating="4"></i>
-                        <i class="far fa-star star" data-rating="5"></i>
+    <div><?php include('../HeaderPage/head.php'); ?></div>
+    <div class="modal" id="reviewModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="modal-title">Add Review For: <span id="productName"></span></h2>
+            <div class="review-form">
+                <form id="reviewForm">
+                    <div class="rating-section">
+                        <label for="rating">Rating:</label>
+                        <div class="rating-stars" id="ratingStars">
+                            <!-- Five stars, initially all empty -->
+                            <i class="far fa-star star" data-rating="1"></i>
+                            <i class="far fa-star star" data-rating="2"></i>
+                            <i class="far fa-star star" data-rating="3"></i>
+                            <i class="far fa-star star" data-rating="4"></i>
+                            <i class="far fa-star star" data-rating="5"></i>
+                        </div>
+                        <!-- Hidden input field to store the selected rating -->
+                        <input type="hidden" id="rating" name="rating" value="0">
                     </div>
-                    <!-- Hidden input field to store the selected rating -->
-                    <input type="hidden" id="rating" name="rating" value="0">
-                </div>
-                <div class="comment-section">
-                    <label for="comments">Comments:</label>
-                    <textarea id="comments" name="comments" rows="4" placeholder="Enter your comments here..."
-                              required></textarea>
-                </div>
-                <div class="submit-section">
-                    <input type="submit" value="Submit Review">
-                </div>
-            </form>
+                    <div class="comment-section">
+                        <label for="comments">Comments:</label>
+                        <textarea id="comments" name="comments" rows="4" placeholder="Enter your comments here..."
+                            required></textarea>
+                    </div>
+                    <div class="submit-section">
+                        <input type="submit" value="Submit Review">
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 
-<div class="wrapper">
-    <div class="sidebar">
-        <ul>
-            <li><a href="customerProfile.php"><i class="fas fa-user"></i>My Profile</a></li>
-            <li><a href="myOrder.php"><i class="fas fa-cart-shopping"></i>My Orders</a></li>
-            <li><a href="myWishlist.php"><i class="fas fa-heart"></i>My Whislists</a></li>
-            <li><a href="#"><i class="fas fa-money-bill"></i></i>My Reviews</a></li>
-            <li><a href="#"><i class="fas fa-cart-shopping"></i>My Cart</a></li>
-        </ul>
-    </div>
-    <div class="main_content">
-        <div class="hr">My Orders</div>
-        <?php
+    <div class="wrapper">
+        <div class="sidebar">
+            <ul>
+                <li><a href="customerProfile.php"><i class="fas fa-user"></i>My Profile</a></li>
+                <li><a href="myOrder.php"><i class="fas fa-cart-shopping"></i>My Orders</a></li>
+                <li><a href="myWishlist.php"><i class="fas fa-heart"></i>My Whislists</a></li>
+                <li><a href="#"><i class="fas fa-money-bill"></i></i>My Reviews</a></li>
+                <li><a href="#"><i class="fas fa-cart-shopping"></i>My Cart</a></li>
+            </ul>
+        </div>
+        <div class="main_content">
+            <div class="hr">My Orders</div>
+            <?php
         // Include your database connection file
         include('../../partials/dbconnect.php');
         $customerId = $_SESSION['user_id'];
@@ -126,10 +128,11 @@
             echo "</div>";
         }
         ?>
+        </div>
     </div>
-</div>
 
 
-<?php include('../FooterPage/footer.php'); ?>
+    <?php include('../FooterPage/footer.php'); ?>
 </body>
+
 </html>
