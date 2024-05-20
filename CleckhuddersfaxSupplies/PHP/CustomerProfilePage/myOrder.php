@@ -9,12 +9,14 @@
     <link rel="stylesheet" href="../FooterPage/footer.css">
     <script defer src="order.js"></script>
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
 </head>
 <body>
 
-<div><?php include('../HeaderPage/head.php');?></div>
+<div><?php include('../HeaderPage/head.php'); ?></div>
 <div class="modal" id="reviewModal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -36,7 +38,8 @@
                 </div>
                 <div class="comment-section">
                     <label for="comments">Comments:</label>
-                    <textarea id="comments" name="comments" rows="4" placeholder="Enter your comments here..." required></textarea>
+                    <textarea id="comments" name="comments" rows="4" placeholder="Enter your comments here..."
+                              required></textarea>
                 </div>
                 <div class="submit-section">
                     <input type="submit" value="Submit Review">
@@ -45,7 +48,6 @@
         </div>
     </div>
 </div>
-
 
 
 <div class="wrapper">
@@ -119,7 +121,7 @@
             }
             echo "</tbody>";
             echo "</table>";
-            echo "<div class='total-price'>Total Price: £". number_format($totalPrice, 2) . "</div>"; // Display total price below the subtotal
+            echo "<div class='total-price'>Total Price: £" . number_format($totalPrice, 2) . "</div>"; // Display total price below the subtotal
             echo "</div>";
             echo "</div>";
         }
@@ -128,6 +130,6 @@
 </div>
 
 
-<?php include('../FooterPage/footer.php');?>
+<?php include('../FooterPage/footer.php'); ?>
 </body>
 </html>

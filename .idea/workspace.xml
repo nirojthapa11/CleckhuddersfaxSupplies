@@ -6,17 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="dfdccd17-bc41-4eb6-9dc8-f1a1b916cdc5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/CustomerProfilePage/myWishlist.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/CustomerProfilePage/myWishlist.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HeaderPage/head.css" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HeaderPage/head.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HeaderPage/head.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HeaderPage/head.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HomePage/homepage.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HomePage/homepage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HomePage/productdtl.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HomePage/productdtl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/ShopAuthrntication.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/ShopAuthrntication.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/TraderSignup.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/TraderSignup.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/customerSignup.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/customerSignup.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/loginAuthentication.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/loginAuthentication.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/partials/dbConnect.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/partials/dbConnect.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/CustomerProfilePage/myOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/CustomerProfilePage/myOrder.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +24,7 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -85,6 +76,7 @@
       <workItem from="1716012980794" duration="19000" />
       <workItem from="1716038943155" duration="290000" />
       <workItem from="1716132600510" duration="159000" />
+      <workItem from="1716206930399" duration="50000" />
     </task>
     <servers />
   </component>
