@@ -4,6 +4,7 @@ require_once('../../partials/dbConnect.php');
 $customerId = $_SESSION['user_id']; 
 $db = new Database();
 $customer = $db->getCustomerById($customerId);
+$profileUpdateAlert = FALSE;
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["profile_image"])) {
@@ -11,8 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["profile_image"])) {
     $decodedImageData = base64_decode($base64ImageData);
     $result = $db->insertProfileImage($customerId, $decodedImageData);
     if ($result) {
-        echo "Profile image uploaded successfully.";
-        echo '<meta http-equiv="refresh" content="0">';
+        $profileUpdateAlert = 'Profile image successfully updated!';
+        echo '<meta http-equiv="refresh" content="3">';
     } else {
         echo "Failed to upload profile image.";
     }
@@ -67,7 +68,7 @@ $db->closeConnection();
                     </form>
                 </div>
                 <div class="profile-container">
-                    <form id="registration-form">
+                    <form id="registration-form" action="updateProfile.php" method="post">
                         <h2>Personal Information</h2>
                         <div class="form-row">
                             <div class="form-group">
@@ -112,17 +113,14 @@ $db->closeConnection();
                                     value="<?php echo htmlspecialchars($customer['AGE']); ?>" required readonly>
                             </div>
                             <div class="form-group">
-                                <label for="gender">Gender:</label>
-                                <select name="gender" id="gender" disabled>
-                                    <option value="male"
-                                        <?php echo ($customer['GENDER'] == 'male') ? 'selected' : ''; ?>>Male</option>
-                                    <option value="female"
-                                        <?php echo ($customer['GENDER'] == 'female') ? 'selected' : ''; ?>>Female
-                                    </option>
-                                    <option value="other"
-                                        <?php echo ($customer['GENDER'] == 'other') ? 'selected' : ''; ?>>Other</option>
-                                </select>
-                            </div>
+                            <label for="gender">Gender:</label>
+                            <select name="gender" id="gender" disabled>
+                                <option value="M" <?php echo ($customer['GENDER'] == 'male') ? 'selected' : ''; ?>>Male</option>
+                                <option value="F" <?php echo ($customer['GENDER'] == 'female') ? 'selected' : ''; ?>>Female</option>
+                                <option value="O" <?php echo ($customer['GENDER'] == 'other') ? 'selected' : ''; ?>>Other</option>
+                            </select>
+                        </div>
+
                         </div>
                         <div class="form-row">
                             <div class="form-group full-width">

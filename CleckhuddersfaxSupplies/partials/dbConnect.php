@@ -574,6 +574,64 @@ class Database
             return false;
         }
     }
+
+
+    public function updateCustomerProfile($customerId, $updatedData) {
+        $setClause = [];
+        $params = [];
+
+        var_dump($updatedData);
+        
+        foreach ($updatedData as $column => $value) {
+            $setClause[] = "$column = :$column";
+            $params[":$column"] = $value;
+        }
+        
+        $params[':customerId'] = $customerId;
+        $setClause = implode(", ", $setClause);
+        $query = "UPDATE customer SET $setClause WHERE customer_id = :customerId";
+        
+        $statement = oci_parse($this->conn, $query);
+        if (!$statement) {
+            $m = oci_error($this->conn);
+            throw new Exception("Error preparing query: " . $m['message']);
+        }
+        
+        foreach ($params as $param => $value) {
+            oci_bind_by_name($statement, $param, $params[$param]);
+        }
+        
+        if (!oci_execute($statement)) {
+            $m = oci_error($statement);
+            throw new Exception("Error executing query: " . $m['message']);
+        }
+        
+        return true;
+    }
+    
+
+    public function addReview($customerId, $productId, $rating, $comments) {
+        try {
+            // Prepare the SQL query
+            $query = "INSERT INTO review (CUSTOMER_ID, PRODUCT_ID, RATING, COMMENTS, REVIEWED_DATE)
+                      VALUES (:customerId, :productId, :rating, :comments, SYSDATE)";
+    
+            // Bind parameters and execute the query
+
+            echo 'here in db rev: ' .$customerId;
+            $statement = $this->executeQuery($query, array(
+                "customerId" => $customerId,
+                "productId" => $productId,
+                "rating" => $rating,
+                "comments" => $comments
+            ));
+    
+            return true; 
+        } catch (Exception $e) {
+            return false; 
+        }
+    }
+    
     
 
 
