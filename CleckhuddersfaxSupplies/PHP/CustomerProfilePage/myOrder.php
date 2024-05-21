@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Orders</title>
     <link rel="stylesheet" href="myOrder.css?v=<?php echo time(); ?>">
-
     <link rel="stylesheet" href="../HeaderPage/head.css">
     <link rel="stylesheet" href="../FooterPage/footer.css">
     <script defer src="order.js"></script>
@@ -15,9 +14,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
-
 <body>
-
     <div><?php include('../HeaderPage/head.php'); ?></div>
     <div class="modal" id="reviewModal">
         <div class="modal-content">
@@ -71,7 +68,7 @@
         $db = new Database();
 
         // Fetch order details from the database
-        $orders = $db->getOrderDetailsFromDatabase($customerId); // Implement this function to fetch order details
+        $orders = $db->getOrderDetailsFromDatabase($customerId);
 
         // Loop through orders
         foreach ($orders as $order) {
@@ -123,16 +120,13 @@
             }
             echo "</tbody>";
             echo "</table>";
-            echo "<div class='total-price'>Total Price: £" . number_format($totalPrice, 2) . "</div>"; // Display total price below the subtotal
+            echo "<div class='total-price'>Total Price: £" . number_format($totalPrice, 2) . "</div>";
             echo "</div>";
             echo "</div>";
         }
         ?>
         </div>
     </div>
-
-
     <?php include('../FooterPage/footer.php'); ?>
 </body>
-
 </html>

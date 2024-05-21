@@ -24,7 +24,6 @@ $db->closeConnection();
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Side Navigation Bar</title>
@@ -52,7 +51,7 @@ $db->closeConnection();
         <div class="main_content">
             <div class="he">My Profile</div>
             <div class="profile-content">
-            <div class="profile-image">
+                <div class="profile-image">
                     <?php
                     $imageBase64 = $db->getProfileImage($customerId); 
                     if ($imageBase64) {
@@ -62,8 +61,10 @@ $db->closeConnection();
                     }
                     
                     ?>
-                    <form id="image-upload-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
-                        <input type="file" name="profile_image" accept="image/*" style="display: none;" id="profile-image-input" onchange="document.getElementById('image-upload-form').submit()">
+                    <form id="image-upload-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
+                        method="post" enctype="multipart/form-data">
+                        <input type="file" name="profile_image" accept="image/*" style="display: none;"
+                            id="profile-image-input" onchange="document.getElementById('image-upload-form').submit()">
                         <label for="profile-image-input" class="but">Upload Picture</label>
                     </form>
                 </div>
@@ -113,13 +114,17 @@ $db->closeConnection();
                                     value="<?php echo htmlspecialchars($customer['AGE']); ?>" required readonly>
                             </div>
                             <div class="form-group">
-                            <label for="gender">Gender:</label>
-                            <select name="gender" id="gender" disabled>
-                                <option value="M" <?php echo ($customer['GENDER'] == 'male') ? 'selected' : ''; ?>>Male</option>
-                                <option value="F" <?php echo ($customer['GENDER'] == 'female') ? 'selected' : ''; ?>>Female</option>
-                                <option value="O" <?php echo ($customer['GENDER'] == 'other') ? 'selected' : ''; ?>>Other</option>
-                            </select>
-                        </div>
+                                <label for="gender">Gender:</label>
+                                <select name="gender" id="gender" disabled>
+                                    <option value="M" <?php echo ($customer['GENDER'] == 'male') ? 'selected' : ''; ?>>
+                                        Male</option>
+                                    <option value="F"
+                                        <?php echo ($customer['GENDER'] == 'female') ? 'selected' : ''; ?>>Female
+                                    </option>
+                                    <option value="O" <?php echo ($customer['GENDER'] == 'other') ? 'selected' : ''; ?>>
+                                        Other</option>
+                                </select>
+                            </div>
 
                         </div>
                         <div class="form-row">
