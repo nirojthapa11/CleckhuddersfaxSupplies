@@ -672,6 +672,26 @@ class Database
         }
     }
 
+
+    public function getTraderIdByUsername($username)
+    {
+        try {
+            $query = 'SELECT trader_id FROM trader WHERE username = :username';
+            
+            $statement = $this->executeQuery($query, array('username' => $username));
+            $row = $this->fetchRow($statement);
+            oci_free_statement($statement);
+            if ($row && isset($row['TRADER_ID'])) {
+                return $row['TRADER_ID'];
+            } else {
+                return null;
+            }
+        } catch (Exception $e) {
+            throw new Exception("Error fetching trader ID by username: " . $e->getMessage());
+        }
+    }
+
+
     
     
 

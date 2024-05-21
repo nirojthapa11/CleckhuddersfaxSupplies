@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../alertService.php';
 
 if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_SESSION['isVerifiedCustSignupOtp'])) {
     $enteredOtp = htmlspecialchars(trim($_POST['otp']));
@@ -7,6 +8,17 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_SESSION['isVerifiedCustSig
     if (isset($_SESSION['custSignupOtp']) && $enteredOtp == $_SESSION['custSignupOtp']) {
         $_SESSION['isVerifiedCustSignupOtp'] = TRUE;
         header("Location: ../Login_Signup/CustomerAuthentication.php");
+        exit;
+    } else {
+        $_SESSION['error'] = 'Invalid OTP. Please try again.';
+    }
+}
+elseif (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_SESSION['isVerifiedTraderSignupOtp'] )) {
+    $enteredOtp = htmlspecialchars(trim($_POST['otp']));
+
+    if (isset($_SESSION['traderSignupOtp']) && $enteredOtp == $_SESSION['traderSignupOtp']) {
+        $_SESSION['isVerifiedTraderSignupOtp'] = TRUE;
+        header("Location: ../Login_Signup/traderAuthentication.php");
         exit;
     } else {
         $_SESSION['error'] = 'Invalid OTP. Please try again.';
@@ -48,10 +60,11 @@ elseif (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_SESSION['isVerifiedCus
     <title>OTP Verification</title>
     <link rel="stylesheet" href="otpVerification.css" />
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-
+    <?php AlertService::includeCSS(); ?>
 </head>
 
 <body>
+    <?php AlertService::displayAlerts(); ?>
     <div class="container">
         <header>
             <i class="bx bxs-check-shield"></i>

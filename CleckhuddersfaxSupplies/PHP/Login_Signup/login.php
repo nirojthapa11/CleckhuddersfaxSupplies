@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../../partials/dbConnect.php';
+include '../alertService.php';
 
 
 function sanitizeInput($data)
@@ -86,8 +87,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="login.css">
+    <?php AlertService::includeCSS2(); ?>
 </head>
 <body>
+<?php AlertService::displayAlerts(); ?>
 <div class="form_container">
     <form action="" method="POST">
         <div class="login">

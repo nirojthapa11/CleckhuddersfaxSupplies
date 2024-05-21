@@ -2,6 +2,7 @@
 
 include '../../partials/dbConnect.php';
 require_once '../MailerService.php';
+include '../alertService.php';
 
 $db = new Database();
 $conn = $db->getConnection();
@@ -83,6 +84,7 @@ if(isset($_POST['submit']))
     $mailer = new MailerService();
 
     if ($mailer->signupEmailVerification($email, $custSignupOtp)) {
+        AlertService::setWarning('Check your email and enter the OTP.');
         header("Location: ../VerificationPage/otpVerification.php");
         exit;
     } else {

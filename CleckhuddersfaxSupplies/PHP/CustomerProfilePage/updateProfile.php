@@ -2,6 +2,7 @@
 <?php
 include '../../partials/dbConnect.php';
 require_once '../MailerService.php';
+include '../alertService.php';
 session_start();
 
 $db = new Database();
@@ -52,6 +53,7 @@ if(isset($_POST['update-profile']))
         $mailer = new MailerService();
 
         if ($mailer->custProfileUpdateEmailVerification($primaryEmail, $custUpdateOtp)) {
+            AlertService::setWarning('Check your email and enter the OTP.');
             header("Location: ../VerificationPage/otpVerification.php");
             exit;
         } else {
