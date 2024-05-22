@@ -32,20 +32,20 @@ body {
 }
 
 .sidebar {
-    width: 300px;
+    width: 200px;
     height: 800px;
-    background: #666;
+    background: #c1c0c0;
 }
 
 .sidebar ul li {
-    font-size: 20px;
-    padding: 20px;
+    font-size: 15px;
+    padding: 15px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .sidebar ul li a {
-    color: #fff;
+    color: black;
     display: block;
 }
 
@@ -67,10 +67,10 @@ body {
 }
 
 .main_content .he {
-    font-size: 24px; /* Slightly increased font size */
-    padding: 20px;
-    background: #666;
-    color: white;
+    font-size: 15px;
+    padding: 15px;
+    background: #999696;
+    color: White;
     border-bottom: 1px solid #e0e4e8;
 }
 

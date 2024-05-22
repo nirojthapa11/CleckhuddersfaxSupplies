@@ -31,33 +31,33 @@ body{
   position: relative;
 }
 
-.sidebar{
-  width: 300px;
+.sidebar {
+  width: 200px;
   height: 800px;
-  background: #666;
+  background: #c1c0c0;
 }
 
-.sidebar ul li{
-  font-size: 20px;
-  padding: 20px;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  border-top: 1px solid rgba(255,255,255,0.05);
-}    
+.sidebar ul li {
+  font-size: 15px;
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-.sidebar ul li a{
-  color: #fff;
+.sidebar ul li a {
+  color: black;
   display: block;
 }
 
-.sidebar ul li i{
+.sidebar ul li i {
   width: 25px;
 }
 
-.sidebar ul li:hover{
+.sidebar ul li:hover {
   background-color: var(--orange);
 }
-    
-.sidebar ul li:hover a{
+
+.sidebar ul li:hover a {
   color: #fff;
 }
 
@@ -67,11 +67,17 @@ body{
 }
 
 .main_content .hr{
-  font-size: 20px;
-  padding: 20px;
-  background: #717171;
+  font-size: 15px;
+  padding: 15px;
+  background: #999696;
   color: White;
   border-bottom: 1px solid #e0e4e8;
+}
+
+.wish_content {
+  width: 90%;
+  padding-top: 20px;
+  padding-left: 100px;
 }
 
 .wishlist-table {

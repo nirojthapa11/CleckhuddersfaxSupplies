@@ -56,7 +56,7 @@
                 <li><a href="myOrder.php"><i class="fas fa-cart-shopping"></i>My Orders</a></li>
                 <li><a href="myWishlist.php"><i class="fas fa-heart"></i>My Whislists</a></li>
                 <li><a href="#"><i class="fas fa-money-bill"></i></i>My Reviews</a></li>
-                <li><a href="#"><i class="fas fa-cart-shopping"></i>My Cart</a></li>
+                <li><a href="myCart.php"><i class="fas fa-cart-shopping"></i>My Cart</a></li>
             </ul>
         </div>
         <div class="main_content">

@@ -1,104 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>My Cart</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-	<link rel="stylesheet" href="mycart.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="myCart.css">
     <link rel="stylesheet" href="../HeaderPage/head.css">
     <link rel="stylesheet" href="../FooterPage/footer.css">
+    <title>My Cart</title>
 </head>
 <body>
-	
-	<div><?php include('../HeaderPage/head.php');?></div>
+    <div><?php include('../HeaderPage/head.php');?></div>
+    <!-- Cart items details -->
+    <div class="wrapper">
+        <div class="sidebar">
+            <ul>
+                <li><a href="customerProfile.php"><i class="fas fa-user"></i>My Profile</a></li>
+                <li><a href="myOrder.php"><i class="fas fa-cart-shopping"></i>My Orders</a></li>
+                <li><a href="myWishlist.php"><i class="fas fa-heart"></i>My Whislists</a></li>
+                <li><a href="#"><i class="fas fa-money-bill"></i>My Reviews</a></li>
+                <li><a href="mycart.php"><i class="fas fa-cart-shopping"></i>My Cart</a></li>
+            </ul>
+        </div>
+        <div class="small-container cart-page">
+            <div class="hed">My Cart</div>
+            <div class="cart-contain">
+                <table>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>SubTotal</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="cart-info">
+                                <img src="../Image/apple.jpeg" alt="Fresh Apple">
+                                <div>
+                                    <p>Fresh Apple</p>
+                                    <small>Price: $50.00</small>
+                                    <br>
+                                    <a href="">Remove</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><input type="number" value="1"></td>
+                        <td>$50.00</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="cart-info">
+                                <img src="../Image/apple.jpeg" alt="Fresh Apple">
+                                <div>
+                                    <p>Fresh Apple</p>
+                                    <small>Price: $50.00</small>
+                                    <br>
+                                    <a href="">Remove</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><input type="number" value="1"></td>
+                        <td>$50.00</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="cart-info">
+                                <img src="../Image/apple.jpeg" alt="Fresh Apple">
+                                <div>
+                                    <p>Fresh Apple</p>
+                                    <small>Price: $50.00</small>
+                                    <br>
+                                    <a href="">Remove</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><input type="number" value="1"></td>
+                        <td>$50.00</td>
+                    </tr>
+                </table>
 
-	<section id="cart-container" class="container my-5">
-		<table width="100%">
-			<thead>
-				<tr>
-					<td>Id</td>
-					<td>Image</td>
-					<td>Product</td>
-					<td>Price</td>
-					<td>Quantity</td>
-					<td>Total</td>
-					<td>Action</td>
-				</tr>
-			</thead>
+                <div class="total-price">
+                    <table>
+                        <tr>
+                            <td>SubTotal</td>
+                            <td>$150.00</td>
+                        </tr>
+                        <tr>
+                            <td>Tax</td>
+                            <td>$50.00</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td>$200.00</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="checkout-button">
+                    <button onclick="location.href='checkout.php'" class="btn">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-			<tbody>
-				<tr>
-					<td><h5>1</h5></td>
-					<td><img src="./frimage.jpeg" alt=""></td>
-					<td>
-						<h5>Kiwi fruit</h5>
-					</td>
-					<td><h5>$10</h5></td>
-					<td><input class="w-25 pl-1" value="1" type="number"></td>
-					<td><h5>$20</h5></td>
-					<td><button>Remove</button></td>
-				</tr>
-
-				<tr>
-					<td><h5>2</h5></td>
-					<td><img src="./frimage.jpeg" alt=""></td>
-					<td>
-						<h5>Kiwi fruit</h5>
-					</td>
-					<td><h5>$10</h5></td>
-					<td><input class="w-25 pl-1" value="1" type="number"></td>
-					<td><h5>$20</h5></td>
-					<td><button>Remove</button></td>
-				</tr>
-
-				<tr>
-					<td><h5>3</h5></td>
-					<td><img src="./frimage.jpeg" alt=""></td>
-					<td>
-						<h5>Kiwi fruit</h5>
-					</td>
-					<td><h5>$10</h5></td>
-					<td><input class="w-25 pl-1" value="1" type="number"></td>
-					<td><h5>$20</h5></td>
-					<td><button>Remove</button></td>
-				</tr>
-			</tbody>
-		</table>
-	</section>
-
-	<section id="cart-bottom" class="container">
-		<div class="row">
-			<div class="total col-lg-6 col-md-6 col-12">
-				<div>
-					<h5>CART TOTAL</h5>
-					<div class="d-flex justify-content-between">
-						<h6>Subtotal</h6>
-						<p>$30</p>
-					</div>
-					<div class="d-flex justify-content-between">
-						<h6>Shipping</h6>
-						<p>$30</p>
-					</div>
-					<hr class="second-hr">
-					<div class="d-flex justify-content-between">
-						<h6>Total</h6>
-						<p>$60</p>
-					</div>
-
-					<button class="ml-auto">PROCEED TO CHECKOUT</button>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<br><br><br><br>
+    <br><br><br><br><br>
     <?php include('../FooterPage/footer.php');?>
-
-    <script src="../HeaderPage/head.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-
+    <script src="../HeaderPage/head.php"></script>
 </body>
 </html>
