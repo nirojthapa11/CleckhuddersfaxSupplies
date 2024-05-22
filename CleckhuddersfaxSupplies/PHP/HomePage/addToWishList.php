@@ -1,8 +1,18 @@
 <?php
-session_start(); // Start the session to access session variables
-
+session_start(); 
 include '../../partials/dbConnect.php';
+include '../alertService.php';
+
 $db = new Database();
+
+
+
+if(!isset($_SESSION['isAuthenticated']) && !isset($_SESSION['loggedin'])) {
+    AlertService::setError('Please log in first in order to add to wish list!');
+    header("Location: " . $_SERVER['HTTP_REFERER']);
+    exit();
+}
+
 $productId = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0;
 
 if ($productId === 0) {

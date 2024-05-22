@@ -44,19 +44,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Assigning the correct user_id based on the user type
                 if ($usertype == 'customer') {
                     $_SESSION['user_id'] = $row['CUSTOMER_ID'];
+                    header("Location: ../cartUtils.php");
                 } elseif ($usertype == 'trader') {
                     $_SESSION['user_id'] = $row['TRADER_ID'];
+                    header("Location: ../TraderInterface/traderInterface.php");
+                    exit();
                 } elseif ($usertype == 'admin') {
                     $_SESSION['user_id'] = $row['ADMIN_ID'];
+                    header("Location: ../AdminInterface/adminInterface.php");
+                    exit();
                 }
-                // require_once '../cartUtils.php';
 
 
-                // updateCartFromCookies($_SESSION['user_id']);
-
-
-                header("Location: ../cartUtils.php");
-                // header("Location: ../HomePage/homepage.php");
                 exit;
             } else {
                 $showError = "Invalid username or password. Please try again.";

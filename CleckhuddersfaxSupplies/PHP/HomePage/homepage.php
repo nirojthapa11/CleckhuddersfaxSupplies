@@ -1,3 +1,6 @@
+<?php include '../alertService.php' ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,17 +20,17 @@
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <title>Cleckhuddersfax Supplies</title>
+    <?php AlertService::includeCSS(); ?>
 
 
 </head>
 <body>
-
-
+    <?php
+    AlertService::displayAlerts();
+    ?>
 <div>
     <?php
-
     include('../HeaderPage/head.php');
-
     ?>
 </div>
 
