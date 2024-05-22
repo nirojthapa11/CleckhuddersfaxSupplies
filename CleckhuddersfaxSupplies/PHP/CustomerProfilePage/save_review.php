@@ -1,5 +1,4 @@
 <?php
-// Assuming you have already included necessary files and initialized your Database object
 
 include '../../partials/dbConnect.php';
 $db = new Database();

@@ -5,7 +5,7 @@ class Database
 {
     private $conn;
 
-    public function __construct($username = 'hembikram', $password = 'Hem#123', $host = 'localhost', $dbname = 'xe')
+    public function __construct($username = 'GOVIND', $password = 'root', $host = 'localhost', $dbname = 'xe')
     {
         $this->conn = oci_connect($username, $password, "//" . $host . "/" . $dbname);
         if (!$this->conn) {

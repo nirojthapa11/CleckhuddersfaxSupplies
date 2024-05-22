@@ -31,7 +31,7 @@
                 echo '<a href="../CustomerProfilePage/customerProfile.php"> <i class="fa-regular fa-face-smile"></i> Manage My Account</a>';
                 echo '<a href="../CustomerProfilePage/myOrder.php"> <i class="fa-sharp fa-solid fa-box-open"></i> My Orders</a>';
                 echo '<a href="../CustomerProfilePage/myWishlist.php?customer_id=' . $customerId . '"><i class="fa-regular fa-heart"></i> My Wishlist</a>';
-                echo '<a href="#"> <i class="fa-regular fa-star"></i> My Reviews</a>';
+                echo '<a href="../CustomerProfilePage/myReview.php?customer_id=' . $customerId . '"> <i class="fa-regular fa-star"></i> My Reviews</a>';
                 echo '<a href="../Login_Signup/logout.php"> <i class="fa-solid fa-person-walking-arrow-right"></i> Log out</a>';
                 echo '</div>';
                 echo '</div>';
