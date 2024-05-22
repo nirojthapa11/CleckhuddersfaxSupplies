@@ -2,108 +2,123 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Side Navigation Bar</title>
-    <link rel="stylesheet" href="eg.css">
-    <link rel="stylesheet" href="../HeaderPage/head.css">
-    <link rel="stylesheet" href="../FooterPage/footer.css">
-    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Interface</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="eg.css">
 </head>
 <body>
-    <div><?php include('../HeaderPage/head.php');?></div>
-    <div class="wrapper">
-        <div class="sidebar">
-            <ul>
-                <li><a href="customerProfile.php"><i class="fas fa-user"></i>My Profile</a></li>
-                <li><a href="#"><i class="fas fa-cart-shopping"></i>My Orders</a></li>
-                <li><a href="myWishlist.php"><i class="fas fa-heart"></i>My Wishlist</a></li>
-                <li><a href="#"><i class="fas fa-money-bill"></i>Payment</a></li>
-                <li><a href="#"><i class="fas fa-cart-shopping"></i>My Cart</a></li>
-            </ul> 
-        </div>
-        <div class="main_content">
-            <div class="he">My Profile</div>  
-            <div class="profile-content">
-                <div class="profile-container">
-                    <div class="image-container">
-                        <img src="../Image/usericon.png" alt="User Image">
-                        <button type="submit" class="but">Upload Picture</button>
+<div class="container-fluid" id="main-content">
+        <div class="row">
+            <div class="col-lg-10 ms-auto p-4 overflow-hidden">
+                <h3 class="mb-4">Approved Traders</h3>
+
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover border text-center" style="min-width: 1000px; width : 100%;">
+                                <thead>
+                                    <tr class="bg-dark text-light">
+                                        <th scope="col">S.N</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Shop Name</th>
+                                        <th scope="col">Phone no.</th>
+                                        <th scope="col">Location</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="users-data">
+                                    <?php
+                                    $query = "SELECT u.USER_ID, u.first_name || ' ' || u.last_name as Name, u.EMAIL, s.shop_name, u.CONTACT_NUMBER, s.location 
+                                    FROM \"USER\" u 
+                                    inner join trader t on t.user_id = u.user_id 
+                                    inner join shop s on s.user_id = t.user_id WHERE t.status=1 
+                                    ORDER BY u.USER_ID";
+
+                                    $stid = oci_parse($connection, $query);
+                                    oci_execute($stid);
+
+                                    $sn = 1;  // Serial Number counter
+                                    while ($row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
+                                        echo "<tr>\n";
+                                        echo "    <td>" . htmlspecialchars($sn++) . "</td>\n";
+                                        echo "    <td>" . htmlspecialchars($row['NAME']) . "</td>\n"; // Corrected from FIRST_NAME and LAST_NAME to NAME
+                                        echo "    <td>" . htmlspecialchars($row['EMAIL']) . "</td>\n";
+                                        echo "    <td>" . htmlspecialchars($row['SHOP_NAME']) . "</td>\n"; // Corrected from USERNAME to SHOP_NAME
+                                        echo "    <td>" . htmlspecialchars($row['CONTACT_NUMBER']) . "</td>\n";
+                                        echo "    <td>" . htmlspecialchars($row['LOCATION']) . "</td>\n"; // Corrected from ROLE to LOCATION
+                                        echo "    <td><a class='btn btn-danger' href='?action=disapprove&id=" . htmlspecialchars($row['USER_ID']) . "' onclick='return confirm(\"Are you sure you want to disapprove this trader?\")'>Disapprove</a></td>\n";
+
+                                        echo "</tr>\n";
+                                    }
+
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <form id="registration-form">
-                        <h2>Personal Information</h2>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="first-name">First Name:</label>
-                                <input type="text" id="first-name" name="first-name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="last-name">Last Name:</label>
-                                <input type="text" id="last-name" name="last-name" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group toggle-input">
-                                <label for="username">Username:</label>
-                                <input type="text" id="username" name="username" required>
-                            </div>
-                            <div class="form-group toggle-input">
-                                <label for="email">Email:</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="address">Address:</label>
-                                <input type="text" id="address" name="address" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone-number">Phone Number:</label>
-                                <input type="tel" id="phone-number" name="phone-number" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group toggle-input">
-                                <label for="age">Age:</label>
-                                <input type="number" id="age" name="age" required>
-                            </div>
-                            <div class="form-group toggle-input">
-                                <label for="gender">Gender:</label>
-                                <select name="gender" id="gender">
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group full-width toggle-input">
-                                <label for="password">Password:</label>
-                                <input type="password" id="password" name="password" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <button type="button" class="button-group" id="edit-btn">Edit</button>
-                            <button type="submit" class="button-group">Save</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <?php include('../FooterPage/footer.php');?>
-    <script src="../HeaderPage/head.js"></script>
-    <script>
-        document.getElementById('edit-btn').addEventListener('click', function() {
-            document.querySelectorAll('.toggle-input').forEach(function(input) {
-                input.style.display = input.style.display === 'none' ? 'block' : 'none';
-            });
-        });
 
-        window.onload = function() {
-            document.querySelectorAll('.toggle-input').forEach(function(input) {
-                input.style.display = 'none';
-            });
-        };
-    </script>
+    <div class="container-fluid" id="main-content">
+        <div class="row">
+            <div class="col-lg-10 ms-auto p-4 overflow-hidden">
+                <h3 class="mb-4">Pending Traders</h3>
+
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover border text-center" style="min-width: 1000px; width : 100%;">
+                                <thead>
+                                    <tr class="bg-dark text-light">
+                                        <th scope="col">S.N</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Shop Name</th>
+                                        <th scope="col">Phone no.</th>
+                                        <th scope="col">Location</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="users-data">
+                                    <?php
+                                    $query = "SELECT u.USER_ID, u.first_name || ' ' || u.last_name as Name, u.EMAIL, s.shop_name, u.CONTACT_NUMBER, s.location 
+                                    FROM \"USER\" u 
+                                    inner join trader t on t.user_id = u.user_id 
+                                    inner join shop s on s.user_id = t.user_id WHERE t.status=0
+                                    ORDER BY u.USER_ID";
+
+                                    $stid = oci_parse($connection, $query);
+                                    oci_execute($stid);
+
+                                    $sn = 1;  // Serial Number counter
+                                    while ($row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
+                                        echo "<tr>\n";
+                                        echo "    <td>" . htmlspecialchars($sn++) . "</td>\n";
+                                        echo "    <td>" . htmlspecialchars($row['NAME']) . "</td>\n"; // Corrected from FIRST_NAME and LAST_NAME to NAME
+                                        echo "    <td>" . htmlspecialchars($row['EMAIL']) . "</td>\n";
+                                        echo "    <td>" . htmlspecialchars($row['SHOP_NAME']) . "</td>\n"; // Corrected from USERNAME to SHOP_NAME
+                                        echo "    <td>" . htmlspecialchars($row['CONTACT_NUMBER']) . "</td>\n";
+                                        echo "    <td>" . htmlspecialchars($row['LOCATION']) . "</td>\n"; // Corrected from ROLE to LOCATION
+                                        echo "    <td><a class='btn btn-success' href='?action=approve&id=" . htmlspecialchars($row['USER_ID']) . "' onclick='return confirm(\"Are you sure you want to approve this trader?\")'>Approve</a></td>\n";
+
+                                        echo "</tr>\n";
+                                    }
+
+                                    ?>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

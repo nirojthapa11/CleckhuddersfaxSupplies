@@ -20,29 +20,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         
         if ($usertype == 'customer') {
-            $query = "SELECT username, password FROM Customer WHERE username = '$username' AND password = '$password'";
+            $query = "SELECT username, password FROM CUSTOMER WHERE username = '$username' AND password = '$password'";
         } elseif ($usertype == 'trader') {
-            $query = "SELECT username, password FROM Trader WHERE username = '$username' AND password = '$password'";
+            $query = "SELECT username, password FROM TRADER WHERE username = '$username' AND password = '$password'";
         } elseif ($usertype == 'admin') {
-            $query = "SELECT username, password FROM Customer WHERE username = '$username' AND password = '$password'";
+            $query = "SELECT username, password FROM ADMIN WHERE username = '$username' AND password = '$password'";
         }
 
         try {
             $db = new Database();
-
             $statement = $db->executeQuery($query);
 
             if ($row = $db->fetchRow($statement)) {
                 $_SESSION['isAuthenticated'] = true;
-                $_SESSION['username'] = $row['username'];
-                $_SESSION['user_id'] = $row['user_id'];
-
-                header("Location: ../HomePage/homepage.php");
-                exit;
+                $_SESSION['username'] = $row['USERNAME'];
+                $_SESSION['user_id'] = $row['USER_ID'];
+                if($usertype == 'customer'){
+                    header("Location: ../HomePage/homepage.php");
+                } elseif ($usertype == 'trader'){
+                    header("Location: ../TraderInterface/traderInterface.php");
+                } elseif ($usertype == 'admin') {
+                    header("Location: ../AdminInterface/adminInterface.php");
+                }
+                exit();
             } else {
                 $showError = "Invalid username or password. Please try again.";
             }
-
             $db->closeConnection();
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
@@ -50,7 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 
 <?php if ($showError) { ?>
     <div style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; margin-bottom: 15px;">

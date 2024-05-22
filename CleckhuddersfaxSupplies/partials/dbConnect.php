@@ -90,6 +90,65 @@ class Database
             $imageBase64 = ''; 
         }
     }
+
+    public function getProductById($productId) {
+        $product = array();
+        try {
+            $query = "SELECT * FROM product WHERE PRODUCT_ID = :productId";
+            $statement = oci_parse($this->conn, $query);
+            oci_bind_by_name($statement, ":productId", $productId);
+            oci_execute($statement);
+    
+            // Check if the query executed successfully
+            if ($statement) {
+                // Fetch the product data
+                $product = oci_fetch_assoc($statement);
+                oci_free_statement($statement);
+            } else {
+                // Handle the case where the query fails
+                // For example, log the error or display an error message
+                echo "Failed to execute the query.";
+            }
+        } catch (Exception $e) {
+            // Handle any exceptions that may occur during query execution
+            echo "Error: " . $e->getMessage();
+        }
+        return $product;
+    }
+    
+    
+
+    public function updateProduct($productId, $updatedData) {
+        $setClause = [];
+        $params = [];
+    
+        foreach ($updatedData as $column => $value) {
+            $setClause[] = "$column = :$column";
+            $params[":$column"] = $value;
+        }
+        
+        $params[':productId'] = $productId;
+        $setClause = implode(", ", $setClause);
+        $query = "UPDATE product SET $setClause WHERE product_id = :productId";
+        
+        $statement = oci_parse($this->conn, $query);
+        if (!$statement) {
+            $m = oci_error($this->conn);
+            throw new Exception("Error preparing query: " . $m['message']);
+        }
+        
+        foreach ($params as $param => $value) {
+            oci_bind_by_name($statement, $param, $params[$param]);
+        }
+        
+        if (!oci_execute($statement)) {
+            $m = oci_error($statement);
+            throw new Exception("Error executing query: " . $m['message']);
+        }
+        
+        return true;
+    }
+    
     
 
 

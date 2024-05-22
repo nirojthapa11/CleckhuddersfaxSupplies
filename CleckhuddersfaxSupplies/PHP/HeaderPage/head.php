@@ -28,7 +28,7 @@
                         <a href="../CustomerProfilePage/myOrder.php"> <i class="fa-sharp fa-solid fa-box-open"></i> My Orders</a>
                         <a href="../CustomerProfilePage/myWishlist.php"> <i class="fa-regular fa-heart"></i> My Wishlist</a>
                         <a href="#"> <i class="fa-regular fa-star"></i> My Reviews</a>
-                        <a href="#"> <i class="fa-solid fa-person-walking-arrow-right"></i> Logout</a>
+                        <a href="../Login_Signup/logout.php"> <i class="fa-solid fa-person-walking-arrow-right"></i> Logout</a>
                     </div>
                 </div>
                 <a href="../Login_Signup/login.php">LogIn</a>
