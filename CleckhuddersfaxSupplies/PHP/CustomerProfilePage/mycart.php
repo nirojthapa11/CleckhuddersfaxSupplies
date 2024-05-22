@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../FooterPage/footer.css">
 </head>
 <body>
+	
 	<div><?php include('../HeaderPage/head.php');?></div>
 
 	<section id="cart-container" class="container my-5">
