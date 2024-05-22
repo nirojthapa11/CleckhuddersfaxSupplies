@@ -1,23 +1,17 @@
 <?php
 
 include '../../partials/dbConnect.php';
+
 $db = new Database();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $customerId = $_POST['customerId'];
     $productId = $_POST['productId'];
-    $rating = $_POST['rating'];
+    $rating = $_POST['rating'] + 0;
     $comments = $_POST['comments'];
-    
-    // Call addReview function
-    $success = $db->addReview($customerId, $productId, $rating, $comments);
-    
-    if ($success) {
-        http_response_code(200); // Success
-    } else {
-        http_response_code(500); // Server error
+    if ($rating !=1 && $rating !=2 && $rating !=3 && $rating !=4 && $rating !=5 && $rating = 0) {
+        $rating = 1;
     }
-} else {
-    http_response_code(405); // Method not allowed
-}
+    $success = $db->addReview($customerId, $productId, $rating, $comments);
+} 
 ?>

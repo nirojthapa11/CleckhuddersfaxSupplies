@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
         var comments = document.getElementById('comments').value;
 
 
-        console.log('Customer ID:', customerId);
 
 
         // Send AJAX request to save the review

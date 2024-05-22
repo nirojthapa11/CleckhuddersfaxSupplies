@@ -692,12 +692,43 @@ class Database
     }
 
 
-    
-    
+    public function getProductRatingByCustomerId($customerId)
+    {
+        $products = array();
+        $conn = $this->getConnection();
+        try {
+            $query = "SELECT p.product_name, p.product_id, r.rating, r.review_id, r.comments, TO_CHAR(r.reviewed_date, 'YYYY-MM-DD HH24:MI:SS') as reviewed_date
+                    FROM product p
+                    JOIN review r 
+                    ON p.product_id = r.product_id
+                    WHERE r.customer_id = :customer_id
+                    ORDER BY r.reviewed_date DESC";
 
+            $statement = oci_parse($conn, $query);
+            oci_bind_by_name($statement, ":customer_id", $customerId);
+            oci_execute($statement);
+            while ($row = oci_fetch_assoc($statement)) {
+                $products[] = $row;
+            }
+            oci_free_statement($statement);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        return $products;
+    }
 
-    
-    
+    public function deleteReviewByReviewId($reviewId)
+    {
+        $conn = $this->getConnection();
+        $query = "DELETE FROM review WHERE review_id = :review_id";
+        $statement = oci_parse($conn, $query);
+        oci_bind_by_name($statement, ":review_id", $reviewId);
+        if (oci_execute($statement)) {
+            return;
+        } else {
+            return;
+        }
+    }
     
     
     
