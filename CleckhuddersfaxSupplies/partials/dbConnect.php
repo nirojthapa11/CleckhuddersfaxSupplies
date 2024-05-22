@@ -729,6 +729,29 @@ class Database
             return;
         }
     }
+
+    public function getShopIdByTraderUsername($username) 
+    {
+        $conn = $this->getConnection();
+        $query = "SELECT sh.shop_id
+                  FROM shop sh
+                  JOIN trader tr ON sh.trader_id = tr.trader_id
+                  WHERE tr.username = :username";
+        $statement = oci_parse($conn, $query);
+        oci_bind_by_name($statement, ":username", $username);
+
+        if (oci_execute($statement)) {
+            if ($row = oci_fetch_assoc($statement)) {
+                return $row['SHOP_ID']; 
+            } else {
+                return null; 
+            }
+        } else {
+            $error = oci_error($statement); 
+            return null; 
+        }
+    }
+    
     
     
     

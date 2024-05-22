@@ -6,12 +6,15 @@
         header("Location: ../Login_Signup/login.php");
         exit;
     }
-    // Database Connection.
-    $conn = $db->getConnection();
+    $trader = $_SESSION['username'];
 
+
+    $conn = $db->getConnection();
+    $shop_id = $db->getShopIdByTraderUsername($trader);
+    $_SESSION['shop_id'] = $shop_id;
 
     // For diffrent Trader logged in.
-    $trader = $_SESSION['username'];
+ 
     $query = "SELECT * FROM Trader WHERE USERNAME = '$trader' ";
     $statement = oci_parse($conn, $query);
     oci_execute($statement);
@@ -36,7 +39,7 @@
         $description = $_POST['description'];
         $shopImage = null;
     
-        $query2 = "UPDATE Shop SET SHOP_IMAGE = NULL, SHOP_NAME = '$shopName', DESCRIPTION = '$description', SHOP_EMAIL = '$email', REGISTRATION_DATE = SYSDATE
+        $query2 = "UPDATE Shop SET SHOP_IMAGE = empty_blob(), SHOP_NAME = '$shopName', DESCRIPTION = '$description', SHOP_EMAIL = '$email', REGISTRATION_DATE = SYSDATE
         WHERE Trader_ID = '$traderId'";
     
         $statement_Shop = oci_parse($conn, $query2);
@@ -93,6 +96,33 @@
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="traderInterface.css">
+    <style>
+        .formh-group2 label.but {
+            display: inline-block;
+            padding: 8px 12px; /* Adjust padding as needed */
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .formh-group2 label.but:hover {
+            background-color: #f0f0f0;
+        }
+
+    </style>
+
+<script>
+    // Define the updateLabel function in the global scope
+    function updateLabel(input, labelId) {
+        var label = document.getElementById(labelId);
+        if (input.files && input.files[0]) {
+            label.innerText = input.files[0].name; // Change label text to the selected file name
+        } else {
+            label.innerText = "Choose Image"; // Reset label text if no file selected
+        }
+    }
+</script>
+
+
 </head>
 
 <body>
@@ -271,9 +301,17 @@
 
                             $sn = 1;
                             while ($row = oci_fetch_assoc($stid)) {
+                                $imageBase64 = $db->getProductImage($row['PRODUCT_ID']);
                                 echo "<tr>";
                                 echo "<td>" . htmlspecialchars($sn++) . "</td>";
                                 // echo "<td><img src='" . htmlspecialchars($row['PRODUCT_IMAGE']) . "' alt='Product Image' /></td>";
+                                echo "<td>";
+                                if ($imageBase64) {
+                                    echo '<img src="data:image/jpeg;base64,' . $imageBase64 . '" alt="' . htmlspecialchars($row['PRODUCT_NAME']) . '" style="width: 100%; height: 130px;">';
+                                } else {
+                                    echo '<img src="../Image/path_to_placeholder_image.jpg" alt="' . htmlspecialchars($row['PRODUCT_NAME']) . ' Image" style="width: 100%; height: auto;">';
+                                }
+                                echo "</td>";
                                 echo "<td>" . htmlspecialchars($row['PRODUCT_NAME']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['DESCRIPTION']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['PRICE']) . "</td>";
@@ -460,70 +498,70 @@
 
     <!-- Add Product Modal -->
     <div id="addProductModal" class="modal2">
-        <div class="modal-content2">
-            <span class="close-add">&times;</span>
-            <h1>Add Product</h1>
-            <form action="" method="post" enctype="multipart/form-data">
-                <div class="formh-group2">
-                    <label for="product-name">Product Name:</label>
-                    <input type="text" id="product-name" name="product-name" required>
-                </div>
-                <div class="formh-group2 inline">
-                    <label for="price">Price:</label>
-                    <input type="number" id="price" name="price" required>
-                </div>
-                <div class="formh-group2 inline">
-                    <label for="stock">Stock:</label>
-                    <input type="number" id="stock" name="stock" required>
-                </div>
-                <div class="formh-group2 inline">
-                    <label for="min-order">Min Order:</label>
-                    <input type="number" id="min-order" name="min-order" required>
-                </div>
-                <div class="formh-group2 inline">
-                    <label for="max-order">Max Order:</label>
-                    <input type="number" id="max-order" name="max-order" required>
-                </div>
-                <div class="formh-group2">
-                    <label for="product-image">Product Image:</label>
-                    <input type="file" id="product-image" name="product-image" required>
-                </div>
-                <div class="formh-group2">
-                    <label for="allergy-info">Allergy Info:</label>
-                    <input type="text" id="allergy-info" name="allergy-info" required>
-                </div>
-                <div class="formh-group2">
-                    <label for="category">Product Category</label>
-                    <select type="category" id="category" name="category" required>
-                        <option value="">Select a category</option>
-                        <?php
-                        // Fetch categories
-                        $query_categories = "SELECT * FROM CATEGORY";
-                        $statement_categories = oci_parse($conn, $query_categories);
-                        oci_execute($statement_categories);
-                        while ($row_category = oci_fetch_assoc($statement_categories)) {
-                            echo '<option value="' . $row_category['CATEGORY_ID'] . '">' . $row_category['CATEGORY_NAME'] . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="formh-group2">
-                    <label for="description">Description:</label>
-                    <input type="text" id="Description" name="description" required>
-                </div>
-                <button type="submit" class="next2" name="addproduct">Add</button>
-            </form>
-        </div>
+    <div class="modal-content2">
+        <span class="close-add">&times;</span>
+        <h1>Add Product</h1>
+        <form action="traderAction.php" method="post" enctype="multipart/form-data">
+            <div class="formh-group2">
+                <label for="product-name">Product Name:</label>
+                <input type="text" id="product-name" name="product-name" required>
+            </div>
+            <div class="formh-group2 inline">
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" required>
+            </div>
+            <div class="formh-group2 inline">
+                <label for="stock">Stock:</label>
+                <input type="number" id="stock" name="stock" required>
+            </div>
+            <div class="formh-group2 inline">
+                <label for="min-order">Min Order:</label>
+                <input type="number" id="min-order" name="min-order" required>
+            </div>
+            <div class="formh-group2 inline">
+                <label for="max-order">Max Order:</label>
+                <input type="number" id="max-order" name="max-order" required>
+            </div>
+            <div class="formh-group2">
+                <label for="quantity-per-item">Quantity Per Item:</label>
+                <input type="number" id="quantity-per-item" name="quantity-per-item" required>
+            </div>
+            <div class="formh-group2">
+                <label for="product-image2" class="but">Product Image:</label>
+                <input type="file" id="product-image2" name="product-image" accept="image/*" style="display: none;" onchange="updateLabel(this, 'file-select-label2')">
+                <span id="file-select-label2">Choose Image</span> <!-- Add a span for displaying the selected file name -->
+            </div>
+            <div class="formh-group2">
+                <label for="allergy-info">Allergy Info:</label>
+                <input type="text" id="allergy-info" name="allergy-info" required>
+            </div>
+            <div class="formh-group2">
+                <label for="category">Product Category</label>
+                <select type="category" id="category" name="category" required>
+                    <option value="">Select a category</option>
+                    <?php
+                    // Fetch categories
+                    $query_categories = "SELECT * FROM CATEGORY";
+                    $statement_categories = oci_parse($conn, $query_categories);
+                    oci_execute($statement_categories);
+                    while ($row_category = oci_fetch_assoc($statement_categories)) {
+                        echo '<option value="' . $row_category['CATEGORY_ID'] . '">' . $row_category['CATEGORY_NAME'] . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="formh-group2">
+                <label for="description">Description:</label>
+                <input type="text" id="Description" name="description" required>
+            </div>
+            <input type="hidden" name="addproduct" value="">
+            <button type="submit" class="next2" name="addproduct">Add</button>
+        </form>
+    </div>
     </div>
 
+
     <script src="traderInterface.js"></script>
-
-
-
-
-
-
-
 <script>
     // Navigate to Apex Oracle Application
     function navigateTo(url) {
@@ -570,6 +608,14 @@
         deleteEntity('shop', shopId);
     }
 </script>
+
+
+
+
+
+
+
+
 </body>
 
 </html>
