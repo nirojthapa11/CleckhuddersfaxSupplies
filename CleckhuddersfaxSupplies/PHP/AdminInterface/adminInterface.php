@@ -1,6 +1,9 @@
 <?php
 include '../../partials/dbConnect.php';
-session_start();
+include '../alertService.php';
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 if (!isset($_SESSION['username'])) {
     header("Location: ../Login_Signup/login.php");
     exit;
@@ -102,8 +105,12 @@ if (isset($_GET['action']) && $_GET['action'] == 'disapproveShop' && isset($_GET
     <title>Admin Interface</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="adminInterface.css">
+    <?php AlertService::includeCSS(); ?>
 </head>
 <body>
+    <?php
+        AlertService::displayAlerts();
+    ?>
     <header class="admin-header">
         <div class="header-container">
             <div class="logo">

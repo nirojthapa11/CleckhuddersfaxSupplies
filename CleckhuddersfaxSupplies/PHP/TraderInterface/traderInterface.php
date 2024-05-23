@@ -1,7 +1,12 @@
 <?php
     include '../../partials/dbConnect.php';
+    include '../alertService.php';
     $db = new Database();
-    session_start();
+    
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
     if (!isset($_SESSION['username'])) {
         header("Location: ../Login_Signup/login.php");
         exit;
@@ -74,6 +79,7 @@
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="traderInterface.css">
+    <?php AlertService::includeCSS(); ?>
     <style>
     .formh-group2 label.but {
         display: inline-block;
@@ -113,6 +119,10 @@
 </head>
 
 <body>
+    <?php
+        AlertService::displayAlerts();
+    ?>
+
     <!-- Dashboard Header -->
     <header class="admin-header">
         <div class="header-container">

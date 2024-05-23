@@ -33,18 +33,24 @@ class AlertService {
         }
     }
 
-    public static function includeCSS() {
+    public static function includeCSS($fadeOutDuration = '15') {
         echo '
         <style>
             .alert-container {
                 position: fixed;
                 top: 20px;
-                right: 20px;
+                right: 150px;
                 z-index: 1000;
-                animation: slideIn 0.5s forwards, fadeOut 15s forwards;
+            }
+            .alert {
+                padding: 10px 20px;
+                border-radius: 5px;
+                margin-bottom: 10px;
+                color: white;
+                animation: slideIn 0.5s forwards, fadeOut ' . $fadeOutDuration . 's forwards;
                 opacity: 0;
             }
-
+    
             @keyframes slideIn {
                 from {
                     transform: translateX(100%);
@@ -53,7 +59,7 @@ class AlertService {
                     transform: translateX(0);
                 }
             }
-
+    
             @keyframes fadeOut {
                 from {
                     opacity: 1;
@@ -62,76 +68,21 @@ class AlertService {
                     opacity: 0;
                 }
             }
-
-            .alert {
-                padding: 10px 20px;
-                border-radius: 5px;
-                margin-bottom: 10px;
-                color: white;
-            }
-
+    
             .alert.error {
                 background-color: #f44336;
             }
-
+    
             .alert.success {
                 background-color: #4CAF50;
             }
-
+    
             .alert.warning {
                 background-color: #FFC107;
             }
         </style>';
+
     }
-    public static function includeCSS2() {
-        echo '
-        <style>
-            .alert-container {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 1000;
-                animation: slideIn 0.5s forwards, fadeOut 22s forwards;
-                opacity: 0;
-            }
-
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                }
-                to {
-                    transform: translateX(0);
-                }
-            }
-
-            @keyframes fadeOut {
-                from {
-                    opacity: 1;
-                }
-                to {
-                    opacity: 0;
-                }
-            }
-
-            .alert {
-                padding: 10px 20px;
-                border-radius: 5px;
-                margin-bottom: 10px;
-                color: white;
-            }
-
-            .alert.error {
-                background-color: #f44336;
-            }
-
-            .alert.success {
-                background-color: #4CAF50;
-            }
-
-            .alert.warning {
-                background-color: #FFC107;
-            }
-        </style>';
-    }
+    
+    
 }
-

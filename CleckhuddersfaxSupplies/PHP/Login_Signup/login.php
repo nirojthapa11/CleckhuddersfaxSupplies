@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="login.css">
-    <?php AlertService::includeCSS2(); ?>
+    <?php AlertService::includeCSS(22); ?>
 </head>
 <body>
 <?php AlertService::displayAlerts(); ?>
