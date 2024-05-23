@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfdccd17-bc41-4eb6-9dc8-f1a1b916cdc5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/CustomerProfilePage/mycart.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/CustomerProfilePage/mycart.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HomePage/homepage.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/HomePage/homepage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/CleckhuddersfaxSupplies/PHP/Login_Signup/login.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,21 +39,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "e07e60f6",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;govind2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -82,6 +81,10 @@
       <workItem from="1716354656547" duration="192000" />
       <workItem from="1716354913479" duration="39000" />
       <workItem from="1716355150642" duration="190000" />
+      <workItem from="1716384639205" duration="34000" />
+      <workItem from="1716384676875" duration="6135000" />
+      <workItem from="1716397269866" duration="6793000" />
+      <workItem from="1716444174898" duration="17582000" />
     </task>
     <servers />
   </component>

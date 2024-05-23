@@ -25,9 +25,9 @@
 
 </head>
 <body>
-    <?php
-    AlertService::displayAlerts();
-    ?>
+<?php
+AlertService::displayAlerts();
+?>
 <div>
     <?php
     include('../HeaderPage/head.php');
