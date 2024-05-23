@@ -44,13 +44,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Assigning the correct user_id based on the user type
                 if ($usertype == 'customer') {
                     $_SESSION['user_id'] = $row['CUSTOMER_ID'];
+                    $_SESSION['user_type'] = $usertype;
                     header("Location: ../cartUtils.php");
                 } elseif ($usertype == 'trader') {
                     $_SESSION['user_id'] = $row['TRADER_ID'];
+                    $_SESSION['user_type'] = $usertype;
                     header("Location: ../TraderInterface/traderInterface.php");
                     exit();
                 } elseif ($usertype == 'admin') {
                     $_SESSION['user_id'] = $row['ADMIN_ID'];
+                    $_SESSION['user_type'] = $usertype;
                     header("Location: ../AdminInterface/adminInterface.php");
                     exit();
                 }

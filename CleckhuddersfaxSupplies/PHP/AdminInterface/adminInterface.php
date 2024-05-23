@@ -405,9 +405,16 @@ if (isset($_GET['action']) && $_GET['action'] == 'disapproveShop' && isset($_GET
 
                                         $sn = 1;
                                         while ($row = oci_fetch_assoc($stid)) {
+                                            $shopImageBase64 = $db->getShopImage($row['SHOP_ID']);
                                             echo "<tr>";
                                             echo "<td>" . $sn++ . "</td>";
-                                            // echo "<td>" . $row['SHOP_IMAGE'] . "</td>";
+                                            echo "<td>";
+                                            if ($shopImageBase64) {
+                                                echo '<img src="data:image/jpeg;base64,' . $shopImageBase64 . '" alt="' . htmlspecialchars($row['SHOP_NAME']) . '" style="width: 100%; height: 130px;">';
+                                            } else {
+                                                echo '<img src="../Image/path_to_placeholder_image.jpg" alt="' . htmlspecialchars($row['SHOP_NAME']) . ' Image" style="width: 100%; height: auto;">';
+                                            }
+                                            echo "</td>";
                                             echo "<td>" . $row['SHOP_NAME'] . "</td>";
                                             echo "<td>" . $row['REGISTRATION_DATE'] . "</td>";
                                             echo "<td>" . $row['DESCRIPTION'] . "</td>";
@@ -454,9 +461,16 @@ if (isset($_GET['action']) && $_GET['action'] == 'disapproveShop' && isset($_GET
 
                                         $sn = 1;
                                         while ($row = oci_fetch_assoc($stid)) {
+                                            $shopImageBase64 = $db->getShopImage($row['SHOP_ID']);
                                             echo "<tr>";
                                             echo "<td>" . $sn++ . "</td>";
-                                            // echo "<td>" . $row['SHOP_IMAGE'] . "</td>";
+                                            echo "<td>";
+                                            if ($shopImageBase64) {
+                                                echo '<img src="data:image/jpeg;base64,' . $shopImageBase64 . '" alt="' . htmlspecialchars($row['SHOP_NAME']) . '" style="width: 100%; height: 130px;">';
+                                            } else {
+                                                echo '<img src="../Image/path_to_placeholder_image.jpg" alt="' . htmlspecialchars($row['SHOP_NAME']) . ' Image" style="width: 100%; height: auto;">';
+                                            }
+                                            echo "</td>";
                                             echo "<td>" . $row['SHOP_NAME'] . "</td>";
                                             echo "<td>" . $row['REGISTRATION_DATE'] . "</td>";
                                             echo "<td>" . $row['DESCRIPTION'] . "</td>";
