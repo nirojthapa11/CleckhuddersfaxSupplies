@@ -751,6 +751,29 @@ class Database
             return null; 
         }
     }
+
+
+
+    public function getShopImage($shopId) {
+        $query = 'SELECT SHOP_IMAGE FROM shop WHERE shop_id = :id';
+        $statement = oci_parse($this->conn, $query);
+        oci_bind_by_name($statement, ":id", $shopId);
+
+        if (!oci_execute($statement)) {
+            $m = oci_error($statement);
+            throw new Exception("Error executing query: " . $m['message']);
+        }
+
+        $row = oci_fetch_array($statement, OCI_ASSOC + OCI_RETURN_LOBS);
+
+        if ($row && isset($row['SHOP_IMAGE'])) {
+            $imageData = $row['SHOP_IMAGE'];
+            $imageBase64 = base64_encode($imageData);
+            return $imageBase64;
+        } else {
+            return '';
+        }
+    }
     
     
     

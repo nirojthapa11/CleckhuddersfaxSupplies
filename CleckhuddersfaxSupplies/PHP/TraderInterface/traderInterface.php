@@ -33,28 +33,6 @@
     oci_execute($statement_Trader);
     $fetchTrader = oci_fetch_assoc($statement_Trader);
 
-    if (isset($_POST['submit'])) {
-        $shopName = $_POST['shop-name'];
-        $email = $_POST['shop-email'];
-        $description = $_POST['description'];
-        $shopImage = null;
-    
-        $query2 = "UPDATE Shop SET SHOP_IMAGE = empty_blob(), SHOP_NAME = '$shopName', DESCRIPTION = '$description', SHOP_EMAIL = '$email', REGISTRATION_DATE = SYSDATE
-        WHERE Trader_ID = '$traderId'";
-    
-        $statement_Shop = oci_parse($conn, $query2);
-        $result = oci_execute($statement_Shop);
-
-        if ($result) {
-            oci_commit($conn);
-            header("Location: traderInterface.php");
-            exit();
-        } else {
-            echo "Error updating profile!";
-        }
-        oci_close($conn);
-    };
-
     if (isset($_POST['save'])) {
         $firstName = $_POST['first_name'];
         $lastName = $_POST['last_name'];
@@ -97,20 +75,20 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="traderInterface.css">
     <style>
-        .formh-group2 label.but {
-            display: inline-block;
-            padding: 8px 12px; /* Adjust padding as needed */
-            border: 1px solid #ccc;
-            cursor: pointer;
-        }
+    .formh-group2 label.but {
+        display: inline-block;
+        padding: 8px 12px;
+        /* Adjust padding as needed */
+        border: 1px solid #ccc;
+        cursor: pointer;
+    }
 
-        .formh-group2 label.but:hover {
-            background-color: #f0f0f0;
-        }
-
+    .formh-group2 label.but:hover {
+        background-color: #f0f0f0;
+    }
     </style>
 
-<script>
+    <script>
     // Define the updateLabel function in the global scope
     function updateLabel(input, labelId) {
         var label = document.getElementById(labelId);
@@ -120,7 +98,16 @@
             label.innerText = "Choose Image"; // Reset label text if no file selected
         }
     }
-</script>
+
+    function updateLabel2(input, labelId) {
+        var label = document.getElementById(labelId);
+        if (input.files && input.files[0]) {
+            label.innerText = input.files[0].name; // Change label text to the selected file name
+        } else {
+            label.innerText = "Choose Image"; // Reset label text if no file selected
+        }
+    }
+    </script>
 
 
 </head>
@@ -207,9 +194,17 @@
 
                             $sn = 1;
                             while ($row = oci_fetch_assoc($stid)) {
+                                $shopImageBase64 = $db->getShopImage($row['SHOP_ID']);
+
                                 echo "<tr>";
                                 echo "<td>" . htmlspecialchars($sn++) . "</td>";
-                                // echo "<td><img src='" . htmlspecialchars($row['SHOP_IMAGE']) . "' alt='Shop Image' /></td>"; // Display image
+                                echo "<td>";
+                                if ($shopImageBase64) {
+                                    echo '<img src="data:image/jpeg;base64,' . $shopImageBase64 . '" alt="' . htmlspecialchars($row['SHOP_NAME']) . '" style="width: 100%; height: 130px;">';
+                                } else {
+                                    echo '<img src="../Image/path_to_placeholder_image.jpg" alt="' . htmlspecialchars($row['SHOP_NAME']) . ' Image" style="width: 100%; height: auto;">';
+                                }
+                                echo "</td>";
                                 echo "<td>" . htmlspecialchars($row['SHOP_NAME']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['DESCRIPTION']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['STATUS']) . "</td>";
@@ -426,7 +421,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h1>Update Shop</h1>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="traderAction.php" method="post" enctype="multipart/form-data">
                 <div class="formh-group">
                     <label for="shop-name">Shop Name:</label>
                     <input type="text" id="shop-name" name="shop-name"
@@ -437,15 +432,17 @@
                     <input type="email" id="shop-email" name="shop-email"
                         value="<?php echo htmlspecialchars($fetch['SHOP_EMAIL'], ENT_QUOTES); ?>" required>
                 </div>
-                <div class="formh-group">
-                    <label for="shop-image">Shop Image:</label>
-                    <input type="file" id="shop-image" name="shop-image" accept="image/*">
+                <div class="formh-group2">
+                    <label for="shop-image" class="but">Product Image:</label>
+                    <input type="file" id="shop-image" name="shop-image" accept="image/*" style="display: none;" onchange="updateLabel(this, 'file-select-label4')">
+                    <span id="file-select-label4">Choose Image</span> <!-- Add a span for displaying the selected file name -->
                 </div>
                 <div class="formh-group">
                     <label for="description">Description:</label>
                     <input type="text" id="description" name="description"
                         value="<?php echo htmlspecialchars($fetch['DESCRIPTION'], ENT_QUOTES); ?>" required>
                 </div>
+                <input type="hidden" name="updateShop" value="">
                 <button type="submit" class="next" name="submit">Update</button>
             </form>
         </div>
@@ -482,9 +479,10 @@
                     <input type="number" id="update-max-order" name="max-order">
                 </div>
                 <div class="formh-group2">
-                    <label for="product-image2" class="but">Product Image:</label>
-                    <input type="file" id="update-product-image" name="product-image" accept="image/*" style="display: none;" onchange="updateLabel(this, 'file-select-label2')">
-                    <span id="file-select-label2">Choose Image</span> 
+                    <label for="product-image3" class="but">Product Image:</label>
+                    <input type="file" id="product-image3" name="product-image" accept="image/*"
+                        style="display: none;" onchange="updateLabel2(this, 'file-select-label3')">
+                    <span id="file-select-label3">Choose Image</span>
                 </div>
                 <div class="formh-group1">
                     <label for="update-allergy-info">Allergy Info:</label>
@@ -510,7 +508,7 @@
                     <input type="text" id="update-description" name="description" required>
                 </div>
                 <input type="hidden" name="updateproduct" value="">
-                <input type="hidden" name="update_productId" value="">
+                <input type="hidden" id="update_productId" name="update_productId" value="">
                 <button type="submit" class="next1" name="submits">Update</button>
             </form>
         </div>
@@ -549,8 +547,9 @@
                 </div>
                 <div class="formh-group2">
                     <label for="product-image2" class="but">Product Image:</label>
-                    <input type="file" id="product-image2" name="product-image" accept="image/*" style="display: none;" onchange="updateLabel(this, 'file-select-label2')">
-                    <span id="file-select-label2">Choose Image</span> <!-- Add a span for displaying the selected file name -->
+                    <input type="file" id="product-image2" name="product-image" accept="image/*" style="display: none;"
+                        onchange="updateLabel(this, 'file-select-label2')">
+                    <span id="file-select-label2">Choose Image</span>
                 </div>
                 <div class="formh-group2">
                     <label for="allergy-info">Allergy Info:</label>
@@ -583,88 +582,80 @@
 
 
     <script src="traderInterface.js"></script>
-<script>
-    // Navigate to Apex Oracle Application
-    function navigateTo(url) {
-        window.location.href = url;
-    }
+    <script>
+        // Navigate to Apex Oracle Application
+        function navigateTo(url) {
+            window.location.href = url;
+        }
 
-    // Edit and Save Button
-    document.getElementById('editButton').addEventListener('click', function() {
-        var inputFields = document.querySelectorAll('input:not([type="submit"])');
-        inputFields.forEach(function(input) {
-            input.removeAttribute('readonly');
+        // Edit and Save Button
+        document.getElementById('editButton').addEventListener('click', function() {
+            var inputFields = document.querySelectorAll('input:not([type="submit"])');
+            inputFields.forEach(function(input) {
+                input.removeAttribute('readonly');
+            });
+            document.getElementById('editButton').style.display = 'none';
+            document.getElementById('saveButton').style.display = 'block';
         });
-        document.getElementById('editButton').style.display = 'none';
-        document.getElementById('saveButton').style.display = 'block';
-    });
 
-    // Password Hide and Show
-    document.getElementById('togglePassword').addEventListener('click', function() {
-        var passwordField = document.getElementById('password');
-        var type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordField.setAttribute('type', type);
-        this.classList.toggle('fa-eye-slash');
-    });
+        // Password Hide and Show
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            var passwordField = document.getElementById('password');
+            var type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
 
-    function deleteEntity(entityType, entityId) {
-        if (confirm("Are you sure you want to delete this " + entityType + "?")) {
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "deleteTraderRecord.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    location.reload();
-                }
-            };
-            xhr.send("type=" + entityType + "&id=" + entityId);
-        }
-    }
-
-    function deleteProduct(productId) {
-        deleteEntity('product', productId);
-    }
-
-    function deleteShop(shopId) {
-        deleteEntity('shop', shopId);
-    }
-
-
-    function openUpdateModal(productId, productName, description, price, stock, allergyInfo, qtyPerItem, minOrder, maxOrder) {
-        document.getElementById('update-product-name').value = productName;
-        document.getElementById('update-description').value = description;
-        document.getElementById('update-price').value = price;
-        document.getElementById('update-stock').value = stock;
-        document.getElementById('update_productId').value = productId;
-
-        console.log(productId);
-
-        var allergyInfoElement = document.getElementById('update-allergy-info');
-        if (allergyInfoElement) {
-            allergyInfoElement.value = allergyInfo || '';  // Handle null or undefined values
+        function deleteEntity(entityType, entityId) {
+            if (confirm("Are you sure you want to delete this " + entityType + "?")) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "deleteTraderRecord.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        location.reload();
+                    }
+                };
+                xhr.send("type=" + entityType + "&id=" + entityId);
+            }
         }
 
-        document.getElementById('update-quantity-per-item').value = qtyPerItem;
-        document.getElementById('update-min-order').value = minOrder;
-        document.getElementById('update-max-order').value = maxOrder;
-        document.getElementById('update-category').selectedIndex = 0; 
+        function deleteProduct(productId) {
+            deleteEntity('product', productId);
+        }
 
-        // Display the modal
-        document.getElementById('updateProductModal').style.display = 'block';
-    }
+        function deleteShop(shopId) {
+            deleteEntity('shop', shopId);
+        }
 
-    document.querySelector('.close-update').onclick = function() {
-        document.getElementById('updateProductModal').style.display = 'none';
-    };
-    window.onclick = function(event) {
-        if (event.target == document.getElementById('updateProductModal')) {
+
+        function openUpdateModal(productId, productName, description, price, stock, allergyInfo, qtyPerItem, minOrder,
+            maxOrder) {
+
+            document.getElementById('update-product-name').value = productName;
+            document.getElementById('update-description').value = description;
+            document.getElementById('update-price').value = price;
+            document.getElementById('update-stock').value = stock;
+            document.getElementById('update-allergy-info').value = allergyInfo || '';
+            document.getElementById('update-quantity-per-item').value = qtyPerItem || '';
+            document.getElementById('update-min-order').value = minOrder || '';
+            document.getElementById('update-max-order').value = maxOrder || '';
+            document.getElementById('update_productId').value = productId;
+            document.getElementById('update-category').selectedIndex = 0;
+
+            // Display the modal
+            document.getElementById('updateProductModal').style.display = 'block';
+        }
+
+        document.querySelector('.close-update').onclick = function() {
             document.getElementById('updateProductModal').style.display = 'none';
-        }
-    };
-
-
-
-</script>
+        };
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('updateProductModal')) {
+                document.getElementById('updateProductModal').style.display = 'none';
+            }
+        };
+    </script>
 
 
 
