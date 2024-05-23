@@ -407,7 +407,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'disapproveShop' && isset($_GET
                                         while ($row = oci_fetch_assoc($stid)) {
                                             echo "<tr>";
                                             echo "<td>" . $sn++ . "</td>";
-                                            echo "<td>" . $row['SHOP_IMAGE'] . "</td>";
+                                            // echo "<td>" . $row['SHOP_IMAGE'] . "</td>";
                                             echo "<td>" . $row['SHOP_NAME'] . "</td>";
                                             echo "<td>" . $row['REGISTRATION_DATE'] . "</td>";
                                             echo "<td>" . $row['DESCRIPTION'] . "</td>";

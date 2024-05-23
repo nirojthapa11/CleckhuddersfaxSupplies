@@ -209,7 +209,7 @@
                             while ($row = oci_fetch_assoc($stid)) {
                                 echo "<tr>";
                                 echo "<td>" . htmlspecialchars($sn++) . "</td>";
-                                echo "<td><img src='" . htmlspecialchars($row['SHOP_IMAGE']) . "' alt='Shop Image' /></td>"; // Display image
+                                // echo "<td><img src='" . htmlspecialchars($row['SHOP_IMAGE']) . "' alt='Shop Image' /></td>"; // Display image
                                 echo "<td>" . htmlspecialchars($row['SHOP_NAME']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['DESCRIPTION']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['STATUS']) . "</td>";
@@ -291,7 +291,8 @@
                     </thead>
                     <tbody>
                         <?php
-                            $query = "SELECT PRODUCT.Product_Id, PRODUCT.Product_Image, PRODUCT.Product_Name, PRODUCT.Description, PRODUCT.Price, PRODUCT.Stock, SHOP.Shop_Name
+                            $query = "SELECT PRODUCT.Product_Id, PRODUCT.Product_Image, PRODUCT.Product_Name, PRODUCT.Description, PRODUCT.Price, PRODUCT.quantity_per_item, PRODUCT.Stock, PRODUCT.min_order, PRODUCT.max_order,
+                            PRODUCT.allergy_info, SHOP.Shop_Name
                             FROM PRODUCT
                             JOIN SHOP ON PRODUCT.Shop_Id = SHOP.Shop_Id 
                             WHERE SHOP.Trader_Id = '$traderId'";
@@ -304,7 +305,6 @@
                                 $imageBase64 = $db->getProductImage($row['PRODUCT_ID']);
                                 echo "<tr>";
                                 echo "<td>" . htmlspecialchars($sn++) . "</td>";
-                                // echo "<td><img src='" . htmlspecialchars($row['PRODUCT_IMAGE']) . "' alt='Product Image' /></td>";
                                 echo "<td>";
                                 if ($imageBase64) {
                                     echo '<img src="data:image/jpeg;base64,' . $imageBase64 . '" alt="' . htmlspecialchars($row['PRODUCT_NAME']) . '" style="width: 100%; height: 130px;">';
@@ -317,11 +317,24 @@
                                 echo "<td>" . htmlspecialchars($row['PRICE']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['STOCK']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['SHOP_NAME']) . "</td>";
-                                echo 
-                                '<td>
-                                    <button class="upd-btn" onclick="">Update</button>
-                                    <button class="del-btn" onclick="deleteProduct(' . $row['PRODUCT_ID'] . ')">Delete</button>
-                                </td>';
+
+                                echo "<td>
+                                    <button class='upd-btn' 
+                                        onclick=\"openUpdateModal(
+                                            '{$row['PRODUCT_ID']}', 
+                                            '" . addslashes($row['PRODUCT_NAME']) . "', 
+                                            '" . addslashes($row['DESCRIPTION']) . "', 
+                                            {$row['PRICE']}, 
+                                            {$row['STOCK']}, 
+                                            '" . addslashes($row['ALLERGY_INFO']) . "',
+                                            {$row['QUANTITY_PER_ITEM']},
+                                            {$row['MIN_ORDER']},
+                                            {$row['MAX_ORDER']},
+                                        )\">
+                                        Update
+                                    </button>
+                                    <button class='del-btn' onclick=\"deleteProduct({$row['PRODUCT_ID']})\">Delete</button>
+                                </td>";
                                 echo "</tr>";
                             }
                         ?>
@@ -443,34 +456,39 @@
         <div class="modal-content1">
             <span class="close-update">&times;</span>
             <h1>Update Product</h1>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="traderAction.php" method="post" enctype="multipart/form-data">
                 <div class="formh-group1">
-                    <label for="product-name">Product Name:</label>
-                    <input type="text" id="product-name" name="product-name" required>
+                    <label for="update-product-name">Product Name:</label>
+                    <input type="text" id="update-product-name" name="product-name" required>
                 </div>
                 <div class="formh-group1 inline">
-                    <label for="price">Price:</label>
-                    <input type="number" id="price" name="price" required>
+                    <label for="update-price">Price:</label>
+                    <input type="number" id="update-price" name="price" required>
                 </div>
                 <div class="formh-group1 inline">
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" required>
+                    <label for="update-stock">Stock:</label>
+                    <input type="number" id="update-stock" name="stock" required>
                 </div>
                 <div class="formh-group1 inline">
-                    <label for="min-order">Min Order:</label>
-                    <input type="number" id="min-order" name="min-order" required>
+                    <label for="update-quantity">Quantity Per Item:</label>
+                    <input type="number" id="update-quantity-per-item" name="quantity">
                 </div>
                 <div class="formh-group1 inline">
-                    <label for="max-order">Max Order:</label>
-                    <input type="number" id="max-order" name="max-order" required>
+                    <label for="update-min-order">Min Order:</label>
+                    <input type="number" id="update-min-order" name="min-order">
+                </div>
+                <div class="formh-group1 inline">
+                    <label for="update-max-order">Max Order:</label>
+                    <input type="number" id="update-max-order" name="max-order">
+                </div>
+                <div class="formh-group2">
+                    <label for="product-image2" class="but">Product Image:</label>
+                    <input type="file" id="update-product-image" name="product-image" accept="image/*" style="display: none;" onchange="updateLabel(this, 'file-select-label2')">
+                    <span id="file-select-label2">Choose Image</span> 
                 </div>
                 <div class="formh-group1">
-                    <label for="product-image">Product Image:</label>
-                    <input type="file" id="product-image" name="product-image" accept="image/*">
-                </div>
-                <div class="formh-group1">
-                    <label for="allergy-info">Allergy Info:</label>
-                    <input type="text" id="allergy-info" name="allergy-info" required>
+                    <label for="update-allergy-info">Allergy Info:</label>
+                    <input type="text" id="update-allergy-info" name="allergy-info">
                 </div>
                 <div class="formh-group1">
                     <label for="category">Product Category</label>
@@ -488,76 +506,79 @@
                     </select>
                 </div>
                 <div class="formh-group1">
-                    <label for="description">Description:</label>
-                    <input type="text" id="description" name="description" required>
+                    <label for="update-description">Description:</label>
+                    <input type="text" id="update-description" name="description" required>
                 </div>
+                <input type="hidden" name="updateproduct" value="">
+                <input type="hidden" name="update_productId" value="">
                 <button type="submit" class="next1" name="submits">Update</button>
             </form>
         </div>
     </div>
 
+
     <!-- Add Product Modal -->
     <div id="addProductModal" class="modal2">
-    <div class="modal-content2">
-        <span class="close-add">&times;</span>
-        <h1>Add Product</h1>
-        <form action="traderAction.php" method="post" enctype="multipart/form-data">
-            <div class="formh-group2">
-                <label for="product-name">Product Name:</label>
-                <input type="text" id="product-name" name="product-name" required>
-            </div>
-            <div class="formh-group2 inline">
-                <label for="price">Price:</label>
-                <input type="number" id="price" name="price" required>
-            </div>
-            <div class="formh-group2 inline">
-                <label for="stock">Stock:</label>
-                <input type="number" id="stock" name="stock" required>
-            </div>
-            <div class="formh-group2 inline">
-                <label for="min-order">Min Order:</label>
-                <input type="number" id="min-order" name="min-order" required>
-            </div>
-            <div class="formh-group2 inline">
-                <label for="max-order">Max Order:</label>
-                <input type="number" id="max-order" name="max-order" required>
-            </div>
-            <div class="formh-group2">
-                <label for="quantity-per-item">Quantity Per Item:</label>
-                <input type="number" id="quantity-per-item" name="quantity-per-item" required>
-            </div>
-            <div class="formh-group2">
-                <label for="product-image2" class="but">Product Image:</label>
-                <input type="file" id="product-image2" name="product-image" accept="image/*" style="display: none;" onchange="updateLabel(this, 'file-select-label2')">
-                <span id="file-select-label2">Choose Image</span> <!-- Add a span for displaying the selected file name -->
-            </div>
-            <div class="formh-group2">
-                <label for="allergy-info">Allergy Info:</label>
-                <input type="text" id="allergy-info" name="allergy-info" required>
-            </div>
-            <div class="formh-group2">
-                <label for="category">Product Category</label>
-                <select type="category" id="category" name="category" required>
-                    <option value="">Select a category</option>
-                    <?php
-                    // Fetch categories
-                    $query_categories = "SELECT * FROM CATEGORY";
-                    $statement_categories = oci_parse($conn, $query_categories);
-                    oci_execute($statement_categories);
-                    while ($row_category = oci_fetch_assoc($statement_categories)) {
-                        echo '<option value="' . $row_category['CATEGORY_ID'] . '">' . $row_category['CATEGORY_NAME'] . '</option>';
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="formh-group2">
-                <label for="description">Description:</label>
-                <input type="text" id="Description" name="description" required>
-            </div>
-            <input type="hidden" name="addproduct" value="">
-            <button type="submit" class="next2" name="addproduct">Add</button>
-        </form>
-    </div>
+        <div class="modal-content2">
+            <span class="close-add">&times;</span>
+            <h1>Add Product</h1>
+            <form action="traderAction.php" method="post" enctype="multipart/form-data">
+                <div class="formh-group2">
+                    <label for="product-name">Product Name:</label>
+                    <input type="text" id="product-name" name="product-name" required>
+                </div>
+                <div class="formh-group2 inline">
+                    <label for="price">Price:</label>
+                    <input type="number" id="price" name="price" required>
+                </div>
+                <div class="formh-group2 inline">
+                    <label for="stock">Stock:</label>
+                    <input type="number" id="stock" name="stock" required>
+                </div>
+                <div class="formh-group2 inline">
+                    <label for="min-order">Min Order:</label>
+                    <input type="number" id="min-order" name="min-order" required>
+                </div>
+                <div class="formh-group2 inline">
+                    <label for="max-order">Max Order:</label>
+                    <input type="number" id="max-order" name="max-order" required>
+                </div>
+                <div class="formh-group2">
+                    <label for="quantity-per-item">Quantity Per Item:</label>
+                    <input type="number" id="quantity-per-item" name="quantity-per-item" required>
+                </div>
+                <div class="formh-group2">
+                    <label for="product-image2" class="but">Product Image:</label>
+                    <input type="file" id="product-image2" name="product-image" accept="image/*" style="display: none;" onchange="updateLabel(this, 'file-select-label2')">
+                    <span id="file-select-label2">Choose Image</span> <!-- Add a span for displaying the selected file name -->
+                </div>
+                <div class="formh-group2">
+                    <label for="allergy-info">Allergy Info:</label>
+                    <input type="text" id="allergy-info" name="allergy-info" required>
+                </div>
+                <div class="formh-group2">
+                    <label for="category">Product Category</label>
+                    <select type="category" id="category" name="category" required>
+                        <option value="">Select a category</option>
+                        <?php
+                        // Fetch categories
+                        $query_categories = "SELECT * FROM CATEGORY";
+                        $statement_categories = oci_parse($conn, $query_categories);
+                        oci_execute($statement_categories);
+                        while ($row_category = oci_fetch_assoc($statement_categories)) {
+                            echo '<option value="' . $row_category['CATEGORY_ID'] . '">' . $row_category['CATEGORY_NAME'] . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="formh-group2">
+                    <label for="description">Description:</label>
+                    <input type="text" id="Description" name="description" required>
+                </div>
+                <input type="hidden" name="addproduct" value="">
+                <button type="submit" class="next2" name="addproduct">Add</button>
+            </form>
+        </div>
     </div>
 
 
@@ -607,6 +628,42 @@
     function deleteShop(shopId) {
         deleteEntity('shop', shopId);
     }
+
+
+    function openUpdateModal(productId, productName, description, price, stock, allergyInfo, qtyPerItem, minOrder, maxOrder) {
+        document.getElementById('update-product-name').value = productName;
+        document.getElementById('update-description').value = description;
+        document.getElementById('update-price').value = price;
+        document.getElementById('update-stock').value = stock;
+        document.getElementById('update_productId').value = productId;
+
+        console.log(productId);
+
+        var allergyInfoElement = document.getElementById('update-allergy-info');
+        if (allergyInfoElement) {
+            allergyInfoElement.value = allergyInfo || '';  // Handle null or undefined values
+        }
+
+        document.getElementById('update-quantity-per-item').value = qtyPerItem;
+        document.getElementById('update-min-order').value = minOrder;
+        document.getElementById('update-max-order').value = maxOrder;
+        document.getElementById('update-category').selectedIndex = 0; 
+
+        // Display the modal
+        document.getElementById('updateProductModal').style.display = 'block';
+    }
+
+    document.querySelector('.close-update').onclick = function() {
+        document.getElementById('updateProductModal').style.display = 'none';
+    };
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('updateProductModal')) {
+            document.getElementById('updateProductModal').style.display = 'none';
+        }
+    };
+
+
+
 </script>
 
 

@@ -58,6 +58,7 @@
                     echo "Failed to save product image.";
                 }
                 $lob->free();
+                header("Location: traderInterface.php");
             } else {
                 $error = oci_error($statement);
                 echo "Error adding product: " . $error['message'];
@@ -66,6 +67,13 @@
             echo "Failed to upload product image.";
         }
         
+    }
+
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['updateproduct'])) {
+        
+
+
     }
 
 
