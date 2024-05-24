@@ -179,17 +179,130 @@ class MailerService
         }
     }
 
+    public function sendOrderReceipt($toEmail, $orderDetails)
+    {
+        try {
+            $this->mail->setFrom($this->mail->Username, 'Cleckhuddersfax Supplies'); // Sender's email address and name
+            $this->mail->addAddress($toEmail);                       // Recipient's email address
+            $this->mail->Subject = 'Order Receipt - Cleckhuddersfax Supplies';
+            $this->mail->isHTML(true);  // Set email format to HTML
+            
+// Construct the email body with order summary
+$emailBody = '
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                padding: 20px;
+            }
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #fff;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            h2 {
+                color: #ffffff;
+                padding: 20px;
+                margin: 0;
+                background-color: #ff5722;
+                border-radius: 10px 10px 0 0;
+                text-align: center;
+            }
+            p {
+                color: #333333;
+                padding: 0 20px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 15px;
+                text-align: left;
+            }
+            th {
+                background-color: #ff5722;
+                color: #ffffff;
+            }
+            tr:nth-child(even) {
+                background-color: #ffe0b2;
+            }
+            .total {
+                font-weight: bold;
+                text-align: right;
+                background-color: #ffc107;
+            }
+            .thank-you {
+                padding: 20px;
+                text-align: center;
+                background-color: #ff5722;
+                color: #ffffff;
+                border-radius: 0 0 10px 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Order Receipt</h2>
+            <p>Thank you for your order with Cleckhuddersfax Supplies. Below is the summary of your order:</p>
+            <table border="1">
+                <tr>
+                    <th>Product</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>';
+
+// Loop through order details to construct rows for each product
+foreach ($orderDetails as $key => $product) {
+    if ($key === 'total') {
+        continue; // Skip the total key
+    }
+
+    $emailBody .= '
+                <tr>
+                    <td>' . $product['PRODUCT_NAME'] . '</td>
+                    <td>$' . $product['PRICE'] . '</td>
+                    <td>' . $product['QUANTITY'] . '</td>
+                    <td>$' . number_format($product['PRICE'] * $product['QUANTITY'], 2) . '</td>
+                </tr>';
+}
+
+// Add total summary
+$emailBody .= '
+                <tr class="total">
+                    <td colspan="3">Total:</td>
+                    <td>$' . number_format($orderDetails['total'], 2) . '</td>
+                </tr>
+            </table>
+            <p class="thank-you">Thank you for shopping with us!</p>
+        </div>
+    </body>
+    </html>
+';
 
 
 
 
 
+            
 
+            // Set email body
+            $this->mail->Body = $emailBody;
+
+            // Send email
+            $this->mail->send();
+            return true; // Email sent successfully
+        } catch (Exception $e) {
+            return false; // Failed to send email
+        }
+    }
 
 
 
 }
-
-
-
-
