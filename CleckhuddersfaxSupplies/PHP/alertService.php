@@ -38,7 +38,7 @@ class AlertService {
         <style>
             .alert-container {
                 position: fixed;
-                top: 20px;
+                top: 130px;
                 right: 150px;
                 z-index: 1000;
             }

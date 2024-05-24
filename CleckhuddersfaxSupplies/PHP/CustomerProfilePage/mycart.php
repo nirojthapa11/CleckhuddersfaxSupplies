@@ -1,3 +1,21 @@
+<?php
+    require_once '../../partials/dbConnect.php';
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    $customerid = $_SESSION['user_id'];
+    $db = new Database();
+    $cartid = $db->getCartIdUsingCustomerId($customerid);
+    $cart_products = $db->getCartProducts($cartid);
+    // Calculate subtotal and total
+    $subtotal = 0;
+    foreach ($cart_products as $product) {
+        $subtotal += $product['PRICE'] * $product['QUANTITY'];
+    }
+    $tax = 0; // You need to calculate the tax based on your business logic
+    $total = $subtotal + $tax;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +24,8 @@
     <link rel="stylesheet" href="myCart.css">
     <link rel="stylesheet" href="../HeaderPage/head.css">
     <link rel="stylesheet" href="../FooterPage/footer.css">
+    <!-- Include FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>My Cart</title>
 </head>
 <body>
@@ -30,66 +50,54 @@
                         <th>Quantity</th>
                         <th>SubTotal</th>
                     </tr>
+                    <?php foreach ($cart_products as $product) { ?>
                     <tr>
                         <td>
                             <div class="cart-info">
-                                <img src="../Image/apple.jpeg" alt="Fresh Apple">
+                                <a href="../HomePage/productdtl.php?product_id=<?php echo $product['PRODUCT_ID']; ?>">
+                                    <?php
+                                    $imageBase64 = $db->getProductImage($product['PRODUCT_ID']);
+                                    ?>
+                                    <?php if (!empty($imageBase64)): ?>
+                                        <img src="data:image/jpeg;base64,<?php echo $imageBase64; ?>" alt="Product Image" class="product-image">
+                                    <?php else: ?>
+                                        <img src="../Image/apple.jpeg" alt="No Image" class="product-image">
+                                    <?php endif; ?>
+                                </a>
                                 <div>
-                                    <p>Fresh Apple</p>
-                                    <small>Price: $50.00</small>
+                                    <p><a href="../HomePage/productdtl.php?product_id=<?php echo $product['PRODUCT_ID']; ?>"><?php echo $product['PRODUCT_NAME']; ?></a></p>
+                                    <small>Price: $<?php echo $product['PRICE']; ?></small>
                                     <br>
-                                    <a href="">Remove</a>
+                                    <a href="removeFromCart.php?product_id=<?php echo $product['PRODUCT_ID']; ?>">Remove</a>
                                 </div>
                             </div>
                         </td>
-                        <td><input type="number" value="1"></td>
-                        <td>$50.00</td>
-                    </tr>
-                    <tr>
                         <td>
-                            <div class="cart-info">
-                                <img src="../Image/apple.jpeg" alt="Fresh Apple">
-                                <div>
-                                    <p>Fresh Apple</p>
-                                    <small>Price: $50.00</small>
-                                    <br>
-                                    <a href="">Remove</a>
-                                </div>
+                            <div class="quantity-input">
+                                <!-- FontAwesome icons for plus and minus buttons -->
+                                <button class="quantity-btn minus" data-product-id="<?php echo $product['PRODUCT_ID']; ?>"><i class="fas fa-minus"></i></button>
+                                <input id="quantity-<?php echo $product['PRODUCT_ID']; ?>" type="text" class="quantity" value="<?php echo $product['QUANTITY']; ?>" readonly>
+                                <button class="quantity-btn plus" data-product-id="<?php echo $product['PRODUCT_ID']; ?>"><i class="fas fa-plus"></i></button>
                             </div>
                         </td>
-                        <td><input type="number" value="1"></td>
-                        <td>$50.00</td>
+                        <td>$<?php echo number_format($product['PRICE'] * $product['QUANTITY'], 2); ?></td>
                     </tr>
-                    <tr>
-                        <td>
-                            <div class="cart-info">
-                                <img src="../Image/apple.jpeg" alt="Fresh Apple">
-                                <div>
-                                    <p>Fresh Apple</p>
-                                    <small>Price: $50.00</small>
-                                    <br>
-                                    <a href="">Remove</a>
-                                </div>
-                            </div>
-                        </td>
-                        <td><input type="number" value="1"></td>
-                        <td>$50.00</td>
-                    </tr>
+                    <?php } ?>
                 </table>
 
                 <div class="total-price">
                     <table>
                         <tr>
                             <td>SubTotal</td>
-                            <td>$150.00</td>
+                            <td>$<?php echo number_format($subtotal, 2); ?></td>
                         </tr>
                         <tr>
                             <td>Tax</td>
-                            <td>$50.00</td>
+                            <td>$<?php echo number_format($tax, 2); ?></td>
                         </tr>
                         <tr>
                             <td>Total</td>
-                            <td>$200.00</td>
+                            <td>$<?php echo number_format($total, 2); ?></td>
                         </tr>
                     </table>
                 </div>
@@ -102,6 +110,58 @@
 
     <br><br><br><br><br>
     <?php include('../FooterPage/footer.php');?>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners to plus and minus buttons
+            document.querySelectorAll('.quantity-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.dataset.productId;
+                    const quantityField = document.querySelector(`#quantity-${productId}`);
+                    let newQuantity = parseInt(quantityField.value);
+
+                    // Increment or decrement the quantity
+                    if (this.classList.contains('plus')) {
+                        newQuantity++;
+                    } else {
+                        newQuantity = Math.max(newQuantity - 1, 1); // Ensure quantity does not go below 1
+                    }
+
+                    // Update the quantity field
+                    quantityField.value = newQuantity;
+
+                    // Send an AJAX request to update the quantity in the database
+                    const url = 'updateQuantity.php';
+                    const data = new FormData();
+                    data.append('cartId', '<?php echo $cartid; ?>');
+                    data.append('productId', productId);
+                    data.append('newQuantity', newQuantity);
+
+                    fetch(url, {
+                        method: 'POST',
+                        body: data
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Quantity updated successfully:', data);
+                        // If you want to update the UI after successful update, you can do it here
+                    })
+                    .catch(error => {
+                        console.error('Error updating quantity:', error);
+                    });
+                });
+            });
+        });
+    </script>
+
+
+
     <script src="../HeaderPage/head.php"></script>
 </body>
 </html>

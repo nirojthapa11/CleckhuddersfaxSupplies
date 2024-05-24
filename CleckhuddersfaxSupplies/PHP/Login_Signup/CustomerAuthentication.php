@@ -83,6 +83,7 @@ if(isset($_POST['submit']))
 
     $mailer = new MailerService();
 
+    // send otp in email
     if ($mailer->signupEmailVerification($email, $custSignupOtp)) {
         AlertService::setWarning('Check your email and enter the OTP.');
         header("Location: ../VerificationPage/otpVerification.php");

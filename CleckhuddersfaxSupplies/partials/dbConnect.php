@@ -775,6 +775,57 @@ class Database
             return '';
         }
     }
+
+
+
+    public function getCartProducts($cartId)
+    {
+        $cartProducts = array();
+
+        try {
+            // Prepare the SQL query to fetch cart products
+            $query = "SELECT p.product_id, p.product_name, cp.quantity, p.price 
+                    FROM cart_product cp
+                    JOIN product p ON cp.product_id = p.product_id
+                    WHERE cp.cart_id = :cart_id";
+            $conn = $this->getConnection();
+            $statement = oci_parse($conn, $query);
+            oci_bind_by_name($statement, ":cart_id", $cartId);
+            oci_execute($statement);
+            while ($row = oci_fetch_assoc($statement)) {
+                $cartProducts[] = $row;
+            }
+            oci_close($conn);
+        } catch (Exception $e) {
+            throw new Exception("Error fetching cart products: " . $e->getMessage());
+        }
+        return $cartProducts;
+    }
+
+
+    // Update cart quantity
+    public function updateQuantity($cartId, $productId, $newQuantity)
+    {
+        try {
+            $query = "UPDATE cart_product 
+                    SET quantity = :newQuantity
+                    WHERE cart_id = :cartId
+                    AND product_id = :productId";
+            $conn = $this->getConnection();
+            $statement = oci_parse($conn, $query);
+            oci_bind_by_name($statement, ":newQuantity", $newQuantity);
+            oci_bind_by_name($statement, ":cartId", $cartId);
+            oci_bind_by_name($statement, ":productId", $productId);
+            $success = oci_execute($statement);
+            oci_close($conn);
+
+            return $success;
+        } catch (Exception $e) {
+            throw new Exception("Error updating cart quantity: " . $e->getMessage());
+        }
+    }
+
+
     
     
     
