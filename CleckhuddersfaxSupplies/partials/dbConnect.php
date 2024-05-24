@@ -826,6 +826,50 @@ class Database
     }
 
 
+    // Removing a product from cart
+    public function removeProductFromCart($cartId, $productId) {
+        try {
+            $query = "DELETE FROM cart_product 
+                      WHERE cart_id = :cartId 
+                      AND product_id = :productId";
+            $conn = $this->getConnection();
+            $statement = oci_parse($conn, $query);
+            oci_bind_by_name($statement, ":cartId", $cartId);
+            oci_bind_by_name($statement, ":productId", $productId);
+            $success = oci_execute($statement);
+            oci_close($conn);
+    
+            return $success;
+        } catch (Exception $e) {
+            throw new Exception("Error removing product from cart: " . $e->getMessage());
+        }
+    }
+
+    // Get stock of a particular product
+    public function getProductStock($productId) {
+        try {
+            $query = "SELECT stock FROM product WHERE product_id = :productId";
+            $conn = $this->getConnection();
+            $statement = oci_parse($conn, $query);
+            oci_bind_by_name($statement, ":productId", $productId);
+            oci_execute($statement);
+            $row = oci_fetch_assoc($statement);
+            oci_close($conn);
+    
+            if ($row) {
+                return $row['STOCK'];
+            } else {
+                throw new Exception("Product not found");
+            }
+        } catch (Exception $e) {
+            throw new Exception("Error getting product stock: " . $e->getMessage());
+        }
+    }
+    
+    
+
+
+
     
     
     

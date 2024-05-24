@@ -65,7 +65,7 @@ body {
     background: #999696;
     color: white;
     text-align: left;
-    margin-bottom: 20px;
+    margin-bottom: 2px;
 }
 
 .cart-page {
@@ -88,6 +88,7 @@ table {
 .cart-info {
     display: flex;
     align-items: center;
+    width: min-content;
 }
 
 th, td {
@@ -123,7 +124,7 @@ td input {
 
 td a {
     color: #ff523b;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .total-price {
@@ -164,4 +165,17 @@ th:last-child {
 
 .checkout-button .btn:hover {
     background-color: #45a049;
+}
+#removeForm button {
+    background-color: #ff0000; /* Red background */
+    color: #ffffff; /* White text */
+    padding: 1px 2px; /* Padding */
+    border: none; /* No border */
+    cursor: pointer; /* Cursor style */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+#removeForm button:hover {
+    background-color: #cc0000; /* Darker red on hover */
 }

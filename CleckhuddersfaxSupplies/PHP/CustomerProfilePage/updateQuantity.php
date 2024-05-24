@@ -1,37 +1,39 @@
 <?php
-// updateQuantity.php
-
-// Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Include the necessary files and start the session
+
     require_once '../../partials/dbConnect.php';
+    require_once '../alertService.php';
+
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
 
-    // Get the product ID and new quantity from the POST data
+    $db = new Database();
+
     $productId = $_POST['productId'];
     $newQuantity = $_POST['newQuantity'];
     $cartId = $_POST['cartId'];
 
-    // Echo the variables for debugging
-    echo "Product ID: $productId, New Quantity: $newQuantity, Cart ID: $cartId";
+    $productStock = $db->getProductStock($productId);
 
-    // Update the quantity in the database
-    $db = new Database();
+    if ($newQuantity > $productStock) {
+        AlertService::setError('Quantity exceeds available stock');
+        echo json_encode(['success' => false, 'message' => 'Quantity exceeds available stock']);
+        exit(); 
+    }
+
     $success = $db->updateQuantity($cartId, $productId, $newQuantity);
 
-    // Return a JSON response indicating success or failure
     if ($success) {
-        // Respond with a JSON object indicating success
+        AlertService::setSuccess('Quantity updated successfully');
         echo json_encode(['success' => true]);
     } else {
-        // Respond with a JSON object indicating failure
+        AlertService::setError('Failed to update quantity');
         echo json_encode(['success' => false, 'message' => 'Failed to update quantity']);
     }
 } else {
-    // If the request method is not POST, return an error
-    http_response_code(405); // Method Not Allowed
+    http_response_code(405);
+    AlertService::setError('Method not allowed');
     echo json_encode(['error' => 'Method not allowed']);
 }
 ?>
