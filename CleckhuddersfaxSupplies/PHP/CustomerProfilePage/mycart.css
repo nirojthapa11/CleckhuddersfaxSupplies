@@ -116,20 +116,10 @@ td input {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
-    /* display: inline-block;  */
+    display: inline-block; 
+
 }
 
-/* Hide the increment and decrement arrows */
-td input[type="number"]::-webkit-inner-spin-button,
-td input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Show arrows on Firefox */
-td input[type="number"] {
-    -moz-appearance: textfield;
-}
 
 td a {
     color: #ff523b;
