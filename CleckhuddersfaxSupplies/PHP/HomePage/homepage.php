@@ -76,8 +76,9 @@ AlertService::displayAlerts();
     <div class="row my-3">
         <!-- fetch all the products and use a loop to iterate through products -->
         <?php
-        include '../../partials/dbConnect.php';
+        require_once '../../partials/dbConnect.php';
         $db = new Database();
+
         $products = $db->getProducts();
 
         foreach ($products as $product) {

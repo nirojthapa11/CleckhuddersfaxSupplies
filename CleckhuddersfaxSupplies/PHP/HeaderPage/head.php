@@ -1,3 +1,23 @@
+
+
+<?php 
+require_once '../../partials/dbConnect.php';
+
+$db = new Database();
+$conn = $db->getConnection();
+
+$shopName = "SELECT * FROM SHOP";
+$statement = oci_parse($conn, $shopName);
+oci_execute($statement);
+
+$shops = array();
+while ($row = oci_fetch_assoc($statement)){
+    $shops[] = $row;
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,44 +73,13 @@
                     <li><a href="../ContactUsPage/contactus.php">Contact Us</a></li>
                     <li><a href="../ProductPage/product.php">Products</a></li>
                     <li class="menu-item-has-children">
-                        <a href="../ShopPage/shop.php">Shop <i class="fa fa-angle-down"></i></a>
+                        <a href="#">Shop <i class="fa fa-angle-down"></i></a>
                         <div class="sub-menu mega-menu mega-menu-column-4">
-                            <div class="list-item">
-                                <h4 class="title">Greengrocer</h4>
-                                <ul>
-                                    <li><a href="../CategoriesPage/greengrocerCategories.php">Fruits List</a></li>
-                                    <li><a href="../CategoriesPage/greengrocerCategories.php">Vegetables List</a></li>
-                                </ul>
-                                <h4 class="title">Bakery</h4>
-                                <ul>
-                                    <li><a href="../CategoriesPage/bakeryCategories.php">Bread List</a></li>
-                                    <li><a href="../CategoriesPage/bakeryCategories.php">Cakes List</a></li>
-                                    <li><a href="../CategoriesPage/bakeryCategories.php">Cookies List</a></li>
-                                </ul>
-                            </div>
-                            <div class="list-item">
-                                <h4 class="title">Butcher</h4>
-                                <ul>
-                                    <li><a href="../CategoriesPage/butcherCategories.php">Meat List</a></li>
-                                    <li><a href="../CategoriesPage/butcherCategories.php">Wings & Legs List</a></li>
-                                    <li><a href="../CategoriesPage/butcherCategories.php">Sausages List</a></li>
-                                </ul>
-                                <h4 class="title">Fishmonger</h4>
-                                <ul>
-                                    <li><a href="../CategoriesPage/fishmongerCategories.php">Fish List</a></li>
-                                    <li><a href="../CategoriesPage/fishmongerCategories.php">Seafood List</a></li>
-                                    <li><a href="../CategoriesPage/fishmongerCategories.php">Smoked & Cured Fish
-                                            List</a></li>
-                                </ul>
-                            </div>
-                            <div class="list-item">
-                                <h4 class="title">Delicatessen</h4>
-                                <ul>
-                                    <li><a href="../CategoriesPage/delicatessenCategories.php">Cured Meats List</a></li>
-                                    <li><a href="../CategoriesPage/delicatessenCategories.php">Cheeses List</a></li>
-                                    <li><a href="../CategoriesPage/delicatessenCategories.php">Sandwiches List</a></li>
-                                </ul>
-                            </div>
+                            <ul class="list-item">
+                            <?php foreach ($shops as $shop) { ?>
+                                <li><a href="../ShopPage/egShop.php?shopID=<?php echo $shop['SHOP_ID']; ?>"><?php echo $shop['SHOP_NAME']; ?></a></li>
+                            <?php }?>
+                            </ul>
                         </div>
                     </li>
                 </ul>

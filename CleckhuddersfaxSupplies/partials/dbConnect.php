@@ -18,6 +18,11 @@ class Database
     {
         return $this->conn;
     }
+    
+    public function closeConnection()
+    {
+        oci_close($this->conn);
+    }
 
     public function executeQuery($query, $params = [])
     {
@@ -44,10 +49,6 @@ class Database
         return oci_fetch_assoc($statement);
     }
 
-    public function closeConnection()
-    {
-        oci_close($this->conn);
-    }
 
     public function getProducts()
     {
