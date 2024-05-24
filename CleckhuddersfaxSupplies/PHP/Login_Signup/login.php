@@ -17,7 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $showError = "Username/email or password is missing.";
     } else {
         $username = sanitizeInput($_POST['userName']);
-        $password = sanitizeInput($_POST['password']);
+        $password = md5(sanitizeInput($_POST['password']));
+        echo $password;
         $usertype = $_POST['usertype'];
         $query = '';
 

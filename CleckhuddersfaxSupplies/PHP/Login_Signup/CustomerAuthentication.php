@@ -99,13 +99,16 @@ if(isset($_SESSION['isVerifiedCustSignupOtp']) && ($_SESSION['isVerifiedCustSign
 {
     $Uname = $_SESSION['Uname'];
     $email = $_SESSION['email'];
-    $password = $_SESSION['password'];
+    $password = md5($_SESSION['password']);
     $fname = $_SESSION['fname'];
     $lname = $_SESSION['lname'];
     $number = $_SESSION['number'];
     $address = $_SESSION['address'];
     $age = $_SESSION['age'];
     $gender = $_SESSION['gender'];
+
+
+
 
     $query = "INSERT INTO Customer (Cust_image, First_Name, Last_Name, Address, Age, Email, Phone, Gender, Username, Password, Registration_Date) 
     VALUES (empty_blob(), '$fname', '$lname', '$address', '$age', '$email', '$number', '$gender', '$Uname', '$password', SYSDATE)";
@@ -115,10 +118,12 @@ if(isset($_SESSION['isVerifiedCustSignupOtp']) && ($_SESSION['isVerifiedCustSign
 
     if($result) {
         oci_commit($conn);
+        AlertService::setSuccess('Successfully created your account. You can log in now!');
         header("Location: ../Login_Signup/login.php");
         exit(); 
     }
     else {
+        AlertService::setError('Error while creating your account! Try Again');
         $error = oci_error($statement);
         echo "Error: " . $error['message']; 
     }

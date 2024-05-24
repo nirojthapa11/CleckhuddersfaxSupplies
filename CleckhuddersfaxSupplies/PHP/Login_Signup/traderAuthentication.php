@@ -106,7 +106,7 @@ if(isset($_SESSION['isVerifiedTraderSignupOtp']) && ($_SESSION['isVerifiedTrader
     $age = $_SESSION['age'];
     $gender = $_SESSION['gender'];
     $userName = $_SESSION['userName'];
-    $password = $_SESSION['password'];
+    $password = md5($_SESSION['password']);
 
     $query = "INSERT INTO Trader (First_Name, Last_Name, Address, Age, Email, Phone, Gender, Username, Password, Registration_Date, isVerified) 
     VALUES ('$firstName', '$lastName', '$address', '$age', '$email', '$phoneNumber', '$gender', '$userName', '$password', SYSDATE, 'no')";
