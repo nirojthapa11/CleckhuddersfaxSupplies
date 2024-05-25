@@ -85,11 +85,13 @@ AlertService::displayAlerts();
             $id = $product["PRODUCT_ID"];
             $name = $product["PRODUCT_NAME"];
             $desc = $product["DESCRIPTION"];
-            $rating = $product["RATING"]; // Assuming rating is out of 5
+            $rating = $product["RATING"]; 
+            $price = "£".$product['PRICE'];
+            $stock = $product['STOCK'] > 1 ? "<p class=\"text-success\">In Stock<p>" : "<p class=\"text-warning\">No Stock<p>";
             $imageBase64 = $db->getProductImage($id);
 
             echo '<div class="col-md-4 my-4 product-card">
-                    <div class="card border rounded shadow-sm" style="width: 100%; border-color: #ddd; height: 350px;">'; // Set a fixed height for the card container
+                    <div class="card border rounded shadow-sm" style="width: 100%; border-color: #ddd; height: 420px;">'; // Set a fixed height for the card container
 
             echo '<div style="height: 200px; overflow: hidden;">'; // Set a fixed height for the image container and hide overflow
             if ($imageBase64) {
@@ -108,7 +110,8 @@ AlertService::displayAlerts();
             echo '<h5 class="card-title" style="font-family: \'Roboto\', sans-serif; font-size: 2rem;"><a href="productdtl.php?product_id=' . $id . '" style="color: #333;">' . $name . '</a></h5>
                   <p class="card-text text-muted" style="font-family: \'Roboto\', sans-serif; font-size: 1.5rem;">' . substr($desc, 0, 50) . '...</p>
                   <div class="ratings">';
-
+            echo '<h6 class="card-title" style="font-size: 1.5rem;">' . $price . '</h6>';
+            echo $stock ;
             // Display star rating
             for ($i = 0; $i < 5; $i++) {
                 if ($i < $rating) {
@@ -118,8 +121,7 @@ AlertService::displayAlerts();
                 }
             }
             echo '</div>
-                    <div class="btn-group mt-3" role="group" aria-label="Product Actions">'; // Increased margin top for the button group
-
+                    <div class="btn-group mt-0" role="group" aria-label="Product Actions">'; 
             // Increased font size for buttons
             echo '<a href="addToCart.php?productid=' . $id . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">Add to Cart</a>';
             echo '<a href="addToWishlist.php?product_id=' . $id . '" class="btn btn-outline-secondary ml-2" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">Add to Wishlist</a>';

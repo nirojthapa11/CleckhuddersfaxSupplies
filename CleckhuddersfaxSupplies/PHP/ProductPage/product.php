@@ -2,6 +2,7 @@
 include '../../partials/dbConnect.php';
 
 $db = new Database();
+$conn = $db->getConnection();
 
 $filterdata = !empty($_GET['q']) ? "AND PRODUCT.PRODUCT_NAME LIKE '%" . $_GET['q'] . "%'" : '';
 
@@ -147,11 +148,11 @@ $ratingQuery = !empty($_GET['rating']) ? intval($_GET['rating']) : TRUE;
                                                 <div class="col-12 col-md-6 col-lg-4">
                                                     <div class="card card-border d-flex">';
                                                     if ($imageBase64) {
-                                                        echo '<a href="productdtl.php?product_id=' . $productId . '">';
+                                                        echo '<a href="../HomePage/productdtl.php?product_id=' . $productId . '">';
                                                         echo '<img src="data:image/jpeg;base64,' . $imageBase64 . '" class="card-img-top" alt="product image" style="width: 100%; height: 240px;">';
                                                         echo '</a>';
                                                     } else {
-                                                        echo '<a href="productdtl.php?product_id=' . $productId . '">';
+                                                        echo '<a href="../HomePage/productdtl.php?product_id=' . $productId . '">';
                                                         echo '<img src="path_to_placeholder_image.jpg" class="card-img-top" alt="' . htmlspecialchars($row['PRODUCT_NAME']) . ' Image" style="width: 100%; height: auto;">';
                                                         echo '</a>';
                                                     }
@@ -170,7 +171,7 @@ $ratingQuery = !empty($_GET['rating']) ? intval($_GET['rating']) : TRUE;
 
                                                         echo '<div class="card-body">
                                                             <div class="card-upper-body text-left">
-                                                                <h5 class="card-title"><a href="productdtl.php?product_id=' . $productId . '" style="color: #333; font-size: 1.75rem;">' . htmlspecialchars($row['PRODUCT_NAME']) . '</a></h5>
+                                                                <h5 class="card-title"><a href="../HomePage/productdtl.php?product_id=' . $productId . '" style="color: #333; font-size: 1.75rem;">' . htmlspecialchars($row['PRODUCT_NAME']) . '</a></h5>
                                                                 <h6 class="card-text text-muted" style="font-family: \'Roboto\', sans-serif; font-size: 1.5rem;">' . substr(htmlspecialchars($row['DESCRIPTION']), 0, 50) . '...</h6>
                                                                 <h6 class="card-title" style="font-size: 1.5rem;">' . $price . '</h6>
                                                                 ' . $stock . '

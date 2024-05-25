@@ -23,7 +23,7 @@ $database->closeConnection();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="productdtl.css">
+    <link rel="stylesheet" href="productdtl.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../HeaderPage/head.css">
     <link rel="stylesheet" href="../FooterPage/footer.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,8 +36,6 @@ $database->closeConnection();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
           integrity="sha512-..." crossorigin="anonymous"/>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-          integrity="sha512-..." crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -69,14 +67,6 @@ $database->closeConnection();
                            style="font-family: 'Roboto', sans-serif; font-size: 1.8rem;">
                             <i class="fas fa-heart"></i> Add to Wishlist
                         </a>
-                        <!-- Quantity increase and decrease buttons -->
-                        <div class="quantity-buttons my-2">
-                            <button class="btn btn-secondary" onclick="updateQuantity('decrease')"><i
-                                        class="fas fa-minus"></i></button>
-                            <span id="productQuantity" class="mx-2">1</span>
-                            <button class="btn btn-secondary" onclick="updateQuantity('increase')"><i
-                                        class="fas fa-plus"></i></button>
-                        </div>
                         <!-- Add to Cart button -->
                         <?php
                         // Increased font size for buttons
@@ -96,8 +86,7 @@ $database->closeConnection();
                     </div>
                     <div class="price-area my-4">
                         <?php if ($product['PRICE']) : ?>
-                            <!-- Display Price -->
-                            <p class="new-price text-bold mb-1">Price: $<?php echo $product['PRICE']; ?></p>
+                            <p class="new-price text-bold mb-1">Price: £<?php echo $product['PRICE']; ?></p>
                         <?php endif; ?>
                         <!-- Display Rating -->
                         <?php
@@ -112,7 +101,7 @@ $database->closeConnection();
                         <p class="description"><?php echo $product['DESCRIPTION']; ?></p>
                     </div>
                     <!-- Additional Product Details -->
-                    <div class="product-details my-4">
+                    <div class="product-detail my-4">
                         <p><strong>Category:</strong> <?php echo $product['CATEGORY_NAME']; ?></p>
                         <p><strong>Shop:</strong> <?php echo $product['SHOP_NAME']; ?></p>
                         <p><strong>Stock:</strong> <?php echo $product['STOCK']; ?></p>

@@ -865,7 +865,7 @@ class Database
             throw new Exception("Error getting product stock: " . $e->getMessage());
         }
     }
-    
+
     
 
 
