@@ -156,17 +156,6 @@ $ratingQuery = !empty($_GET['rating']) ? intval($_GET['rating']) : TRUE;
                                                         echo '<img src="path_to_placeholder_image.jpg" class="card-img-top" alt="' . htmlspecialchars($row['PRODUCT_NAME']) . ' Image" style="width: 100%; height: auto;">';
                                                         echo '</a>';
                                                     }
-                                                
-
-                            
-
-                                                
-
-
-
-                                
-
-
 
 
                                                         echo '<div class="card-body">
@@ -181,8 +170,8 @@ $ratingQuery = !empty($_GET['rating']) ? intval($_GET['rating']) : TRUE;
                                                                 ' . str_repeat('<i class="bi bi-star me-1"></i>', $noRating) . '
                                                             </div>
                                                             <div class="btn-group mt-2" role="group" aria-label="Product Actions">
-                                                                <a href="addToCart.php?productid=' . $productId . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.5rem;">Add to Cart</a>
-                                                                <a href="addToWishlist.php?product_id=' . $productId . '" class="btn btn-outline-secondary ml-2" style="font-family: \'Roboto\', sans-serif; font-size: 1.5rem;">Add to Wishlist</a>
+                                                                <a href="../HomePage/addToCart.php?productid=' . $productId . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.5rem;">Add to Cart</a>
+                                                                <a href="../HomePage/addToWishlist.php?product_id=' . $productId . '" class="btn btn-outline-secondary ml-2" style="font-family: \'Roboto\', sans-serif; font-size: 1.5rem;">Add to Wishlist</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -205,7 +194,7 @@ $ratingQuery = !empty($_GET['rating']) ? intval($_GET['rating']) : TRUE;
 
     <?php include('../FooterPage/footer.php'); ?>
 
-    <script src="product.js"></script>
+    <!-- <script src="product.js"></script> -->
     <script src="../HeaderPage/head.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 

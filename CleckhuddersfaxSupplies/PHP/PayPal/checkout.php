@@ -13,8 +13,10 @@
   $cart_products = $db->getCartProducts($cartid);
 
   $subtotal = 0;
+  $totalNoOfItems = 0;
   foreach ($cart_products as $product) {
-      $subtotal += $product['PRICE'] * $product['QUANTITY'];
+    $totalNoOfItems += $product['QUANTITY'];
+    $subtotal += $product['PRICE'] * $product['QUANTITY'];
   }
 
   $total = $subtotal;
@@ -41,8 +43,10 @@
 <body>
     <div class="container">
         <h1>Checkout</h1>
-        <form action="/submit-order" method="POST">
+        <form action="process_order.php" method="POST">
             <div class="left-container">
+
+                <!-- Billing details -->
                 <div class="details-box">
                     <div class="billing-details">
                         <h2>Billing Details</h2>
@@ -58,11 +62,11 @@
                     </div>
                 </div>
 
+                 <!-- Cart items -->
                 <div class="product-box">
                     <h2>Order Products</h2>
                     <?php foreach ($cart_products as $product) { ?>
                     <div class="product-item">
-
                         <?php
                             $imageBase64 = $db->getProductImage($product['PRODUCT_ID']);
                         ?>
@@ -83,33 +87,41 @@
                                 <span>£<?php echo number_format($product['PRICE'] * $product['QUANTITY'], 2); ?></span>
                             </div>
                         </div>
-
                     </div>
                     <?php } ?>
                 </div>
             </div>
 
+
+
+
+             <!-- Collection slot choosing -->
             <div class="right-container">
                 <div class="collection-slot">
                     <h2>Collection Slot</h2>
                     <label for="collection-day">Select a Day</label>
-                    <select id="collection-day" name="collection-day" required>
-                        <option value="" disabled selected>Select a day</option>
-                        <option value="Wednesday">Wednesday</option>
-                        <option value="Thursday">Thursday</option>
-                        <option value="Friday">Friday</option>
+                    <select id="collection_date" name="collection_date" required>
+                        <?php
+                        for ($i = 1; $i <= 14; $i++) {
+                            $date = date('Y-m-d', strtotime("+$i days"));
+                            $day_of_week = date('w', strtotime($date));
+                            if (in_array($day_of_week, [3, 4, 5])) {
+                                echo "<option value='$date'>" . date('l, F j, Y', strtotime($date)) . "</option>";
+                            }
+                        }
+                        ?>
                     </select>
 
-                    <label for="collection-time">Select a Time Slot</label>
-                    <select id="collection-time" name="collection-time" required>
-                        <option value="" disabled selected>Select a time slot</option>
+                    <label for="collection_slot">Select a Time Slot:</label>
+                    <select id="collection_slot" name="collection_slot" required>
                         <option value="10-13">10:00 - 13:00</option>
                         <option value="13-16">13:00 - 16:00</option>
                         <option value="16-19">16:00 - 19:00</option>
-                    </select>
-                </div>
+                    </select><br><br>
 
 
+
+                 <!-- Order Summary -->
                 <div class="order-summary">
                     <h2>Order Summary</h2>
                     <div class="summary-item">
@@ -126,18 +138,11 @@
                     </div>
                     <div class="summary-item total">
                         <span>Total:</span>
+                        <input type="hidden" name="totalprice" value="<?php echo $total; ?>">
+                        <input type="hidden" name="qty" value="<?php echo $totalNoOfItems; ?>">
                         <span>£<?php echo $total; ?></span>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
 
 
 
@@ -149,13 +154,6 @@
                         </label>
                     </div>
                 </div>
-
-
-
-
-
-
-
                 <button type="submit">Place Order</button>
             </div>
         </form>

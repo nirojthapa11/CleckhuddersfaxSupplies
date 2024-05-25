@@ -48,7 +48,7 @@ if (!empty($search)) {
             </form>
         <div class="icons">
             <!-- <div id="search-btn" class="fas fa-search"></div> -->
-            <a href="../CartPage/cart.php" class="fas fa-shopping-cart"></a>
+            <a href="../CustomerProfilePage/mycart.php" class="fas fa-shopping-cart"></a>
             <?php
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();

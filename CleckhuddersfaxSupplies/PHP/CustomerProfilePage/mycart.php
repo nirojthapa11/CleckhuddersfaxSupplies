@@ -124,7 +124,7 @@
                     </table>
                 </div>
                 <div class="checkout-button">
-                <button onclick="location.href='../PayPal/checkout.php?cart_products=<?php echo urlencode(json_encode($cart_products)); ?>'" class="btn">Proceed to Checkout</button>
+                <button onclick="location.href='../paypal/checkout.php'" class="btn">Proceed to Checkout</button>
                 </div>
             </div>
         </div>

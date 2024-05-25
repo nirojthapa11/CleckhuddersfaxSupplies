@@ -53,7 +53,7 @@ section{
     clip-path: polygon(100% 0, 93% 50%, 100% 99%, 0% 100%, 7% 50%, 0% 0%);
 }
 
-.btn{
+.btns{
     margin-top: 1rem;
     display: inline-block;
     padding: .8rem 3rem;
@@ -65,7 +65,7 @@ section{
     background: none;
 }
 
-.btn:hover{
+.btns:hover{
     background: var(--orange);
     color: #fff;
 }

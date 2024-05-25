@@ -455,8 +455,8 @@ class Database
         $orders = array();
         
         try {
-            // Your SQL query to fetch order details
-            $query = "SELECT ord.ORDER_ID, ord.ORDER_STATUS, ord.ORDER_DATE, op.ORDER_PRODUCT_ID, op.SPECIAL_INSTRUCTION, op.QUANTITY, 
+            // Your SQL query to fetch order details -->
+            $query = "SELECT ord.ORDER_ID, ord.ORDER_STATUS, TO_CHAR(order_date, 'DD-MON-YY HH:MI:SS AM') as order_date, op.ORDER_PRODUCT_ID, op.SPECIAL_INSTRUCTION, op.QUANTITY, 
                              p.PRODUCT_ID, p.PRODUCT_NAME, p.PRICE, d.DISCOUNT_PERCENTAGE
                       FROM orders ord
                       JOIN order_product op ON ord.ORDER_ID = op.ORDER_ID
@@ -865,6 +865,46 @@ class Database
             throw new Exception("Error getting product stock: " . $e->getMessage());
         }
     }
+
+
+    public function getCustomerIdUsingUsername($username) {
+        $query = "SELECT customer_id FROM customer WHERE username = :username";
+        $conn = $this->getConnection();
+        $statement = oci_parse($conn, $query);
+        oci_bind_by_name($statement, ":username", $username);
+        oci_execute($statement);
+
+        $row = oci_fetch_assoc($statement);
+        oci_close($conn);
+        if ($row) {
+            return $row['CUSTOMER_ID'];
+        } else {
+            return null;
+        }
+    }
+
+    function isValidSlot($collection_date, $collection_slot) {
+        $sql = "SELECT orders_count FROM slots WHERE collection_date = TO_DATE(:collection_date, 'YYYY-MM-DD') AND collection_slot = :collection_slot";
+        $conn = $this->getConnection();
+        $stmt = oci_parse($conn, $sql);
+        oci_bind_by_name($stmt, ':collection_date', $collection_date);
+        oci_bind_by_name($stmt, ':collection_slot', $collection_slot);
+        oci_execute($stmt);
+    
+        $row = oci_fetch_assoc($stmt);
+        oci_free_statement($stmt);
+    
+        if ($row) {
+            return $row['ORDERS_COUNT'] < 20;
+        } else {
+            return true;
+        }
+    }
+    
+
+    
+    
+
 
     
 
