@@ -54,6 +54,13 @@ if(isset($_POST['submit']))
         exit();
     }
 
+    if (!preg_match('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/', $password)) {
+        $_SESSION['error'] = "Password must have at least one uppercase letter, one lowercase letter, and a number.";
+        $_SESSION['form_data'] = $_POST;
+        header("Location: customerSignup.php");
+        exit();
+    }
+
     // Check if email, username, or contact number already exists
     $query_check = "SELECT Email, Username, Phone FROM Customer WHERE Email = '$email' OR Username = '$Uname' OR Phone = '$number'";
     $statement_check = oci_parse($conn, $query_check);

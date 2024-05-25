@@ -13,6 +13,15 @@ while ($row = oci_fetch_assoc($statement)){
     $shops[] = $row;
 }
 
+
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+}
+
+if (!empty($search)) {
+    echo "<script>window.location.href='../ProductPage/product.php?q=$search';</script>";
+}
+
 ?>
 
 
@@ -30,12 +39,15 @@ while ($row = oci_fetch_assoc($statement)){
 <header class="header">
     <div class="header-1">
         <img src="../Image/WebsiteLogo.png" alt="Website Logo">
-        <form action="" class="search-form">
-            <input type="search" name="" placeholder="Search here..." id="search-box">
-            <label for="search-box" class="fas fa-search"></label>
-        </form>
+        <form action="" method="GET" class="search-form">
+                <input class="form-control rounded-5 flex-grow-1" type="search" name="search"
+                    placeholder="Search for items.." aria-label="Search" style="padding-left: 40px;" value="<?php if (isset($_GET['q'])) {
+                echo $_GET['q'];
+            } ?>">
+                <button id="search-btn" class="btn btn-dark" type="submit">Search</button>
+            </form>
         <div class="icons">
-            <div id="search-btn" class="fas fa-search"></div>
+            <!-- <div id="search-btn" class="fas fa-search"></div> -->
             <a href="../CartPage/cart.php" class="fas fa-shopping-cart"></a>
             <?php
             if (session_status() === PHP_SESSION_NONE) {
