@@ -85,7 +85,7 @@
                                     <p><a href="../HomePage/productdtl.php?product_id=<?php echo $product['PRODUCT_ID']; ?>"
                                             style="font-weight: bold; color: black;"><?php echo $product['PRODUCT_NAME']; ?></a>
                                     </p>
-                                    <small class="larger-font">Price: $<?php echo $product['PRICE']; ?></small>
+                                    <small class="larger-font">Price: £<?php echo $product['PRICE']; ?></small>
                                     <br>
                                     <form id="removeForm" action="removeFromCart.php" method="post">
                                         <input type="hidden" name="product_id"
@@ -110,7 +110,7 @@
                                         class="fas fa-plus"></i></button>
                             </div>
                         </td>
-                        <td>$<?php echo number_format($product['PRICE'] * $product['QUANTITY'], 2); ?></td>
+                        <td style="font-size: 16px;">£<?php echo number_format($product['PRICE'] * $product['QUANTITY'], 2); ?></td>
                     </tr>
                     <?php } ?>
                 </table>
@@ -119,15 +119,15 @@
                     <table>
                         <tr>
                             <td>SubTotal</td>
-                            <td>$<?php echo number_format($subtotal, 2); ?></td>
+                            <td>£<?php echo number_format($subtotal, 2); ?></td>
                         </tr>
                         <tr>
                             <td>Tax</td>
-                            <td>$<?php echo number_format($tax, 2); ?></td>
+                            <td>£<?php echo number_format($tax, 2); ?></td>
                         </tr>
                         <tr>
                             <td>Total</td>
-                            <td>$<?php echo number_format($total, 2); ?></td>
+                            <td>£<?php echo number_format($total, 2); ?></td>
                         </tr>
                     </table>
                 </div>

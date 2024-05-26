@@ -267,7 +267,15 @@ if (isset($_GET['action']) && $_GET['action'] == 'disapproveShop' && isset($_GET
                             while ($row = oci_fetch_assoc($stid)) {
                                 echo "<tr>";
                                 echo "<td>" . $sn++ . "</td>";
-                                // echo "<td><img src='" . htmlspecialchars($row['PRODUCT_IMAGE']) . "' alt='Product Image' /></td>";
+                                $imageBase64 = $db->getProductImage($row['PRODUCT_ID']);
+                                echo '<td>'; // Set a fixed height for the image container and hide overflow
+                                if ($imageBase64) {
+                                    echo '<img src="data:image/jpeg;base64,' . $imageBase64 . '" alt="Customer Image" style="width: 200PX; height: 100PX;">';
+                                } else {
+                                    echo '<img src="path_to_placeholder_image.jpg" alt="' . $name . ' Image" style="width: 200PX; height: 100PX;">';
+                                }
+                                echo '</td>';
+
                                 echo "<td>" . $row['PRODUCT_NAME'] . "</td>";
                                 echo "<td>" . $row['DESCRIPTION'] . "</td>";
                                 echo "<td>" . $row['PRICE'] . "</td>";
@@ -404,7 +412,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'disapproveShop' && isset($_GET
                                 <tbody>
                                     <?php
                                         $query = "SELECT Shop_Id, Shop_image, Shop_Name, Registration_Date, Description, Shop_Email
-                                        FROM SHOP WHERE Status = 'ACTIVE'
+                                        FROM SHOP WHERE UPPER(Status) = UPPER('ACTIVE')
                                         ORDER BY SHOP.Shop_Id ASC";
     
                                         $stid = oci_parse($conn, $query);
@@ -417,9 +425,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'disapproveShop' && isset($_GET
                                             echo "<td>" . $sn++ . "</td>";
                                             echo "<td>";
                                             if ($shopImageBase64) {
-                                                echo '<img src="data:image/jpeg;base64,' . $shopImageBase64 . '" alt="' . htmlspecialchars($row['SHOP_NAME']) . '" style="width: 100%; height: 130px;">';
+                                                echo '<img src="data:image/jpeg;base64,' . $shopImageBase64 . '" alt="' . htmlspecialchars($row['SHOP_NAME']) . '" style="width: 200px; height: 130px;">';
                                             } else {
-                                                echo '<img src="../Image/path_to_placeholder_image.jpg" alt="' . htmlspecialchars($row['SHOP_NAME']) . ' Image" style="width: 100%; height: auto;">';
+                                                echo '<img src="../Image/path_to_placeholder_image.jpg" alt="' . htmlspecialchars($row['SHOP_NAME']) . ' Image" style="width: 200px; height: auto;">';
                                             }
                                             echo "</td>";
                                             echo "<td>" . $row['SHOP_NAME'] . "</td>";
@@ -460,7 +468,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'disapproveShop' && isset($_GET
                                 <tbody>
                                     <?php
                                         $query = "SELECT Shop_Id, Shop_image, Shop_Name, Registration_Date, Description, Shop_Email
-                                        FROM SHOP WHERE Status = 'INACTIVE'
+                                        FROM SHOP WHERE UPPER(Status) = UPPER('INACTIVE')
                                         ORDER BY SHOP.Shop_Id ASC";
     
                                         $stid = oci_parse($conn, $query);
@@ -473,9 +481,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'disapproveShop' && isset($_GET
                                             echo "<td>" . $sn++ . "</td>";
                                             echo "<td>";
                                             if ($shopImageBase64) {
-                                                echo '<img src="data:image/jpeg;base64,' . $shopImageBase64 . '" alt="' . htmlspecialchars($row['SHOP_NAME']) . '" style="width: 100%; height: 130px;">';
+                                                echo '<img src="data:image/jpeg;base64,' . $shopImageBase64 . '" alt="' . htmlspecialchars($row['SHOP_NAME']) . '" style="width: 200px; height: 130px;">';
                                             } else {
-                                                echo '<img src="../Image/path_to_placeholder_image.jpg" alt="' . htmlspecialchars($row['SHOP_NAME']) . ' Image" style="width: 100%; height: auto;">';
+                                                echo '<img src="../Image/path_to_placeholder_image.jpg" alt="' . htmlspecialchars($row['SHOP_NAME']) . ' Image" style="width: 200px%; height: auto;">';
                                             }
                                             echo "</td>";
                                             echo "<td>" . $row['SHOP_NAME'] . "</td>";

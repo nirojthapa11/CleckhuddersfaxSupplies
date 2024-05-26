@@ -118,24 +118,9 @@
                         <option value="13-16">13:00 - 16:00</option>
                         <option value="16-19">16:00 - 19:00</option>
                     </select><br><br>
-
-
-
                  <!-- Order Summary -->
                 <div class="order-summary">
                     <h2>Order Summary</h2>
-                    <div class="summary-item">
-                        <span>Item 1:</span>
-                        <span>$10.00</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>Item 2:</span>
-                        <span>$20.00</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>Shipping:</span>
-                        <span>$5.00</span>
-                    </div>
                     <div class="summary-item total">
                         <span>Total:</span>
                         <input type="hidden" name="totalprice" value="<?php echo $total; ?>">
@@ -143,9 +128,6 @@
                         <span>£<?php echo $total; ?></span>
                     </div>
                 </div>
-
-
-
                 <div class="payment-details">
                     <h2>Payment Option</h2>
                     <div class="paypal-option">

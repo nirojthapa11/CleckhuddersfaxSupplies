@@ -2,8 +2,10 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
 require_once '../../partials/dbConnect.php';
+require_once '../MailerService.php';
+require_once 'orderReceipt.php';
+
 $db = new Database();
 $conn = $db->getConnection();
 
@@ -18,6 +20,8 @@ if (isset($_GET['date']) && isset($_GET['slot'])) {
     $cartid = $db->getCartIdUsingCustomerId($customer_id);
     $order_status = "created";
     $orderId = null;
+    $customer_email = $db->getEmailByCustomerId($customer_id);
+
 
     // Insert order into the orders table
     $sql = "INSERT INTO orders (order_date, order_status, no_of_items, collection_date, collection_slot, customer_id, total_price) 
@@ -54,8 +58,19 @@ if (isset($_GET['date']) && isset($_GET['slot'])) {
 
     // Updating order products from cart products
     $cart_products = $db->getCartProducts($cartid);
+    sendCartOrderReceipt($customer_email, $cart_products, $orderId);
+    echo $customer_email;
+
+ 
+
+
 
     foreach ($cart_products as $product) {
+
+        $productStock = $db->getProductStock($product['PRODUCT_ID']);
+        $newStock = $productStock - $no_of_items;
+        $db->updateProductStock($product['PRODUCT_ID'], $newStock);
+
         $query = "INSERT INTO order_product (quantity, product_id, order_id) VALUES (:quantity, :product_id, :order_id)";
         $stmt = oci_parse($conn, $query);
         oci_bind_by_name($stmt, ':quantity', $no_of_items);
@@ -65,6 +80,9 @@ if (isset($_GET['date']) && isset($_GET['slot'])) {
         oci_free_statement($stmt);
         $SCC = $db->removeProductFromCart($cartid, $product['PRODUCT_ID']);
     }
+
+    echo $orderId;
+    sendIndividualReceipts($orderId);
     oci_close($conn);
 
     echo 'Order placed and payment successful!';

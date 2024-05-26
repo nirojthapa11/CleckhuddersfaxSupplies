@@ -856,27 +856,6 @@ class Database
         }
     }
 
-    // Get stock of a particular product
-    public function getProductStock($productId) {
-        try {
-            $query = "SELECT stock FROM product WHERE product_id = :productId";
-            $conn = $this->getConnection();
-            $statement = oci_parse($conn, $query);
-            oci_bind_by_name($statement, ":productId", $productId);
-            oci_execute($statement);
-            $row = oci_fetch_assoc($statement);
-            oci_close($conn);
-    
-            if ($row) {
-                return $row['STOCK'];
-            } else {
-                throw new Exception("Product not found");
-            }
-        } catch (Exception $e) {
-            throw new Exception("Error getting product stock: " . $e->getMessage());
-        }
-    }
-
 
     public function getCustomerIdUsingUsername($username) {
         $query = "SELECT customer_id FROM customer WHERE username = :username";
@@ -927,6 +906,76 @@ class Database
         return $shops;
     }
 
+
+
+
+       // Get stock of a particular product
+       public function getProductStock($productId) {
+        try {
+            $query = "SELECT stock FROM product WHERE product_id = :productId";
+            $conn = $this->getConnection();
+            $statement = oci_parse($conn, $query);
+            oci_bind_by_name($statement, ":productId", $productId);
+            oci_execute($statement);
+            $row = oci_fetch_assoc($statement);
+            oci_close($conn);
+    
+            if ($row) {
+                return $row['STOCK'];
+            } else {
+                throw new Exception("Product not found");
+            }
+        } catch (Exception $e) {
+            throw new Exception("Error getting product stock: " . $e->getMessage());
+        }
+    }
+
+
+    // update stock of a product
+    public function updateProductStock($productId, $newStock) {
+        try {
+            $query = "UPDATE product SET stock = :newStock WHERE product_id = :productId";
+            
+            $conn = $this->getConnection();
+            $statement = oci_parse($conn, $query);
+            
+            oci_bind_by_name($statement, ':newStock', $newStock);
+            oci_bind_by_name($statement, ':productId', $productId);
+            
+            $result = oci_execute($statement, OCI_COMMIT_ON_SUCCESS);
+            
+            oci_free_statement($statement);
+            $this->closeConnection();
+            
+            return $result;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+
+    // Get order based on order id
+    public function getOrderByOrderId($orderId) {
+        $order = null;
+    
+        try {
+            $query = "SELECT * FROM orders WHERE order_id = :order_id";
+            $conn = $this->getConnection();
+            $statement = oci_parse($conn, $query);
+            oci_bind_by_name($statement, ':order_id', $orderId);
+            oci_execute($statement);
+            if ($row = oci_fetch_assoc($statement)) {
+                $order = $row;
+            }
+            oci_free_statement($statement);
+            $this->closeConnection();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        return $order;
+    }
+    
 
 
 
