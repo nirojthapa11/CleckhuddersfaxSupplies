@@ -173,8 +173,7 @@ class Database
         $cartItems = array();
 
         try {
-            // Prepare the SQL query to fetch cart items for the user
-            $cartId = $this->getCartIdUsingCustomerId($user_id); // Ensure this function is secure
+            $cartId = $this->getCartIdUsingCustomerId($user_id); 
             $query = "SELECT product_id, quantity, special_instruction FROM cart_product WHERE cart_id = :cart_id";
 
             // Get the database connection
@@ -186,7 +185,6 @@ class Database
             // Bind parameters
             oci_bind_by_name($statement, ":cart_id", $cartId);
 
-            // Execute the statement
             oci_execute($statement);
 
             // Fetch rows one by one
@@ -204,9 +202,6 @@ class Database
                     var_dump($row['QUANTITY']);
                     var_dump($row['SPECIAL_INSTRUCTION']);
                 } else {
-                    // Log or handle the missing keys in the fetched row
-                    // You can choose to skip or handle this case based on your requirements
-                    // For now, we'll skip adding the item to the cartItems array
                 }
             }
 

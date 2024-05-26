@@ -21,10 +21,10 @@ class MailerService
     private function setupMailer()
     {
         $this->mail->isSMTP();
-        $this->mail->Host = 'smtp.gmail.com';  // Specify your SMTP server
+        $this->mail->Host = 'smtp.gmail.com';  
         $this->mail->SMTPAuth = true;
-        $this->mail->Username = 'govindt7256@gmail.com'; // SMTP username
-        $this->mail->Password = 'fjkaoxalbsdyzpmh';   // SMTP password
+        $this->mail->Username = 'govindt7256@gmail.com';
+        $this->mail->Password = 'fjkaoxalbsdyzpmh';   
         $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $this->mail->Port = 587;
     }
@@ -32,10 +32,10 @@ class MailerService
     public function sendVerificationEmailToCustomer($toEmail, $otp)
     {
         try {
-            $this->mail->setFrom($this->mail->Username, 'Cleckhuddersfax Supplies'); // Sender's email address and name
-            $this->mail->addAddress($toEmail);                       // Recipient's email address
+            $this->mail->setFrom($this->mail->Username, 'Cleckhuddersfax Supplies'); 
+            $this->mail->addAddress($toEmail);                    
             $this->mail->Subject = 'Email Verification';
-            $this->mail->isHTML(true);  // Set email format to HTML
+            $this->mail->isHTML(true);  
             $this->mail->Body = '
                 <html>
                 <body style="font-family: Arial, sans-serif;">
@@ -87,10 +87,10 @@ class MailerService
     public function signupEmailVerification($toEmail, $otp)
     {
         try {
-            $this->mail->setFrom($this->mail->Username, 'Cleckhuddersfax Supplies'); // Sender's email address and name
-            $this->mail->addAddress($toEmail);                       // Recipient's email address
+            $this->mail->setFrom($this->mail->Username, 'Cleckhuddersfax Supplies'); 
+            $this->mail->addAddress($toEmail);                     
             $this->mail->Subject = 'Welcome to Cleckhuddersfax Supplies - Verify Your Email';
-            $this->mail->isHTML(true);  // Set email format to HTML
+            $this->mail->isHTML(true);  
             $this->mail->Body = '
                 <html>
                 <body style="font-family: Arial, sans-serif;">
@@ -185,14 +185,14 @@ class MailerService
     public function sendOrderReceipt($toEmail, $orderDetails)
     {
         try {
-            $this->mail->setFrom($this->mail->Username, 'Cleckhuddersfax Supplies'); // Sender's email address and name
-            $this->mail->addAddress($toEmail);                       // Recipient's email address
+            $this->mail->setFrom($this->mail->Username, 'Cleckhuddersfax Supplies'); 
+            $this->mail->addAddress($toEmail);                  
             $this->mail->Subject = 'Order Receipt - Cleckhuddersfax Supplies';
             $this->mail->isHTML(true);  // Set email format to HTML
 
             // Format collection date to include the day of the week
             $collectionDate = new DateTime($orderDetails['collection_date']);
-            $formattedDate = $collectionDate->format('l, F j, Y'); // Example: Friday, January 1, 2024
+            $formattedDate = $collectionDate->format('l, F j, Y'); 
 
             // Assuming collection_slot is stored as "16:00-19:00" or similar format
             $collectionSlot = $orderDetails['collection_slot'];
@@ -375,7 +375,7 @@ class MailerService
             </html>';
 
             // Set email content and headers
-            $this->mail->setFrom($this->mail->Username, 'Cleckhuddersfax Supplies'); // Sender's email address and name
+            $this->mail->setFrom($this->mail->Username, 'Cleckhuddersfax Supplies');
             $this->mail->addAddress($toEmail);                       // Recipient's email address
             $this->mail->Subject = 'Trader Order Receipt - Cleckhuddersfax Supplies';
             $this->mail->isHTML(true); 
@@ -385,7 +385,7 @@ class MailerService
 
             // Send email
             if (!$this->mail->send()) {
-                // Log error message if email sending fails
+        
                 error_log('Mailer Error: ' . $this->mail->ErrorInfo);
                 return false; // Failed to send email
             }
