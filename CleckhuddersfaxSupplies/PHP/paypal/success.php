@@ -70,10 +70,9 @@ if (isset($_GET['date']) && isset($_GET['slot'])) {
         $productStock = $db->getProductStock($product['PRODUCT_ID']);
         $newStock = $productStock - $no_of_items;
         $db->updateProductStock($product['PRODUCT_ID'], $newStock);
-
         $query = "INSERT INTO order_product (quantity, product_id, order_id) VALUES (:quantity, :product_id, :order_id)";
         $stmt = oci_parse($conn, $query);
-        oci_bind_by_name($stmt, ':quantity', $no_of_items);
+        oci_bind_by_name($stmt, ':quantity', $product['QUANTITY']);
         oci_bind_by_name($stmt, ':product_id', $product['PRODUCT_ID']);
         oci_bind_by_name($stmt, ':order_id', $orderId);
         oci_execute($stmt);
@@ -81,11 +80,11 @@ if (isset($_GET['date']) && isset($_GET['slot'])) {
         $SCC = $db->removeProductFromCart($cartid, $product['PRODUCT_ID']);
     }
 
-    echo $orderId;
     sendIndividualReceipts($orderId);
     oci_close($conn);
 
     echo 'Order placed and payment successful!';
+    header("Location: ../CustomerProfilePage/myOrder.php");
 } else {
     echo 'Payment details not received.';
 }

@@ -27,11 +27,13 @@
     function sendIndividualReceipts($orderId) {
         $db = new Database(); 
         $conn = $db->getConnection();
+
+        $traderEmail = null;
     
         echo 'inside this function. The order id: ' . $orderId . '<br>';
     
         // Query to fetch order details
-        $query = "SELECT o.order_id, o.customer_id, o.order_date, op.quantity, p.price, p.product_name, tr.username, tr.email, c.first_name, c.last_name, c.username AS customer_username
+        $query = "SELECT o.order_id, o.customer_id, o.order_date, op.quantity, p.price, p.product_name, tr.username, tr.email, c.first_name ||' '|| c.last_name as Customer_Name, c.username AS customer_username
                   FROM orders o
                   JOIN order_product op ON o.order_id = op.order_id
                   JOIN product p ON op.product_id = p.product_id
@@ -53,24 +55,32 @@
             }
             $ordersByTrader[$traderEmail][] = $row;
         }
-
-        var_dump($ordersByTrader);
     
         // Send individual receipts to each trader
         foreach ($ordersByTrader as $traderEmail => $orderItems) {
-            echo '<br>'.$traderEmail. '<br>';
-
-            // Extract customer details
-            $customerName = $orderItems[0]['FIRST_NAME'] . ' ' . $orderItems[0]['LAST_NAME'];
-            $customerUsername = $orderItems[0]['CUSTOMER_USERNAME'];
-            
+            // Extract trader details
+            $traderUsername = $orderItems[0]['USERNAME'];
+            $customerName = $orderItems[0]['CUSTOMER_NAME'];
+    
+            // Prepare order details for the trader
+            $orderDetailsForTrader = array();
+            foreach ($orderItems as $orderItem) {
+                $orderDetailsForTrader[] = array(
+                    'PRODUCT_NAME' => $orderItem['PRODUCT_NAME'],
+                    'PRICE' => $orderItem['PRICE'],
+                    'QUANTITY' => $orderItem['QUANTITY']
+                );
+            }
+    
             // Send email to trader
             $mailerService = new MailerService();
-            return $mailerService->sendTraderOrderReceipt($traderEmail, $orderItems, $customerName, $customerUsername);
+            $success = $mailerService->sendTraderOrderReceipt($traderEmail, $orderDetailsForTrader, $customerName, $traderUsername);
+            if (!$success) {
+                // Log or handle failure to send email to the trader
+                echo 'Failed to send email to trader: ' . $traderEmail . '<br>';
+            }
         }
     }
-    
-    
     
 
 

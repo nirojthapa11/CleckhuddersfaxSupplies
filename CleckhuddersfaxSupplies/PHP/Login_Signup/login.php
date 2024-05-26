@@ -20,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $username = sanitizeInput($_POST['userName']);
         $password = md5(sanitizeInput($_POST['password']));
-        echo $password;
         $usertype = $_POST['usertype'];
         $query = '';
 
@@ -110,9 +109,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <img src="Website Logo.png" alt="" class="logo">
                     <h1>Login</h1>
                     <!-- Username or Email -->
-                    <label for="userName">Username or Email:</label>
+                    <label for="userName">Username:</label>
                     <input type="text" id="userName" name="userName" required
-                           placeholder="Enter your username or email">
+                           placeholder="Enter your username">
 
                     <!-- Password -->
                     <label for="password">Password:</label>

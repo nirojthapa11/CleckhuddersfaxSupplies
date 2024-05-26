@@ -247,10 +247,10 @@
                     <tbody>
                         <tr>
                             <?php
-                            $query = "SELECT ORDERS.Order_Id, CUSTOMER.First_Name || ' ' || CUSTOMER.Last_Name AS Customer_Name, PRODUCT.Product_Name, ORDERS.Order_Date, ORDERS.Order_Status As Status, COLLECTION_SLOT.Slot_Day
+                            $query = "SELECT ORDERS.Order_Id, CUSTOMER.First_Name || ' ' || CUSTOMER.Last_Name AS Customer_Name, PRODUCT.Product_Name, TO_CHAR(ORDERS.Order_Date, 'YYYY-MM-DD HH24:MM:SS') AS Order_Date, ORDERS.Order_Status As Status, 
+                            ORDERS.COLLECTION_DATE, ORDERS.COLLECTION_SLOT
                             FROM ORDERS
                             JOIN CUSTOMER ON ORDERS.Customer_Id = CUSTOMER.Customer_Id
-                            JOIN COLLECTION_SLOT ON ORDERS.Slot_Id = COLLECTION_SLOT.Slot_Id
                             JOIN ORDER_PRODUCT ON ORDERS.Order_Id = ORDER_PRODUCT.Order_Id
                             JOIN PRODUCT ON ORDER_PRODUCT.Product_Id = PRODUCT.Product_Id
                             JOIN SHOP ON PRODUCT.Shop_Id = SHOP.Shop_Id
@@ -267,7 +267,7 @@
                                 echo "<td>" . htmlspecialchars($row['PRODUCT_NAME']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['ORDER_DATE']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['STATUS']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['SLOT_DAY']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['COLLECTION_DATE']) .' '. htmlspecialchars($row['COLLECTION_SLOT']) . "</td>";
                                 echo "</tr>";
                             }
                         ?>

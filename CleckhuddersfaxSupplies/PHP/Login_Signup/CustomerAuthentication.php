@@ -7,7 +7,10 @@ include '../alertService.php';
 $db = new Database();
 $conn = $db->getConnection();
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 if(isset($_POST['submit']))
 {
@@ -106,7 +109,7 @@ if(isset($_SESSION['isVerifiedCustSignupOtp']) && ($_SESSION['isVerifiedCustSign
 {
     $Uname = $_SESSION['Uname'];
     $email = $_SESSION['email'];
-    $password = md5($_SESSION['password']);
+    $hpassword = md5($_SESSION['password']);
     $fname = $_SESSION['fname'];
     $lname = $_SESSION['lname'];
     $number = $_SESSION['number'];
@@ -120,7 +123,7 @@ if(isset($_SESSION['isVerifiedCustSignupOtp']) && ($_SESSION['isVerifiedCustSign
 
 
     $query = "INSERT INTO Customer (Cust_image, First_Name, Last_Name, Address, Age, Email, Phone, Gender, Username, Password, Registration_Date) 
-            VALUES (empty_blob(), '$fname', '$lname', '$address', '$age', '$email', '$number', '$gender', '$Uname', '$password', SYSDATE)
+            VALUES (empty_blob(), '$fname', '$lname', '$address', '$age', '$email', '$number', '$gender', '$Uname', '$hpassword', SYSDATE)
             RETURNING customer_id INTO :customerid";
 
     $statement = oci_parse($conn, $query);
