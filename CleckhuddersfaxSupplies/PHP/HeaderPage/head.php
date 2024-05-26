@@ -38,7 +38,7 @@ if (!empty($search)) {
 <body>
 <header class="header">
     <div class="header-1">
-        <img src="../Image/WebsiteLogo.png" alt="Website Logo">
+        <a href="../HomePage/homepage.php"><img src="../Image/WebsiteLogo.png" alt="Website Logo"></a>
         <form action="" method="GET" class="search-form">
                 <input class="form-control rounded-5 flex-grow-1" type="search" name="search"
                     placeholder="Search for items.." aria-label="Search" style="padding-left: 40px;" value="<?php if (isset($_GET['q'])) {

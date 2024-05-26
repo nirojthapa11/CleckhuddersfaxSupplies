@@ -1,5 +1,6 @@
 <?php
-include '../../partials/dbConnect.php';
+require_once '../../partials/dbConnect.php';
+require_once '../alertService.php';
 
 $db = new Database();
 $conn = $db->getConnection();
@@ -35,12 +36,16 @@ $ratingQuery = !empty($_GET['rating']) ? intval($_GET['rating']) : TRUE;
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="product.css">
+    <link rel="stylesheet" href="product.css?<?php echo time();?>">
     <link rel="stylesheet" href="../HeaderPage/head.css">
     <link rel="stylesheet" href="../FooterPage/footer.css">
+    <?php   AlertService::includeCSS(); ?>
 </head>
 
 <body>
+        <?php
+            AlertService::displayAlerts();
+        ?>
     <div><?php include('../HeaderPage/head.php'); ?></div>
 
     <main class="page catalog-page mb-4">
@@ -174,8 +179,8 @@ $ratingQuery = !empty($_GET['rating']) ? intval($_GET['rating']) : TRUE;
                                                                 ' . str_repeat('<i class="bi bi-star me-1"></i>', $noRating) . '
                                                             </div>
                                                             <div class="btn-group mt-2" role="group" aria-label="Product Actions">
-                                                                <a href="../HomePage/addToCart.php?productid=' . $productId . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.5rem;">Add to Cart</a>
-                                                                <a href="../HomePage/addToWishlist.php?product_id=' . $productId . '" class="btn btn-outline-secondary ml-2" style="font-family: \'Roboto\', sans-serif; font-size: 1.5rem;">Add to Wishlist</a>
+                                                                <a href="../HomePage/addToCart.php?productid=' . $productId . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.5rem; background-color: #ff8000; border: none;">Add to Cart</a>
+                                                                <a href="../HomePage/addToWishlist.php?product_id=' . $productId . '" class="btn btn-outline-secondary ml-2" style="font-family: \'Roboto\', sans-serif; font-size: 1.5rem; background-color: #6c757d; border: none; color: #FFF">Add to Wishlist</a>
                                                             </div>
                                                         </div>
                                                     </div>

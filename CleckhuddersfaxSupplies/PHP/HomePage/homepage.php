@@ -131,8 +131,8 @@ AlertService::displayAlerts();
                 echo '</div>
                         <div class="btn-group mt-0" role="group" aria-label="Product Actions">'; 
                 // Increased font size for buttons
-                echo '<a href="addToCart.php?productid=' . $id . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">Add to Cart</a>';
-                echo '<a href="addToWishlist.php?product_id=' . $id . '" class="btn btn-outline-secondary ml-2" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">Add to Wishlist</a>';
+                echo '<a href="addToCart.php?productid=' . $id . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem; background-color: #ff8000; border: none;">Add to Cart</a>';
+                echo '<a href="addToWishlist.php?product_id=' . $id . '" class="btn btn-outline-secondary ml-2" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem; background-color: #6c757d; border: none; color: #FFF">Add to Wishlist</a>';
                 echo '</div>
                 </div>
                 </div>
@@ -157,92 +157,42 @@ AlertService::displayAlerts();
     <section class="categores" id="categores">
         <h1 class="heading">Our <span>Shops</span></h1>
 
-
-
-
         <div class="box-container">
             <?php if (!empty($shops)): ?>
-                <?php foreach ($shops as $shop): ?>
+            <?php foreach ($shops as $shop): ?>
 
 
-
-
-
-
-                    <div class="box">
-                        <?php
+            <div class="box">
+                <?php
                         $shopImageBase64 = $db->getShopImage($shop['SHOP_ID']);
                         $shopPageUrl = "../ShopPage/egShop.php?shopID=" . urlencode($shop['SHOP_ID']);
                         ?>
-                        <?php if ($shopImageBase64): ?>
-                            <a href="<?php echo $shopPageUrl; ?>">
-                                <img src="data:image/jpeg;base64,<?php echo $shopImageBase64; ?>" alt="<?php echo htmlspecialchars($shop['SHOP_NAME']); ?>">
-                            </a>
-                        <?php else: ?>
-                            <a href="<?php echo $shopPageUrl; ?>">
-                                <img src="../Image/path_to_placeholder_image.jpg" alt="<?php echo htmlspecialchars($shop['SHOP_NAME']); ?> Image">
-                            </a>
-                        <?php endif; ?>
+                <?php if ($shopImageBase64): ?>
+                <a href="<?php echo $shopPageUrl; ?>">
+                    <img src="data:image/jpeg;base64,<?php echo $shopImageBase64; ?>"
+                        alt="<?php echo htmlspecialchars($shop['SHOP_NAME']); ?>">
+                </a>
+                <?php else: ?>
+                <a href="<?php echo $shopPageUrl; ?>">
+                    <img src="../Image/path_to_placeholder_image.jpg"
+                        alt="<?php echo htmlspecialchars($shop['SHOP_NAME']); ?> Image">
+                </a>
+                <?php endif; ?>
 
-                        <h3>
-                            <a href="<?php echo $shopPageUrl; ?>">
-                                <?php echo htmlspecialchars($shop['SHOP_NAME']); ?>
-                            </a>
-                        </h3>
-                        <p><?php echo htmlspecialchars($shop['DESCRIPTION']); ?></p>
-                        <a href="<?php echo $shopPageUrl; ?>" class="btn">Shop now</a>
-                    </div>
+                <h3>
+                    <a href="<?php echo $shopPageUrl; ?>">
+                        <?php echo htmlspecialchars($shop['SHOP_NAME']); ?>
+                    </a>
+                </h3>
+                <p><?php echo htmlspecialchars($shop['DESCRIPTION']); ?></p>
+                <a href="<?php echo $shopPageUrl; ?>" class="btn">Shop now</a>
+            </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-                <?php endforeach; ?>
+            <?php endforeach; ?>
             <?php else: ?>
-                <p>No shops found.</p>
+            <p>No shops found.</p>
             <?php endif; ?>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </section>
     <br><br><br>

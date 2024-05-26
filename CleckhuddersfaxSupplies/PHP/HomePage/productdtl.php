@@ -13,11 +13,13 @@ $reviews = $database->getReviewsForAProduct($productID);
 $productQuantity = 1;
 
 $database->closeConnection();
+
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,40 +31,42 @@ $database->closeConnection();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-          integrity="sha512-..." crossorigin="anonymous"/>
+        integrity="sha512-..." crossorigin="anonymous" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
-<body>
-<div>
-    <?php include('../HeaderPage/head.php'); ?>
-</div>
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<div class="container my-5">
-    <div class="row">
-        <?php if ($product && $imageBase64) : ?>
+</head>
+
+<body>
+    <div>
+        <?php include('../HeaderPage/head.php'); ?>
+    </div>
+
+    <div class="container my-5">
+        <div class="row">
+            <?php if ($product && $imageBase64) : ?>
             <div class="col-md-5">
                 <div class="main-img">
                     <!-- Resize and display the product image -->
                     <img class="img-fluid" src="data:image/png;base64, <?php echo $imageBase64; ?>" alt="Product"
-                         width="100" height="100">
+                        width="100" height="100">
                 </div>
                 <div class="text-center mt-3">
                     <div class="d-flex justify-content-between">
                         <!-- "Add to Wishlist" button with icon -->
                         <a href="addToWishlist.php?product_id=<?php echo $productID; ?>"
-                           class="btn btn-outline-secondary"
-                           style="font-family: 'Roboto', sans-serif; font-size: 1.8rem;">
+                            class="btn btn-outline-secondary"
+                            style="font-family: 'Roboto', sans-serif; font-size: 1.8rem; background-color: #6c757d; border: none; color: #FFF">
                             <i class="fas fa-heart"></i> Add to Wishlist
                         </a>
                         <!-- Add to Cart button -->
                         <?php
-                        echo '<a href="addToCart.php?productid=' . $productID . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">
+                        echo '<a href="addToCart.php?productid=' . $productID . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem; background-color: #ff8000; border: none; ">
                         <i class="fas fa-shopping-cart"></i> Add to Cart </a>';
                         ?>
                     </div>
@@ -73,11 +77,12 @@ $database->closeConnection();
                 <!-- Product details -->
                 <div class="main-description px-2">
                     <div class="product-title text-bold my-3">
-                        <?php echo $product['PRODUCT_NAME']; ?> <!-- Product Name -->
+                        <?php echo $product['PRODUCT_NAME']; ?>
+                        <!-- Product Name -->
                     </div>
                     <div class="price-area my-4">
                         <?php if ($product['PRICE']) : ?>
-                            <p class="new-price text-bold mb-1">Price: £<?php echo $product['PRICE']; ?></p>
+                        <p class="new-price text-bold mb-1">Price: £<?php echo $product['PRICE']; ?></p>
                         <?php endif; ?>
                         <!-- Display Rating -->
                         <?php
@@ -101,14 +106,14 @@ $database->closeConnection();
                     </div>
                 </div>
             </div>
-        <?php else : ?>
+            <?php else : ?>
             <div class="col-md-12">
                 <p>Product not found.</p>
             </div>
-        <?php endif; ?>
-    </div>
+            <?php endif; ?>
+        </div>
 
-    <script>
+        <script>
         // Initialize productQuantity JavaScript variable with the value from PHP
         var productQuantity = <?php echo $productQuantity; ?>;
 
@@ -121,15 +126,15 @@ $database->closeConnection();
             }
             document.getElementById('productQuantity').innerText = productQuantity;
         }
-    </script>
+        </script>
 
-    <div class="container">
-        <div class="row">
-            <div class="review">
-                <input id="btnBox" type="checkbox">
-                <p class="display-5">Product Reviews</p>
-                <ul>
-                    <?php foreach ($reviews as $review): ?>
+        <div class="container">
+            <div class="row">
+                <div class="review">
+                    <input id="btnBox" type="checkbox">
+                    <p class="display-5">Product Reviews</p>
+                    <ul>
+                        <?php foreach ($reviews as $review): ?>
                         <li>
                             <div class="rev" style="width: 1094px;">
                                 <div class="name_date">
@@ -137,26 +142,27 @@ $database->closeConnection();
                                     <p class="rev_date"><?php echo htmlspecialchars($review['REVIEW_DATE']); ?></p>
                                 </div>
                                 <?php for ($i = 0; $i < $review['RATING']; $i++): ?>
-                                    <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
                                 <?php endfor; ?>
                                 <?php for ($i = $review['RATING']; $i < 5; $i++): ?>
-                                    <span class="fa fa-star-o"></span>
+                                <span class="fa fa-star-o"></span>
                                 <?php endfor; ?>
                                 <p><?php echo htmlspecialchars($review['REVIEW_TEXT']); ?></p>
                             </div>
                         </li>
-                    <?php endforeach; ?>
-                </ul>
-                <label class="btn_a" for="btnBox"><span class="btn1">See More</span><span class="btn2">See Less</span></label>
+                        <?php endforeach; ?>
+                    </ul>
+                    <label class="btn_a" for="btnBox"><span class="btn1">See More</span><span class="btn2">See
+                            Less</span></label>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="container similar-products my-4">
-        <hr>
-        <p class="display-5">Similar Products</p>
-        <div class="row">
-            <?php
+        <div class="container similar-products my-4">
+            <hr>
+            <p class="display-5">Similar Products</p>
+            <div class="row">
+                <?php
             // Fetch similar products
             $similarProducts = $database->getProductsByShopId($shopId);
 
@@ -173,18 +179,26 @@ $database->closeConnection();
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card card-border d-flex">
                         <?php if ($imageBase64) : ?>
-                            <a href="../HomePage/productdtl.php?product_id=<?php echo $productId; ?>">
-                                <img src="data:image/jpeg;base64,<?php echo $imageBase64; ?>" class="card-img-top" alt="product image" style="width: 100%; height: 240px;">
-                            </a>
+                        <a href="../HomePage/productdtl.php?product_id=<?php echo $productId; ?>">
+                            <img src="data:image/jpeg;base64,<?php echo $imageBase64; ?>" class="card-img-top"
+                                alt="product image" style="width: 100%; height: 240px;">
+                        </a>
                         <?php else : ?>
-                            <a href="../HomePage/productdtl.php?product_id=<?php echo $productId; ?>">
-                                <img src="path_to_placeholder_image.jpg" class="card-img-top" alt="<?php echo htmlspecialchars($product['PRODUCT_NAME']); ?> Image" style="width: 100%; height: auto;">
-                            </a>
+                        <a href="../HomePage/productdtl.php?product_id=<?php echo $productId; ?>">
+                            <img src="path_to_placeholder_image.jpg" class="card-img-top"
+                                alt="<?php echo htmlspecialchars($product['PRODUCT_NAME']); ?> Image"
+                                style="width: 100%; height: auto;">
+                        </a>
                         <?php endif; ?>
                         <div class="card-body">
                             <div class="card-upper-body text-left">
-                                <h5 class="card-title"><a href="../HomePage/productdtl.php?product_id=<?php echo $productId; ?>" style="color: #333; font-size: 1.75rem;"><?php echo htmlspecialchars($product['PRODUCT_NAME']); ?></a></h5>
-                                <h6 class="card-text text-muted" style="font-family: 'Roboto', sans-serif; font-size: 1.5rem;"><?php echo substr(htmlspecialchars($product['DESCRIPTION']), 0, 50); ?>...</h6>
+                                <h5 class="card-title"><a
+                                        href="../HomePage/productdtl.php?product_id=<?php echo $productId; ?>"
+                                        style="color: #333; font-size: 1.75rem;"><?php echo htmlspecialchars($product['PRODUCT_NAME']); ?></a>
+                                </h5>
+                                <h6 class="card-text text-muted"
+                                    style="font-family: 'Roboto', sans-serif; font-size: 1.5rem;">
+                                    <?php echo substr(htmlspecialchars($product['DESCRIPTION']), 0, 50); ?>...</h6>
                                 <h6 class="card-title" style="font-size: 1.5rem;"><?php echo $price; ?></h6>
                                 <?php echo $stock; ?>
                             </div>
@@ -193,18 +207,31 @@ $database->closeConnection();
                                 <?php echo str_repeat('<i class="bi bi-star me-1"></i>', $noRating); ?>
                             </div>
                             <div class="btn-group mt-2" role="group" aria-label="Product Actions">
-                                <a href="addToCart.php?productid=<?php echo $productId; ?>" class="btn btn-primary" style="font-family: 'Roboto', sans-serif; font-size: 1.5rem;">Add to Cart</a>
-                                <a href="addToWishlist.php?product_id=<?php echo $productId; ?>" class="btn btn-outline-secondary ml-2" style="font-family: 'Roboto', sans-serif; font-size: 1.5rem;">Add to Wishlist</a>
+                                <a href="addToCart.php?productid=<?php echo $productId; ?>" class="btn btn-primary"
+                                    style="font-family: 'Roboto', sans-serif; font-size: 1.5rem; background-color: #ff8000; border: none;">Add to Cart</a>
+                                <a href="addToWishlist.php?product_id=<?php echo $productId; ?>"
+                                    class="btn btn-outline-secondary ml-2"
+                                    style="font-family: 'Roboto', sans-serif; font-size: 1.5rem; background-color: #6c757d; border: none; color: #FFF">Add to Wishlist</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            <?php
+                <?php
             }
             ?>
+            </div>
         </div>
+
+
+        <h1 class="custom-heading">
+            Show <a href="../ShopPage/egShop.php?shopID=<?php echo $shopId; ?>" class="more-link">More</a> Products from
+            This Shop
+        </h1>
+
+
     </div>
-</div>
-<?php require('../FooterPage/footer.php'); ?>
+
+    <?php require('../FooterPage/footer.php'); ?>
 </body>
+
 </html>

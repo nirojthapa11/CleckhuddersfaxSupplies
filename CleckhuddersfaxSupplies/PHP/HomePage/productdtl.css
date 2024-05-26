@@ -163,7 +163,7 @@
     background-color: #5271ff !important;
 }
 
-a {
+.container a {
     color: black !important;
     text-decoration: none;
 }
@@ -200,4 +200,52 @@ a:hover {
 
 .scrollable-row .row {
     display: inline-flex;
+}
+
+
+
+.heading {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 2em;
+    color: #333;
+}
+
+.more-link {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: bold;
+}
+
+.more-link:hover {
+    color: #0056b3;
+}
+
+
+
+/* See more products */
+
+.container .custom-heading a {
+    color: #ff6600 !important;
+    text-decoration: none;
+}
+
+.container .custom-heading {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 2em;
+    color: #333;
+    margin: 20px 0; /* Add some margin for better spacing */
+}
+
+.container .custom-heading .more-link {
+    color: #ff6600;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: bold;
+}
+
+.container .custom-heading .more-link:hover {
+    color: #cc5200;
 }

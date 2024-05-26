@@ -1,11 +1,13 @@
 <?php
 session_start();
 require_once '../../partials/dbConnect.php';
+require_once '../alertService.php';
 
 $db = new Database();
 $conn = $db->getConnection();
 $shopImageBase64 = null;
 $shopID = null;
+
 
 $shopID  = null;
 if (isset($_GET['shopID']) && is_numeric($_GET['shopID'])) {
@@ -36,26 +38,9 @@ if (!$fetchShop) {
     echo $_SESSION['error'];
     exit();
 }
-
-$queryProduct = "SELECT * FROM PRODUCT WHERE SHOP_ID = :shopID";
-$statement_Product = oci_parse($conn, $queryProduct);
-if (!$statement_Product) {
-    $e = oci_error($conn);
-    echo "Error preparing queryProduct: " . htmlspecialchars($e['message']);
-    exit();
-}
-oci_bind_by_name($statement_Product, ':shopID', $shopID);
-if (!oci_execute($statement_Product)) {
-    $e = oci_error($statement_Product);
-    echo "Error executing queryProduct: " . htmlspecialchars($e['message']);
-    exit();
-}
-
-$products = array();
-while ($row = oci_fetch_assoc($statement_Product)) {
-    $products[] = $row;
-}
+$products = $db->getProductsByShopId($shopID);
 oci_close($conn);
+
 
 
 
@@ -67,10 +52,14 @@ oci_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop Page</title>
-    <link rel="stylesheet" href="egShop.css">
+    <link rel="stylesheet" href="egShop.css?<?php echo time(); ?>">
     <link rel="stylesheet" href="../HeaderPage/head.css">
+    <?php   AlertService::includeCSS(); ?>
 </head>
 <body>
+    <?php
+        AlertService::displayAlerts();
+    ?>
     <div><?php include('../HeaderPage/head.php'); ?></div>
     <div class="main-container">
         <div class="shop-container">
@@ -91,6 +80,9 @@ oci_close($conn);
             <div class="product-list">
                 <?php if (!empty($products)): ?>
                     <?php foreach ($products as $product): ?>  
+                        <?php
+                           $rating = $product["RATING"];  
+                        ?>
                         <div class="product-item">
                             <a href="../HomePage/productdtl.php?product_id=<?php echo $product['PRODUCT_ID']; ?>">
                                 <?php
@@ -107,8 +99,18 @@ oci_close($conn);
                                     <?php echo htmlspecialchars($product['PRODUCT_NAME']); ?>
                                 </a>
                             </h2>
-                            <div class="price">$<?php echo htmlspecialchars($product['PRICE']); ?></div>
-                            <div class="product-rating">Rating: </div>
+                            <div class="price">£<?php echo htmlspecialchars($product['PRICE']); ?></div>
+                            <div class="product-rating"> 
+                                <?php
+                                for ($i = 0; $i < 5; $i++) {
+                                    if ($i < $rating) {
+                                        echo '<i class="fas fa-star text-warning"></i>';
+                                    } else {
+                                        echo '<i class="far fa-star"></i>';
+                                    }
+                                }
+                                ?>
+                            </div>
                             <div class="btn-container">
                                 <a href="../HomePage/addToCart.php?productid=<?php echo $product['PRODUCT_ID']; ?>" class="btn add-to-cart">Add to Cart</a>
                                 <a href="../HomePage/addToWishlist.php?product_id=<?php echo $product['PRODUCT_ID']; ?>" class="btn add-to-wishlist">Add to Wishlist</a>
