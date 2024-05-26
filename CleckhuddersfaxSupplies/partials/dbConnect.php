@@ -55,13 +55,23 @@ class Database
         $products = array();
 
         try {
-            $query = "SELECT p.*, ROUND(r.average_rating, 2) AS rating
-                      FROM product p
-                      LEFT JOIN (
-                          SELECT product_id, AVG(rating) AS average_rating
-                          FROM review
-                          GROUP BY product_id
-                      ) r ON p.product_id = r.product_id";
+            $query = "SELECT * FROM (
+                SELECT p.*, ROUND(r.average_rating, 2) AS rating
+                FROM product p
+                LEFT JOIN (
+                  SELECT product_id, AVG(rating) AS average_rating
+                  FROM review
+                  GROUP BY product_id
+                ) r ON p.product_id = r.product_id
+                JOIN shop sh ON sh.shop_id = p.shop_id
+                JOIN trader tr ON tr.trader_id = sh.trader_id
+                WHERE UPPER(sh.status) = UPPER('Active')
+                  AND UPPER(tr.ISVERIFIED) = UPPER('yes')
+                  AND UPPER(p.isverified) = UPPER('yes')
+                  AND p.STOCK > 1
+                ORDER BY DBMS_RANDOM.VALUE
+              )
+              WHERE ROWNUM <= 9";
 
             $statement = $this->executeQuery($query);
 
@@ -901,6 +911,29 @@ class Database
             return true;
         }
     }
+
+
+    public function getAllShops() 
+    {
+        $conn = $this->getConnection();
+        $query = "SELECT * FROM (SELECT * FROM shop ORDER BY shop_id) WHERE ROWNUM <= 5";
+        $statement = oci_parse($conn, $query);
+        oci_execute($statement);
+        $shops = [];
+        while ($row = oci_fetch_assoc($statement)) {
+            $shops[] = $row;
+        }
+        oci_free_statement($statement);
+        return $shops;
+    }
+
+
+    
+
+
+
+   
+
     
 
     

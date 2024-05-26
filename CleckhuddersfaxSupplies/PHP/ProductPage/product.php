@@ -120,7 +120,11 @@ $ratingQuery = !empty($_GET['rating']) ? intval($_GET['rating']) : TRUE;
                                             FROM REVIEW
                                             GROUP BY PRODUCT_ID
                                         ) r ON PRODUCT.PRODUCT_ID = r.PRODUCT_ID
-                                        WHERE PRODUCT.STOCK > 1 $advcidQuery $filterdata $advfilterdata $query";
+                                        JOIN shop sh on sh.shop_id = product.shop_id
+                                        JOIN trader tr on tr.trader_id = sh.trader_id
+                                        WHERE UPPER(sh.status) = upper('Active') and upper(tr.ISVERIFIED) = upper('yes')
+                                        and upper(product.isverified) = upper('yes')
+                                        and PRODUCT.STOCK > 1 $advcidQuery $filterdata $advfilterdata $query";
 
                                     $qry = oci_parse($conn, $sql);
                                     oci_execute($qry);

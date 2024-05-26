@@ -6,7 +6,6 @@ $database = new Database();
 $productID = isset($_GET['product_id']) ? $_GET['product_id'] : null;
 $product = $database->getProductById($productID);
 $shopId = $product['SHOP_ID'];
-echo $shopId;
 
 $imageBase64 = $database->getProductImage($productID);
 $reviews = $database->getReviewsForAProduct($productID);
@@ -41,16 +40,10 @@ $database->closeConnection();
 </head>
 <body>
 <div>
-    <?php
-    include('../HeaderPage/head.php');
-    ?>
-
+    <?php include('../HeaderPage/head.php'); ?>
 </div>
 
-
 <div class="container my-5">
-
-
     <div class="row">
         <?php if ($product && $imageBase64) : ?>
             <div class="col-md-5">
@@ -69,10 +62,8 @@ $database->closeConnection();
                         </a>
                         <!-- Add to Cart button -->
                         <?php
-                        // Increased font size for buttons
                         echo '<a href="addToCart.php?productid=' . $productID . '" class="btn btn-primary" style="font-family: \'Roboto\', sans-serif; font-size: 1.8rem;">
                         <i class="fas fa-shopping-cart"></i> Add to Cart </a>';
-
                         ?>
                     </div>
                 </div>
@@ -117,7 +108,6 @@ $database->closeConnection();
         <?php endif; ?>
     </div>
 
-
     <script>
         // Initialize productQuantity JavaScript variable with the value from PHP
         var productQuantity = <?php echo $productQuantity; ?>;
@@ -157,73 +147,63 @@ $database->closeConnection();
                         </li>
                     <?php endforeach; ?>
                 </ul>
-                <label class="btn_a" for="btnBox"><span class="btn1">See More</span><span
-                            class="btn2">See Less</span></label>
+                <label class="btn_a" for="btnBox"><span class="btn1">See More</span><span class="btn2">See Less</span></label>
             </div>
         </div>
     </div>
-
 
     <div class="container similar-products my-4">
         <hr>
         <p class="display-5">Similar Products</p>
-        <div class="scrollable-row">
-            <div class="row">
-                <?php
-                // Assuming you have instantiated your class and $shopId is available
+        <div class="row">
+            <?php
+            // Fetch similar products
+            $similarProducts = $database->getProductsByShopId($shopId);
 
-                // Fetch similar products
-                $similarProducts = $database->getProductsByShopId($shopId);
-
-                // Loop through similar products and display them
-                foreach ($similarProducts as $product) {
-                    // Fetch image base64
-                    $imageBase64 = $database->getProductImage($product['PRODUCT_ID']);
-                    ?>
-                    <div class="col-md-3">
-                        <div class="similar-product">
-                            <img class="w-100" src="data:image/jpeg;base64,<?php echo $imageBase64; ?>" alt="Preview">
-                            <p class="title"><?php echo htmlspecialchars($product['PRODUCT_NAME']); ?></p>
-                            <p class="price">$<?php echo $product['PRICE']; ?></p>
-                            <p><?php echo htmlspecialchars($product['DESCRIPTION']); ?></p>
-                            <button type="button" class="btn btn-outline-primary">Add to Cart</button>
-                            <br><br>
-                            <button type="button" class="btn btn-dark">Review</button>
+            // Loop through similar products and display them
+            foreach ($similarProducts as $product) {
+                // Fetch image base64
+                $imageBase64 = $database->getProductImage($product['PRODUCT_ID']);
+                $productId = $product['PRODUCT_ID'];
+                $price = '£' . number_format($product['PRICE'], 2);
+                $stock = $product['STOCK'] > 0 ? '<span class="text-success">In Stock</span>' : '<span class="text-danger">Out of Stock</span>';
+                $avgRating = $product['RATING'];
+                $noRating = 5 - $avgRating;
+                ?>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card card-border d-flex">
+                        <?php if ($imageBase64) : ?>
+                            <a href="../HomePage/productdtl.php?product_id=<?php echo $productId; ?>">
+                                <img src="data:image/jpeg;base64,<?php echo $imageBase64; ?>" class="card-img-top" alt="product image" style="width: 100%; height: 240px;">
+                            </a>
+                        <?php else : ?>
+                            <a href="../HomePage/productdtl.php?product_id=<?php echo $productId; ?>">
+                                <img src="path_to_placeholder_image.jpg" class="card-img-top" alt="<?php echo htmlspecialchars($product['PRODUCT_NAME']); ?> Image" style="width: 100%; height: auto;">
+                            </a>
+                        <?php endif; ?>
+                        <div class="card-body">
+                            <div class="card-upper-body text-left">
+                                <h5 class="card-title"><a href="../HomePage/productdtl.php?product_id=<?php echo $productId; ?>" style="color: #333; font-size: 1.75rem;"><?php echo htmlspecialchars($product['PRODUCT_NAME']); ?></a></h5>
+                                <h6 class="card-text text-muted" style="font-family: 'Roboto', sans-serif; font-size: 1.5rem;"><?php echo substr(htmlspecialchars($product['DESCRIPTION']), 0, 50); ?>...</h6>
+                                <h6 class="card-title" style="font-size: 1.5rem;"><?php echo $price; ?></h6>
+                                <?php echo $stock; ?>
+                            </div>
+                            <div class="star d-flex">
+                                <?php echo str_repeat('<i class="bi bi-star-fill me-1 text-warning"></i>', $avgRating); ?>
+                                <?php echo str_repeat('<i class="bi bi-star me-1"></i>', $noRating); ?>
+                            </div>
+                            <div class="btn-group mt-2" role="group" aria-label="Product Actions">
+                                <a href="addToCart.php?productid=<?php echo $productId; ?>" class="btn btn-primary" style="font-family: 'Roboto', sans-serif; font-size: 1.5rem;">Add to Cart</a>
+                                <a href="addToWishlist.php?product_id=<?php echo $productId; ?>" class="btn btn-outline-secondary ml-2" style="font-family: 'Roboto', sans-serif; font-size: 1.5rem;">Add to Wishlist</a>
+                            </div>
                         </div>
                     </div>
-                    <?php
-                }
-                ?>
-            </div>
+                </div>
+            <?php
+            }
+            ?>
         </div>
-        <div class="arrow left-arrow">&lt;</div>
-        <div class="arrow right-arrow">&gt;</div>
     </div>
-
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const container = document.querySelector(".scrollable-row");
-            const leftArrow = document.querySelector(".left-arrow");
-            const rightArrow = document.querySelector(".right-arrow");
-
-            leftArrow.addEventListener("click", function () {
-                container.scrollBy({
-                    left: -200, // Adjust this value to change scroll distance
-                    behavior: "smooth"
-                });
-            });
-
-            rightArrow.addEventListener("click", function () {
-                container.scrollBy({
-                    left: 200, // Adjust this value to change scroll distance
-                    behavior: "smooth"
-                });
-            });
-        });
-    </script>
-
-
 </div>
 <?php require('../FooterPage/footer.php'); ?>
 </body>
