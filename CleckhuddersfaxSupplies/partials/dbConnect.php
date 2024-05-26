@@ -642,6 +642,7 @@ class Database
 
     public function updatePassword($email, $password) {
         try {
+            $password = md5($password);
             $query = "UPDATE customer SET password = :password WHERE email = :email";
             $statement = $this->executeQuery($query, array(
                 "password" => $password,

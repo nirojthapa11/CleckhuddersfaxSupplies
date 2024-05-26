@@ -13,8 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     elseif ($password1 !== $password2) {
       $error = "Password and Confirm Password do not match. Please try again.";
     }
-     elseif (!preg_match('/[!@#$%^&*()\-_=+]/', $password1)) {
+    elseif (!preg_match('/[!@#$%^&*()\-_=+]/', $password1)) {
         $error = "Password must contain at least one special character.";
+    }
+    elseif (!preg_match('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/', $password1)) {
+        $_SESSION['error'] = "Password must have at least one uppercase letter, one lowercase letter, and a number.";
+        $_SESSION['form_data'] = $_POST;
+        header("Location: customerSignup.php");
+        exit();
     } else {
         try {
             require_once '../../partials/dbConnect.php';

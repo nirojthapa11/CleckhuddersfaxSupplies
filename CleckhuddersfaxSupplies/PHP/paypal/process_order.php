@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type='hidden' name='cmd' value='_xclick'>
             <input type='hidden' name='item_name' value='$item_name'>
             <input type='hidden' name='amount' value='$amount'>
-            <input type='hidden' name='currency_code' value='USD'>
+            <input type='hidden' name='currency_code' value='GBP'>
             <input type='hidden' name='return' value='$return_url'>
             <input type='hidden' name='cancel_return' value='http://localhost/CleckhuddersfaxSupplies/CleckhuddersfaxSupplies/PHP/paypal/cancel.php'>
           </form>

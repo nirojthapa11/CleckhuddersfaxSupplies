@@ -113,15 +113,27 @@ if(isset($_SESSION['isVerifiedCustSignupOtp']) && ($_SESSION['isVerifiedCustSign
     $address = $_SESSION['address'];
     $age = $_SESSION['age'];
     $gender = $_SESSION['gender'];
+    $customerid = null;
+
 
 
 
 
     $query = "INSERT INTO Customer (Cust_image, First_Name, Last_Name, Address, Age, Email, Phone, Gender, Username, Password, Registration_Date) 
-    VALUES (empty_blob(), '$fname', '$lname', '$address', '$age', '$email', '$number', '$gender', '$Uname', '$password', SYSDATE)";
+            VALUES (empty_blob(), '$fname', '$lname', '$address', '$age', '$email', '$number', '$gender', '$Uname', '$password', SYSDATE)
+            RETURNING customer_id INTO :customerid";
 
     $statement = oci_parse($conn, $query);
+    oci_bind_by_name($statement, ':customerid', $customerid, 32);
     $result = oci_execute($statement);
+    oci_free_statement($statement);
+
+
+    // Auto create a cart for new customer.
+    $cartQuery = "INSERT INTO cart(customer_id) VALUES('$customerid')";
+    $statementcart = oci_parse($conn, $cartQuery);
+    oci_execute($statementcart);
+
 
     if($result) {
         oci_commit($conn);

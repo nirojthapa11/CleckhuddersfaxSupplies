@@ -86,16 +86,23 @@ table {
 }
 
 .cart-info {
+    width: 190px;
     display: flex;
     align-items: center;
-    width: min-content;
 }
 
 th, td {
+    width: 100px;
     text-align: left;
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
+
+
+.larger-font {
+    font-size: 14px;
+}
+
 
 th {
     background: #ff523b;
@@ -167,6 +174,7 @@ th:last-child {
     background-color: #45a049;
 }
 #removeForm button {
+    margin-top: 10px;
     background-color: #ff0000; /* Red background */
     color: #ffffff; /* White text */
     padding: 1px 2px; /* Padding */

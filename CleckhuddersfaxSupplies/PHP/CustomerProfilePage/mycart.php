@@ -1,10 +1,18 @@
 <?php
-    require_once '../../partials/dbConnect.php';
-    require_once '../alertService.php';
-
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+    require_once '../../partials/dbConnect.php';
+    require_once '../alertService.php';
+
+
+    if(!(isset($_SESSION['isAuthenticated']) && isset($_SESSION['loggedin']) && isset($_SESSION['username']))) {
+        AlertService::setWarning('You must first log in to see your cart!');
+        header("Location: ../Login_Signup/login.php");
+    }
+
+
+
     $customerid = $_SESSION['user_id'];
     $db = new Database();
     $cartid = $db->getCartIdUsingCustomerId($customerid);
@@ -77,7 +85,7 @@
                                     <p><a href="../HomePage/productdtl.php?product_id=<?php echo $product['PRODUCT_ID']; ?>"
                                             style="font-weight: bold; color: black;"><?php echo $product['PRODUCT_NAME']; ?></a>
                                     </p>
-                                    <small>Price: $<?php echo $product['PRICE']; ?></small>
+                                    <small class="larger-font">Price: $<?php echo $product['PRICE']; ?></small>
                                     <br>
                                     <form id="removeForm" action="removeFromCart.php" method="post">
                                         <input type="hidden" name="product_id"

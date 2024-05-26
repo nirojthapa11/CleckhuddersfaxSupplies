@@ -1,7 +1,9 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once '../../partials/dbConnect.php';
-include '../alertService.php';
+require_once '../alertService.php';
 
 
 function sanitizeInput($data)
